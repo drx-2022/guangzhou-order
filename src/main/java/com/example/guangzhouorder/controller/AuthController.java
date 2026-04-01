@@ -1,6 +1,6 @@
 package com.example.guangzhouorder.controller;
 
-import com.example.guangzhouorder.dto.SignUpRequest;
+import com.example.guangzhouorder.dto.auth.SignUpRequest;
 import com.example.guangzhouorder.entity.User;
 import com.example.guangzhouorder.security.JwtTokenProvider;
 import com.example.guangzhouorder.service.UserService;
@@ -30,21 +30,21 @@ public class AuthController {
     @GetMapping("/signup")
     public String showSignUp(Model model) {
         model.addAttribute("signUpRequest", new SignUpRequest());
-        return "sign_up";
+        return "auth/sign_up";
     }
 
     @PostMapping("/signup")
     public String processSignUp(@Valid @ModelAttribute("signUpRequest") SignUpRequest request,
                                 BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
-            return "sign_up";
+            return "auth/sign_up";
         }
         try {
             userService.registerUser(request.getName(), request.getEmail(),
                     request.getPhone(), request.getPassword(), request.getRole());
         } catch (IllegalArgumentException e) {
             model.addAttribute("signupError", e.getMessage());
-            return "sign_up";
+            return "auth/sign_up";
         }
         return "redirect:/login?registered=true";
     }
@@ -54,7 +54,7 @@ public class AuthController {
         if (registered != null) {
             model.addAttribute("successMessage", "Account created! Please log in.");
         }
-        return "login";
+        return "auth/login";
     }
 
     @PostMapping("/login")
@@ -66,7 +66,7 @@ public class AuthController {
             User user = userService.findByEmail(email);
             if (!passwordEncoder.matches(password, user.getHashedPassword())) {
                 model.addAttribute("loginError", "Invalid email or password.");
-                return "login";
+                return "auth/login";
             }
             String token = jwtTokenProvider.generateToken(email);
             Cookie cookie = new Cookie("jwt", token);
@@ -77,7 +77,7 @@ public class AuthController {
             return "redirect:/dashboard";
         } catch (IllegalArgumentException e) {
             model.addAttribute("loginError", "Invalid email or password.");
-            return "login";
+            return "auth/login";
         }
     }
 

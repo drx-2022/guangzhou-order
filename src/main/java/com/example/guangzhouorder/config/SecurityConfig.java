@@ -33,9 +33,13 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
+            .csrf(csrf -> csrf.disable())  // Disable CSRF for stateless JWT
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/", "/signup", "/login", "/catalog", "/logout", "/error").permitAll()
+                    .requestMatchers("/", "/signup", "/login", "/catalog", "/logout", "/error").permitAll()
+
+                .requestMatchers("/ws", "/ws/**").permitAll()  // WebSocket must be accessible
                 .requestMatchers("/dashboard").authenticated()
+                .requestMatchers("/admin/**").authenticated()
                 .anyRequest().authenticated()
             )
             .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)

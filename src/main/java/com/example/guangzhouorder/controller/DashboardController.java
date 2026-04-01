@@ -20,8 +20,8 @@ public class DashboardController {
         User user = userService.findByEmail(userDetails.getUsername());
         model.addAttribute("user", user);
         if ("AFFILIATE".equals(user.getRole())) {
-            return "affiliate_dashboard";
+            return "affiliate/affiliate_dashboard";
         }
-        return "customer_dashboard";
+        return "customer/customer_dashboard";
     }
 }

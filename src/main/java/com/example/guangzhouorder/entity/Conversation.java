@@ -21,7 +21,7 @@ public class Conversation {
     private Long conversationId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "customer_id", nullable = false)
+    @JoinColumn(name = "customer_id", nullable = false, unique = false)
     private User customer;
 
     @Column(name = "last_message_at")

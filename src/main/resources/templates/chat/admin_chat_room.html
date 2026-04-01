@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Guangzhou Direct - Admin Chat Room</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+    <script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              colors: {
+                "on-secondary-fixed-variant": "#304a55",
+                "tertiary": "#003b34",
+                "tertiary-container": "#00544b",
+                "on-error-container": "#93000a",
+                "inverse-on-surface": "#eff1f3",
+                "surface-bright": "#f8f9fb",
+                "secondary-container": "#cbe7f5",
+                "background": "#f8f9fb",
+                "primary": "#003461",
+                "on-primary-container": "#8abcff",
+                "secondary-fixed": "#cbe7f5",
+                "surface-container-high": "#e6e8ea",
+                "on-error": "#ffffff",
+                "on-primary": "#ffffff",
+                "on-secondary-container": "#4e6874",
+                "inverse-primary": "#a3c9ff",
+                "surface-variant": "#e0e3e5",
+                "surface-container-highest": "#e0e3e5",
+                "surface-tint": "#27609d",
+                "on-tertiary": "#ffffff",
+                "on-background": "#191c1e",
+                "on-surface-variant": "#424750",
+                "on-tertiary-container": "#63cbbb",
+                "tertiary-fixed-dim": "#70d8c8",
+                "secondary-fixed-dim": "#afcbd8",
+                "tertiary-fixed": "#8df5e4",
+                "on-primary-fixed-variant": "#004882",
+                "on-tertiary-fixed": "#00201c",
+                "on-tertiary-fixed-variant": "#005048",
+                "surface-dim": "#d8dadc",
+                "secondary": "#48626e",
+                "surface": "#f8f9fb",
+                "inverse-surface": "#2d3133",
+                "surface-container": "#eceef0",
+                "primary-fixed-dim": "#a3c9ff",
+                "on-surface": "#191c1e",
+                "surface-container-lowest": "#ffffff",
+                "on-primary-fixed": "#001c38",
+                "on-secondary-fixed": "#021f29",
+                "primary-fixed": "#d3e4ff",
+                "surface-container-low": "#f2f4f6",
+                "error-container": "#ffdad6",
+                "outline": "#727781",
+                "error": "#ba1a1a",
+                "on-secondary": "#ffffff",
+                "primary-container": "#004b87",
+                "outline-variant": "#c2c6d1"
+              },
+              fontFamily: {
+                "headline": ["Manrope"],
+                "body": ["Inter"],
+                "label": ["Inter"]
+              },
+              borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+            },
+          },
+        }
+    </script>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .chat-height {
+            height: calc(100vh - 72px);
+        }
+    </style>
+</head>
+<body class="bg-surface font-body text-on-surface">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-[#f8f9fb]/80 dark:bg-slate-900/80 backdrop-blur-xl shadow-sm dark:shadow-none">
+    <div class="flex justify-between items-center px-6 py-3 w-full max-w-screen-2xl mx-auto">
+        <div class="flex items-center gap-8">
+            <span class="text-xl font-black text-[#003461] dark:text-white tracking-tighter font-headline">Guangzhou Direct</span>
+            <div class="hidden md:flex gap-6 items-center">
+                <a class="font-headline font-bold tracking-tight text-[#424750] dark:text-slate-400 hover:text-[#004B87]" href="#">Dashboard</a>
+                <a class="font-headline font-bold tracking-tight text-[#424750] dark:text-slate-400 hover:text-[#004B87]" href="#">Analytics</a>
+                <a class="font-headline font-bold tracking-tight text-[#424750] dark:text-slate-400 hover:text-[#004B87]" href="#">Orders</a>
+                <a class="font-headline font-bold tracking-tight text-[#004B87] dark:text-[#cbe7f5] border-b-2 border-[#004B87] pb-1" href="#">Support</a>
+            </div>
+        </div>
+        <div class="flex items-center gap-4">
+            <button class="p-2 rounded-full hover:bg-[#f2f4f6]/50 transition-colors">
+                <span class="material-symbols-outlined text-on-surface-variant">notifications</span>
+            </button>
+            <button class="p-2 rounded-full hover:bg-[#f2f4f6]/50 transition-colors">
+                <span class="material-symbols-outlined text-on-surface-variant">account_circle</span>
+            </button>
+        </div>
+    </div>
+</nav>
+<!-- Main Content with TopBar offset -->
+<main class="flex mt-16 h-screen">
+    <!-- Left Sidebar Navigation -->
+    <aside class="hidden md:flex flex-col w-64 bg-surface border-r border-outline-variant/15 shrink-0">
+        <div class="p-6 border-b border-outline-variant/10">
+            <h2 class="font-headline font-bold text-primary mb-1">Admin Panel</h2>
+            <p class="text-xs text-on-surface-variant">Customer Support</p>
+        </div>
+        <nav class="flex-1 overflow-y-auto p-4 space-y-2">
+            <a class="flex items-center gap-3 py-2 px-4 text-[#424750] hover:bg-[#f2f4f6] rounded-lg transition-all" href="/dashboard">
+                <span class="material-symbols-outlined text-[20px]">dashboard</span>
+                <span class="font-headline text-sm font-semibold">Dashboard</span>
+            </a>
+            <a class="flex items-center gap-3 py-2 px-4 text-[#424750] hover:bg-[#f2f4f6] rounded-lg transition-all" href="#">
+                <span class="material-symbols-outlined text-[20px]">shopping_cart</span>
+                <span class="font-headline text-sm font-semibold">Orders</span>
+            </a>
+            <a class="flex items-center gap-3 py-2 px-4 text-[#424750] hover:bg-[#f2f4f6] rounded-lg transition-all" href="#">
+                <span class="material-symbols-outlined text-[20px]">receipt_long</span>
+                <span class="font-headline text-sm font-semibold">Transactions</span>
+            </a>
+            <a class="flex items-center gap-3 py-2 px-4 bg-[#cbe7f5] text-[#003461] rounded-lg transition-all" href="/admin/chat">
+                <span class="material-symbols-outlined text-[20px]">chat_bubble</span>
+                <span class="font-headline text-sm font-semibold">Messages</span>
+            </a>
+            <a class="flex items-center gap-3 py-2 px-4 text-[#424750] hover:bg-[#f2f4f6] rounded-lg transition-all" href="#">
+                <span class="material-symbols-outlined text-[20px]">settings</span>
+                <span class="font-headline text-sm font-semibold">Settings</span>
+            </a>
+        </nav>
+    </aside>
+    <!-- Chat Stream Canvas -->
+    <section class="flex-1 flex flex-col bg-surface-container-low min-w-0">
+        <!-- Chat Header -->
+        <div class="px-6 py-4 bg-surface-container-lowest flex items-center justify-between border-b border-outline-variant/10 shrink-0">
+            <div class="flex items-center gap-4">
+                <div class="relative">
+                    <div class="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center text-secondary">
+                        <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">person</span>
+                    </div>
+                    <div class="absolute bottom-0 right-0 w-3 h-3 bg-tertiary-fixed border-2 border-white rounded-full"></div>
+                </div>
+                <div>
+                    <h2 class="font-headline font-bold text-primary">
+                        <span th:text="${conversation.customerName}"></span>
+                    </h2>
+                    <p class="text-xs text-on-surface-variant flex items-center gap-1">
+                        <span class="w-2 h-2 rounded-full bg-tertiary-fixed"></span>
+                        <span th:text="${conversation.customerEmail}"></span>
+                    </p>
+                    <p class="text-[10px] text-on-surface-variant/70 mt-1">
+                        Conversation #<span th:text="${conversation.conversationId}"></span>
+                    </p>
+                </div>
+            </div>
+            <div class="flex gap-2">
+                <button class="p-2 hover:bg-surface-container text-on-surface-variant rounded-full"><span class="material-symbols-outlined">search</span></button>
+                <a th:href="@{/admin/chat}" class="px-4 py-2 bg-primary text-white rounded-lg font-headline font-bold text-sm flex items-center gap-2 hover:bg-primary/90 transition-all">
+                    <span class="material-symbols-outlined text-sm">list</span>
+                    All Conversations
+                </a>
+            </div>
+        </div>
+        <!-- Hidden Data for WebSocket -->
+        <input type="hidden" id="conversationId" th:value="${conversation.conversationId}">
+        <input type="hidden" id="currentUserEmail" th:value="${currentUserEmail}">
+        <input type="hidden" id="customerName" th:value="${conversation.customerName}">
+
+        <!-- Messages Area -->
+        <div id="messagesContainer" class="flex-1 overflow-y-auto p-6 space-y-6 min-h-0">
+            <!-- Empty State -->
+            <div th:if="${#lists.isEmpty(messages)}" class="flex flex-col items-center justify-center h-full">
+                <span class="material-symbols-outlined text-6xl text-on-surface-variant opacity-20">mail</span>
+                <p class="text-on-surface-variant text-sm mt-2">No messages yet. Start the conversation!</p>
+            </div>
+
+            <!-- Messages List -->
+            <th:block th:each="msg : ${messages}">
+                <!-- Determine if message is from current user -->
+                <div th:classappend="${msg.senderEmail == currentUserEmail} ? 'items-end' : 'items-start'" class="flex flex-col gap-2">
+                    <!-- Message: From Current User (Right aligned) -->
+                    <div th:if="${msg.senderEmail == currentUserEmail}" class="max-w-[80%] bg-primary text-white p-4 rounded-xl rounded-tr-none shadow-sm">
+                        <p class="text-sm" th:text="${msg.content}"></p>
+                    </div>
+
+                    <!-- Message: From Other User (Left aligned) -->
+                    <div th:unless="${msg.senderEmail == currentUserEmail}" class="flex items-end gap-3 max-w-[85%]">
+                        <div class="w-8 h-8 rounded-full bg-secondary-container flex items-center justify-center shrink-0">
+                            <span class="material-symbols-outlined text-secondary text-sm">person</span>
+                        </div>
+                        <div th:if="${msg.messageType == 'TEXT'}" class="bg-surface-container-lowest p-4 rounded-xl rounded-bl-none shadow-sm border border-outline-variant/10">
+                            <p class="text-xs font-semibold text-primary mb-1" th:text="${msg.senderName}"></p>
+                            <p class="text-sm text-on-surface" th:text="${msg.content}"></p>
+                        </div>
+
+                        <!-- Spec Proposal Card -->
+                        <div th:if="${msg.messageType == 'SPEC_PROPOSAL_CARD'}" class="bg-white rounded-xl shadow-lg overflow-hidden border border-outline-variant/20 max-w-sm">
+                            <div class="bg-primary px-4 py-3 flex justify-between items-center">
+                                <h3 class="font-headline text-white font-bold text-sm">Specification Proposal</h3>
+                                <span class="text-[10px] text-primary-fixed-dim font-bold tracking-tighter uppercase" th:text="'ID: ' + ${msg.messageId}"></span>
+                            </div>
+                            <div class="p-5 space-y-4">
+                                <div class="text-sm text-on-surface" th:utext="${msg.content}"></div>
+                                <div class="flex flex-col gap-2 pt-2">
+                                    <button class="w-full bg-tertiary-container hover:bg-tertiary text-white py-2.5 rounded-lg font-headline text-xs font-bold flex items-center justify-center gap-2 transition-all">
+                                        <span class="material-symbols-outlined text-sm">verified_user</span>
+                                        Accept Proposal
+                                    </button>
+                                    <button class="w-full border-2 border-outline-variant text-on-surface-variant hover:bg-surface py-2 rounded-lg font-headline text-xs font-bold transition-all">
+                                        Request Revisions
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- File Attachment -->
+                        <div th:if="${msg.messageType == 'FILE'}" class="bg-surface-container-highest/50 p-3 rounded-xl border border-outline-variant/10 flex items-center gap-4 max-w-sm">
+                            <div class="w-10 h-10 bg-white rounded-lg flex items-center justify-center shadow-sm">
+                                <span class="material-symbols-outlined text-error">description</span>
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <p class="text-xs font-bold truncate" th:text="${msg.content}"></p>
+                                <p class="text-[10px] text-on-surface-variant" th:text="${msg.mediaUrl}"></p>
+                            </div>
+                            <a th:if="${msg.mediaUrl}" th:href="${msg.mediaUrl}" target="_blank" class="p-1 hover:bg-white rounded-full transition-all">
+                                <span class="material-symbols-outlined text-primary text-lg">download</span>
+                            </a>
+                        </div>
+
+                        <!-- Image Attachment -->
+                        <div th:if="${msg.messageType == 'IMAGE'}" class="max-w-sm">
+                            <img th:if="${msg.mediaUrl}" th:src="${msg.mediaUrl}" class="rounded-xl shadow-md max-h-64 object-cover" alt="Attached image">
+                        </div>
+                    </div>
+
+                    <!-- Timestamp -->
+                    <span class="text-[10px] text-on-surface-variant" th:text="${msg.createdAt}"></span>
+                </div>
+            </th:block>
+        </div>
+
+        <!-- Chat Input Area - Fixed at Bottom -->
+        <div class="p-6 bg-surface-container-lowest border-t border-outline-variant/10 shrink-0">
+            <div class="bg-surface-container-low rounded-2xl p-2 focus-within:ring-2 focus-within:ring-primary/20 transition-all">
+                <textarea id="messageInput" class="w-full bg-transparent border-none focus:ring-0 text-sm resize-none px-4 py-2" placeholder="Type your response..." rows="2"></textarea>
+                <div class="flex items-center justify-between px-2 pb-1">
+                    <div class="flex gap-1">
+                        <button type="button" class="p-2 hover:bg-white rounded-xl text-on-surface-variant transition-all"><span class="material-symbols-outlined">attach_file</span></button>
+                        <button type="button" class="p-2 hover:bg-white rounded-xl text-on-surface-variant transition-all"><span class="material-symbols-outlined">image</span></button>
+                    </div>
+                    <button id="sendBtn" type="button" class="bg-primary text-white p-2 px-6 rounded-xl font-headline font-bold text-sm flex items-center gap-2 active:scale-95 transition-all">
+                        Send <span class="material-symbols-outlined text-sm">send</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+<!-- WebSocket Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/stompjs@2.3.3/lib/stomp.min.js"></script>
+<script th:inline="javascript">
+    let stompClient = null;
+    const currentUserEmail = [[${currentUserEmail}]];
+    const conversationId = parseInt(document.getElementById('conversationId').value);
+
+    // Connect to WebSocket
+    function connect() {
+        const socket = new SockJS('/ws');
+        stompClient = Stomp.over(socket);
+
+        // Extract JWT from cookies
+        const jwtToken = getCookie('jwt');
+
+        stompClient.connect(
+            { jwt: jwtToken },  // ← Send JWT in STOMP headers
+            function(frame) {
+                console.log('Connected to WebSocket: ' + frame.headers['server']);
+
+                // Subscribe to conversation topic
+                stompClient.subscribe('/topic/conversation.' + conversationId, function(message) {
+                    const messageResponse = JSON.parse(message.body);
+                    displayReceivedMessage(messageResponse);
+                });
+            },
+            function(error) {
+                console.error('WebSocket connection error:', error);
+                setTimeout(connect, 5000); // Retry after 5 seconds
+            }
+        );
+    }
+
+    // Helper: Extract cookie value by name
+    function getCookie(name) {
+        const nameEQ = name + "=";
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.indexOf(nameEQ) === 0) {
+                return cookie.substring(nameEQ.length);
+            }
+        }
+        return null;
+    }
+
+    // Display received message
+    function displayReceivedMessage(messageResponse) {
+        const container = document.getElementById('messagesContainer');
+
+        // Remove empty state if exists
+        const emptyState = container.querySelector('.flex.flex-col.items-center');
+        if (emptyState) {
+            emptyState.remove();
+        }
+
+        // Create message element
+        const messageDiv = document.createElement('div');
+        messageDiv.className = 'flex flex-col gap-2 ' +
+            (messageResponse.senderEmail === currentUserEmail ? 'items-end' : 'items-start');
+
+        let messageContent = '';
+
+        if (messageResponse.senderEmail === currentUserEmail) {
+            // Sent message (right aligned)
+            messageContent = `
+                <div class="max-w-[80%] bg-primary text-white p-4 rounded-xl rounded-tr-none shadow-sm">
+                    <p class="text-sm">${escapeHtml(messageResponse.content)}</p>
+                </div>
+                <span class="text-[10px] text-on-surface-variant">${formatTime(messageResponse.createdAt)}</span>
+            `;
+        } else {
+            // Received message (left aligned)
+            let messageDisplay = '';
+
+            if (messageResponse.messageType === 'TEXT') {
+                messageDisplay = `
+                    <div class="bg-surface-container-lowest p-4 rounded-xl rounded-bl-none shadow-sm border border-outline-variant/10">
+                        <p class="text-xs font-semibold text-primary mb-1">${escapeHtml(messageResponse.senderName)}</p>
+                        <p class="text-sm text-on-surface">${escapeHtml(messageResponse.content)}</p>
+                    </div>
+                `;
+            } else if (messageResponse.messageType === 'SPEC_PROPOSAL_CARD') {
+                messageDisplay = `
+                    <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-outline-variant/20 max-w-sm">
+                        <div class="bg-primary px-4 py-3 flex justify-between items-center">
+                            <h3 class="font-headline text-white font-bold text-sm">Specification Proposal</h3>
+                            <span class="text-[10px] text-primary-fixed-dim font-bold tracking-tighter uppercase">ID: ${escapeHtml(messageResponse.messageId)}</span>
+                        </div>
+                        <div class="p-5 space-y-4">
+                            <div class="text-sm text-on-surface">${messageResponse.content}</div>
+                            <div class="flex flex-col gap-2 pt-2">
+                                <button class="w-full bg-tertiary-container hover:bg-tertiary text-white py-2.5 rounded-lg font-headline text-xs font-bold flex items-center justify-center gap-2 transition-all">
+                                    <span class="material-symbols-outlined text-sm">verified_user</span>
+                                    Accept Proposal
+                                </button>
+                                <button class="w-full border-2 border-outline-variant text-on-surface-variant hover:bg-surface py-2 rounded-lg font-headline text-xs font-bold transition-all">
+                                    Request Revisions
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            } else if (messageResponse.messageType === 'FILE') {
+                messageDisplay = `
+                    <div class="bg-surface-container-highest/50 p-3 rounded-xl border border-outline-variant/10 flex items-center gap-4 max-w-sm">
+                        <div class="w-10 h-10 bg-white rounded-lg flex items-center justify-center shadow-sm">
+                            <span class="material-symbols-outlined text-error">description</span>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <p class="text-xs font-bold truncate">${escapeHtml(messageResponse.content)}</p>
+                            <p class="text-[10px] text-on-surface-variant">${escapeHtml(messageResponse.mediaUrl)}</p>
+                        </div>
+                        ${messageResponse.mediaUrl ? `
+                            <a href="${escapeHtml(messageResponse.mediaUrl)}" target="_blank" class="p-1 hover:bg-white rounded-full transition-all">
+                                <span class="material-symbols-outlined text-primary text-lg">download</span>
+                            </a>
+                        ` : ''}
+                    </div>
+                `;
+            } else if (messageResponse.messageType === 'IMAGE' && messageResponse.mediaUrl) {
+                messageDisplay = `
+                    <div class="max-w-sm">
+                        <img src="${escapeHtml(messageResponse.mediaUrl)}" class="rounded-xl shadow-md max-h-64 object-cover" alt="Attached image">
+                    </div>
+                `;
+            }
+
+            messageContent = `
+                <div class="flex items-end gap-3 max-w-[85%]">
+                    <div class="w-8 h-8 rounded-full bg-secondary-container flex items-center justify-center shrink-0">
+                        <span class="material-symbols-outlined text-secondary text-sm">person</span>
+                    </div>
+                    <div>${messageDisplay}</div>
+                </div>
+                <span class="text-[10px] text-on-surface-variant">${formatTime(messageResponse.createdAt)}</span>
+            `;
+        }
+
+        messageDiv.innerHTML = messageContent;
+        container.appendChild(messageDiv);
+
+        // Auto-scroll to bottom
+        container.scrollTop = container.scrollHeight;
+    }
+
+    // Send message
+    function sendMessage() {
+        const input = document.getElementById('messageInput');
+        const content = input.value.trim();
+
+        if (!content) return;
+
+        const chatMessageRequest = {
+            conversationId: conversationId,
+            messageType: 'TEXT',
+            content: content,
+            mediaUrl: null
+        };
+
+        if (stompClient && stompClient.connected) {
+            stompClient.send('/app/chat.send', {}, JSON.stringify(chatMessageRequest));
+            input.value = '';
+            input.style.height = 'auto'; // Reset height
+        } else {
+            console.error('WebSocket not connected');
+            alert('Chat connection lost. Please refresh the page.');
+        }
+    }
+
+    // Helper: Escape HTML to prevent XSS
+    function escapeHtml(text) {
+        if (!text) return '';
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+    }
+
+    // Helper: Format timestamp
+    function formatTime(isoString) {
+        if (!isoString) return '';
+        const date = new Date(isoString);
+        return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    }
+
+    // Event listeners
+    document.addEventListener('DOMContentLoaded', function() {
+        connect();
+
+        // Send on button click
+        document.getElementById('sendBtn').addEventListener('click', sendMessage);
+
+        // Send on Enter key (Shift+Enter for newline)
+        document.getElementById('messageInput').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                sendMessage();
+            }
+        });
+
+        // Auto-expand textarea
+        const textarea = document.getElementById('messageInput');
+        textarea.addEventListener('input', function() {
+            this.style.height = 'auto';
+            this.style.height = Math.min(this.scrollHeight, 120) + 'px';
+        });
+
+        // Auto-scroll messages container
+        const container = document.getElementById('messagesContainer');
+        container.scrollTop = container.scrollHeight;
+    });
+
+    // Reconnect WebSocket on page visibility change
+    document.addEventListener('visibilitychange', function() {
+        if (!document.hidden && (!stompClient || !stompClient.connected)) {
+            console.log('Page became visible, reconnecting WebSocket...');
+            connect();
+        }
+    });
+</script>
+</body></html>
+
