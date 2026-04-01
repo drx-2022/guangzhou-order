@@ -148,6 +148,9 @@
 <div th:if="${successMessage}" class="p-3 bg-tertiary-fixed rounded-lg">
 <p class="text-tertiary text-sm font-medium" th:text="${successMessage}"></p>
 </div>
+<div th:if="${verifiedMessage}" class="p-3 bg-tertiary-fixed rounded-lg">
+<p class="text-tertiary text-sm font-medium" th:text="${verifiedMessage}"></p>
+</div>
 <button class="editorial-gradient w-full py-4 rounded-lg text-white font-headline font-bold text-sm tracking-widest uppercase shadow-lg shadow-primary/20 hover:scale-[1.01] active:scale-[0.98] transition-all" type="submit">
                         Login
                     </button>

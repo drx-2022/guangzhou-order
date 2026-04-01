@@ -40,19 +40,69 @@ public class AuthController {
             return "sign_up";
         }
         try {
-            userService.registerUser(request.getName(), request.getEmail(),
+            String email = request.getEmail();
+            userService.registerUser(request.getName(), email,
                     request.getPhone(), request.getPassword(), request.getRole());
+            
+            // Add email and masked email to model for verify_pending page
+            model.addAttribute("email", email);
+            model.addAttribute("maskedEmail", maskEmail(email));
+            return "verify_pending";
         } catch (IllegalArgumentException e) {
             model.addAttribute("signupError", e.getMessage());
             return "sign_up";
         }
-        return "redirect:/login?registered=true";
+    }
+
+    @PostMapping("/resend-verification")
+    public String resendVerificationEmail(@RequestParam String email, Model model) {
+        try {
+            userService.resendVerificationEmail(email);
+            model.addAttribute("email", email);
+            model.addAttribute("maskedEmail", maskEmail(email));
+            model.addAttribute("resendSuccess", true);
+            return "verify_pending";
+        } catch (IllegalArgumentException e) {
+            model.addAttribute("email", email);
+            model.addAttribute("maskedEmail", maskEmail(email));
+            model.addAttribute("resendError", e.getMessage());
+            return "verify_pending";
+        }
+    }
+
+    private String maskEmail(String email) {
+        int atIndex = email.indexOf('@');
+        if (atIndex <= 1) {
+            return email;
+        }
+        return email.charAt(0) + "***" + email.substring(atIndex);
+    }
+
+    @GetMapping("/verify-email")
+    public String verifyEmail(@RequestParam String token) {
+        try {
+            userService.verifyEmail(token);
+            return "redirect:/login?verified=true";
+        } catch (IllegalArgumentException e) {
+            return "redirect:/login?error=invalid-token";
+        }
     }
 
     @GetMapping("/login")
-    public String showLogin(@RequestParam(required = false) String registered, Model model) {
+    public String showLogin(@RequestParam(required = false) String registered,
+                           @RequestParam(required = false) String verified,
+                           @RequestParam(required = false) String error,
+                           Model model) {
         if (registered != null) {
             model.addAttribute("successMessage", "Account created! Please log in.");
+        }
+        if (verified != null) {
+            model.addAttribute("verifiedMessage", "Your email has been verified. Please log in.");
+        }
+        if ("unverified".equals(error)) {
+            model.addAttribute("loginError", "Please verify your email before logging in.");
+        } else if ("invalid-token".equals(error)) {
+            model.addAttribute("loginError", "Invalid or expired verification token.");
         }
         return "login";
     }
@@ -67,6 +117,10 @@ public class AuthController {
             if (!passwordEncoder.matches(password, user.getHashedPassword())) {
                 model.addAttribute("loginError", "Invalid email or password.");
                 return "login";
+            }
+            if (!user.isEmailVerified()) {
+                model.addAttribute("loginError", "Please verify your email before logging in.");
+                return "redirect:/login?error=unverified";
             }
             String token = jwtTokenProvider.generateToken(email);
             Cookie cookie = new Cookie("jwt", token);
