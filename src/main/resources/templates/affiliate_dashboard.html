@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "surface-container-high": "#e6e8ea",
+              "on-tertiary-fixed": "#00201c",
+              "on-surface-variant": "#424750",
+              "on-error-container": "#93000a",
+              "tertiary-container": "#00544b",
+              "on-surface": "#191c1e",
+              "surface-container-highest": "#e0e3e5",
+              "secondary": "#48626e",
+              "on-primary": "#ffffff",
+              "secondary-container": "#cbe7f5",
+              "inverse-surface": "#2d3133",
+              "background": "#f8f9fb",
+              "surface-container-lowest": "#ffffff",
+              "surface-bright": "#f8f9fb",
+              "primary-fixed": "#d3e4ff",
+              "on-primary-container": "#8abcff",
+              "outline-variant": "#c2c6d1",
+              "secondary-fixed-dim": "#afcbd8",
+              "primary-fixed-dim": "#a3c9ff",
+              "error-container": "#ffdad6",
+              "on-tertiary-fixed-variant": "#005048",
+              "on-background": "#191c1e",
+              "on-secondary-fixed-variant": "#304a55",
+              "surface-container-low": "#f2f4f6",
+              "surface-container": "#eceef0",
+              "tertiary-fixed": "#8df5e4",
+              "on-error": "#ffffff",
+              "inverse-primary": "#a3c9ff",
+              "on-primary-fixed": "#001c38",
+              "surface-dim": "#d8dadc",
+              "tertiary-fixed-dim": "#70d8c8",
+              "surface-tint": "#27609d",
+              "on-secondary-fixed": "#021f29",
+              "outline": "#727781",
+              "surface": "#f8f9fb",
+              "primary": "#003461",
+              "secondary-container": "#cbe7f5",
+              "inverse-on-surface": "#eff1f3",
+              "error": "#ba1a1a",
+              "on-tertiary-container": "#63cbbb",
+              "on-secondary-container": "#4e6874",
+              "tertiary": "#003b34",
+              "primary-container": "#004b87",
+              "surface-variant": "#e0e3e5",
+              "on-tertiary": "#ffffff",
+              "on-secondary": "#ffffff",
+              "on-primary-fixed-variant": "#004882"
+            },
+            fontFamily: {
+              "headline": ["Manrope"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.5rem", "xl": "0.75rem", "full": "1rem"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body { font-family: 'Inter', sans-serif; }
+        h1, h2, h3, .font-headline { font-family: 'Manrope', sans-serif; }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen">
+<!-- Top Navigation Shell -->
+<nav class="fixed top-0 w-full z-50 bg-[#f8f9fb]/80 dark:bg-slate-900/80 backdrop-blur-xl shadow-sm">
+<div class="flex justify-between items-center px-6 py-3 w-full max-w-screen-2xl mx-auto">
+<div class="text-xl font-black text-[#003461] dark:text-white tracking-tighter">Guangzhou Direct</div>
+<div class="hidden md:flex items-center space-x-8 font-['Manrope'] font-bold tracking-tight">
+<a class="text-[#424750] hover:text-[#004B87] transition-colors" href="#">Trends</a>
+<a class="text-[#424750] hover:text-[#004B87] transition-colors" href="#">Sourcing</a>
+<a class="text-[#004B87] border-b-2 border-[#004B87] pb-1" href="#">Orders</a>
+<a class="text-[#424750] hover:text-[#004B87] transition-colors" href="#">Support</a>
+</div>
+<div class="flex items-center space-x-4">
+<button class="p-2 hover:bg-[#f2f4f6]/50 rounded-full transition-colors">
+<span class="material-symbols-outlined text-[#424750]">notifications</span>
+</button>
+<div class="flex items-center space-x-2 pl-2 border-l border-outline-variant/20">
+<span class="material-symbols-outlined text-[#003461]" style="font-variation-settings: 'FILL' 1;">account_circle</span>
+</div>
+</div>
+</div>
+</nav>
+<div class="flex pt-16 min-h-screen">
+<!-- Sidebar Navigation Shell -->
+<aside class="hidden lg:flex flex-col py-6 space-y-2 h-full w-64 bg-[#ffffff] dark:bg-slate-950 fixed left-0">
+<div class="px-6 mb-8">
+<div class="flex items-center space-x-3 mb-4">
+<div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center text-white font-bold">QD</div>
+<div>
+<div class="text-sm font-bold text-[#003461]">Administrator</div>
+<div class="text-[10px] text-[#424750] opacity-70">ID: GZ-8892</div>
+</div>
+</div>
+<button class="w-full py-2.5 px-4 bg-gradient-to-br from-primary to-primary-container text-white text-xs font-bold rounded-lg hover:opacity-90 transition-all flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-sm">add</span>
+                Create New Request
+            </button>
+</div>
+<nav class="space-y-1">
+<a class="flex items-center space-x-3 py-3 px-4 mx-2 text-[#424750] hover:bg-[#f2f4f6] rounded-lg transition-all font-['Manrope'] text-sm font-semibold" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span>Overview</span>
+</a>
+<a class="flex items-center space-x-3 py-3 px-4 mx-2 bg-[#cbe7f5] text-[#003461] rounded-lg transition-all font-['Manrope'] text-sm font-semibold" href="#">
+<span class="material-symbols-outlined" data-icon="monitoring">monitoring</span>
+<span>Market</span>
+</a>
+<a class="flex items-center space-x-3 py-3 px-4 mx-2 text-[#424750] hover:bg-[#f2f4f6] rounded-lg transition-all font-['Manrope'] text-sm font-semibold" href="#">
+<span class="material-symbols-outlined" data-icon="receipt_long">receipt_long</span>
+<span>Transactions</span>
+</a>
+<a class="flex items-center space-x-3 py-3 px-4 mx-2 text-[#424750] hover:bg-[#f2f4f6] rounded-lg transition-all font-['Manrope'] text-sm font-semibold" href="#">
+<span class="material-symbols-outlined" data-icon="chat_bubble">chat_bubble</span>
+<span>Messages</span>
+</a>
+<a class="flex items-center space-x-3 py-3 px-4 mx-2 text-[#424750] hover:bg-[#f2f4f6] rounded-lg transition-all font-['Manrope'] text-sm font-semibold" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span>Settings</span>
+</a>
+</nav>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 lg:ml-64 p-6 md:p-10 mb-20 lg:mb-0">
+<header class="mb-10">
+<h1 class="text-3xl font-extrabold text-primary tracking-tight mb-2">Affiliate Dashboard</h1>
+<p class="text-on-surface-variant text-sm">Welcome back, here is your product sourcing performance for the past 30 days.</p>
+</header>
+<!-- Metrics Bento Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+<div class="bg-surface-container-lowest p-6 rounded-xl border-l-4 border-primary shadow-sm group hover:shadow-md transition-shadow">
+<div class="flex justify-between items-start mb-4">
+<span class="material-symbols-outlined text-primary p-2 bg-primary-fixed rounded-lg" data-icon="ads_click">ads_click</span>
+<span class="text-xs font-bold text-tertiary-container bg-tertiary-fixed/30 px-2 py-1 rounded">+12.4%</span>
+</div>
+<div class="text-2xl font-black text-on-surface mb-1">12,840</div>
+<div class="text-xs font-semibold text-on-surface-variant uppercase tracking-wider">Total Clicks</div>
+</div>
+<div class="bg-surface-container-lowest p-6 rounded-xl border-l-4 border-secondary shadow-sm group hover:shadow-md transition-shadow">
+<div class="flex justify-between items-start mb-4">
+<span class="material-symbols-outlined text-secondary p-2 bg-secondary-fixed rounded-lg" data-icon="conversion_path">conversion_path</span>
+<span class="text-xs font-bold text-error-container bg-error-container/20 px-2 py-1 rounded text-error">-2.1%</span>
+</div>
+<div class="text-2xl font-black text-on-surface mb-1">3.45%</div>
+<div class="text-xs font-semibold text-on-surface-variant uppercase tracking-wider">Conversion Rate</div>
+</div>
+<div class="bg-surface-container-lowest p-6 rounded-xl border-l-4 border-tertiary-container shadow-sm group hover:shadow-md transition-shadow">
+<div class="flex justify-between items-start mb-4">
+<span class="material-symbols-outlined text-tertiary-container p-2 bg-tertiary-fixed rounded-lg" data-icon="payments" style="font-variation-settings: 'FILL' 1;">payments</span>
+<span class="text-xs font-bold text-tertiary-container bg-tertiary-fixed/30 px-2 py-1 rounded">+18.5%</span>
+</div>
+<div class="text-2xl font-black text-on-surface mb-1">45,200,000 ₫</div>
+<div class="text-xs font-semibold text-on-surface-variant uppercase tracking-wider">Accumulated Commission</div>
+</div>
+<div class="bg-surface-container-lowest p-6 rounded-xl border-l-4 border-outline-variant shadow-sm group hover:shadow-md transition-shadow">
+<div class="flex justify-between items-start mb-4">
+<span class="material-symbols-outlined text-on-surface-variant p-2 bg-surface-container-high rounded-lg" data-icon="pending_actions">pending_actions</span>
+</div>
+<div class="text-2xl font-black text-on-surface mb-1">2,150,000 ₫</div>
+<div class="text-xs font-semibold text-on-surface-variant uppercase tracking-wider">Pending Rewards</div>
+</div>
+</div>
+<!-- Revenue Trend Chart Placeholder -->
+<section class="bg-surface-container-lowest rounded-xl p-8 mb-10 shadow-sm relative overflow-hidden">
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+<div>
+<h2 class="text-xl font-bold text-primary">Revenue Trends</h2>
+<p class="text-xs text-on-surface-variant">Analysis of cash flow and commissions over time</p>
+</div>
+<div class="flex bg-surface-container-low p-1 rounded-lg">
+<button class="px-4 py-1.5 text-xs font-bold bg-white text-primary rounded-md shadow-sm">7 Days</button>
+<button class="px-4 py-1.5 text-xs font-bold text-on-surface-variant hover:text-primary transition-colors">30 Days</button>
+<button class="px-4 py-1.5 text-xs font-bold text-on-surface-variant hover:text-primary transition-colors">90 Days</button>
+</div>
+</div>
+<div class="h-80 w-full bg-gradient-to-b from-primary/5 to-transparent rounded-lg flex items-end justify-between px-4 pb-2 relative">
+<!-- Faux Area Chart Design -->
+<div class="absolute inset-0 flex items-center justify-center">
+<svg class="w-full h-48 opacity-40" viewbox="0 0 1000 200">
+<path d="M0,150 Q150,50 300,120 T600,80 T900,140 L1000,100 L1000,200 L0,200 Z" fill="url(#chartGradient)"></path>
+<path d="M0,150 Q150,50 300,120 T600,80 T900,140 L1000,100" fill="none" stroke="#003461" stroke-width="3"></path>
+<defs>
+<lineargradient id="chartGradient" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="#003461" stop-opacity="0.2"></stop>
+<stop offset="100%" stop-color="#003461" stop-opacity="0"></stop>
+</lineargradient>
+</defs>
+</svg>
+</div>
+<!-- Chart Tooltip Example -->
+<div class="absolute left-1/2 top-1/4 -translate-x-1/2 bg-primary text-white text-[10px] px-3 py-1.5 rounded-full font-bold shadow-xl border border-white/20">
+                    Oct 15: 8,420,000 ₫
+                </div>
+<!-- X-Axis Labels -->
+<div class="flex w-full justify-between text-[10px] text-on-surface-variant font-medium mt-auto border-t border-outline-variant/10 pt-4">
+<span>Oct 01</span><span>Oct 05</span><span>Oct 10</span><span>Oct 15</span><span>Oct 20</span><span>Oct 25</span><span>Oct 30</span>
+</div>
+</div>
+</section>
+<!-- Referral Management & Product DNA -->
+<section class="mb-12">
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
+<div>
+<h2 class="text-2xl font-extrabold text-primary tracking-tight">Referral Management</h2>
+<p class="text-sm text-on-surface-variant">Select high-potential products and create your own marketing links.</p>
+</div>
+<div class="relative w-full md:w-96">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-lg">search</span>
+<input class="w-full pl-10 pr-4 py-3 bg-surface-container-highest border-none rounded-xl text-sm focus:ring-2 focus:ring-primary/20 transition-all" placeholder="Search sourcing or SKU code..." type="text"/>
+</div>
+</div>
+<!-- Product DNA Grid - Asymmetric Layout -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+<!-- Product Card 1 -->
+<div class="bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all border border-outline-variant/10 group flex flex-col">
+<div class="relative h-64 overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" data-alt="Modern minimalist wrist watch with black leather strap on a clean white background with soft shadows" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCUQEaVA2Vm772HCI0MkDK_KpLQaQUGPggV01ldpp302g6IvcEqAnYt18EP2yDjKhvv9_OJi9EMcgvlK845Ett8DAbBLUVYCHAxGkjkjZnvWn_04ANVu9CvkTYKTbcHicoSX_7cjgxggQ7k3V6ara1StVsScPdaD0nlLIaeQfp3I2-YirR5JiX5LLEFfjzgnY8p-qq29oWYEV5yxuDALIFqOIi-lqEef5Lew0GJJfYwrUqyoKG9B6nVh1K1O6w6ErRHXgB1eh2iFdw"/>
+<div class="absolute top-4 right-4 bg-primary text-white text-[10px] font-black px-3 py-1 rounded-full uppercase">Hot Sourcing</div>
+</div>
+<div class="p-5 flex-1 flex flex-col">
+<div class="flex justify-between items-start mb-2">
+<h3 class="text-lg font-bold text-primary leading-tight">Ceramic Gen 5 Watch</h3>
+<span class="text-xs font-bold text-tertiary-container">• 12% Commission</span>
+</div>
+<p class="text-xs text-on-surface-variant line-clamp-2 mb-4 leading-relaxed">Best-selling product in Guangzhou this October. Premium scratch-resistant ceramic material.</p>
+<div class="mt-auto space-y-4">
+<div class="bg-surface-container-low p-3 rounded-lg flex items-center justify-between">
+<code class="text-[10px] font-mono text-primary font-bold overflow-hidden text-ellipsis whitespace-nowrap mr-2">gz.direct/ref=8892_gen5</code>
+<button class="p-1.5 hover:bg-white rounded transition-colors text-primary">
+<span class="material-symbols-outlined text-sm">content_copy</span>
+</button>
+</div>
+<div class="flex gap-2">
+<button class="flex-1 py-2 bg-primary-container text-white text-[10px] font-bold uppercase tracking-widest rounded hover:bg-primary transition-colors">Download Media Kit</button>
+<button class="p-2 border border-outline-variant/30 rounded hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined text-on-surface-variant text-sm">share</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Product Card 2 -->
+<div class="bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all border border-outline-variant/10 group flex flex-col">
+<div class="relative h-64 overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" data-alt="Vibrant red professional running shoes against a minimalist grey industrial backdrop with professional studio lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBdoSS71mg7sLWB0iQr9yAjaf6n3xL_ONA_o6VPMqmKT6NspUjy17njV7pH0ifAKBBn8Rb889eVM3ptr_wvBOK112cg0By7T6GiH-CQw1z257poyybz4DQI60mqJdQbtx-_P2VF2hURm-ui6TbRr_Qv0pOX10lEEvITqwdNY-CYGgUKyUXgqGVdkfSPvVSfkW4k-U2llta5ctSvF1f9wJ2aAgIivY2gCbC4-BfmxnTE4gRwSURijgX2gS8Ca0oOxmkp2KoJY_dPWEc"/>
+<div class="absolute top-4 right-4 bg-tertiary-container text-white text-[10px] font-black px-3 py-1 rounded-full uppercase">Verified Supplier</div>
+</div>
+<div class="p-5 flex-1 flex flex-col">
+<div class="flex justify-between items-start mb-2">
+<h3 class="text-lg font-bold text-primary leading-tight">Pro-Run Sports Shoes</h3>
+<span class="text-xs font-bold text-tertiary-container">• 15% Commission</span>
+</div>
+<p class="text-xs text-on-surface-variant line-clamp-2 mb-4 leading-relaxed">Direct sourcing from Shenzhen factory. Comfortable air cushion sole, suitable for the local market.</p>
+<div class="mt-auto space-y-4">
+<div class="bg-surface-container-low p-3 rounded-lg flex items-center justify-between">
+<code class="text-[10px] font-mono text-primary font-bold overflow-hidden text-ellipsis whitespace-nowrap mr-2">gz.direct/ref=8892_prorun</code>
+<button class="p-1.5 hover:bg-white rounded transition-colors text-primary">
+<span class="material-symbols-outlined text-sm">content_copy</span>
+</button>
+</div>
+<div class="flex gap-2">
+<button class="flex-1 py-2 bg-primary-container text-white text-[10px] font-bold uppercase tracking-widest rounded hover:bg-primary transition-colors">Download Media Kit</button>
+<button class="p-2 border border-outline-variant/30 rounded hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined text-on-surface-variant text-sm">share</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Product Card 3 -->
+<div class="bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all border border-outline-variant/10 group flex flex-col">
+<div class="relative h-64 overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" data-alt="Professional studio headphones on a wooden desk next to a sleek laptop in a modern home office setting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCeMQ8cFv1R-SnPUzyDYvJN8pGYlzp1QvBLjhptfoZXP_PzaL4Z0DmlaS0guHiSFZcrB8vukfWfmzne0wTb-uWjZqo1Ze1jHuevGsAAJkLX6BwZlr-00hRGs0TBmpbCLqq-Ny-xaTnp6Mtl__LcyhjNXd-tZWfxU-fLO4BZqoM1zI2LTGcSuPc06o3mGGeFsy_sb3fYzAfh74ufPQItJNTD6uXN2qAaBsDZ1j3NfAH7XYdgBdag_ql9sJjfgD9NCKMprD2bKs0sFGo"/>
+</div>
+<div class="p-5 flex-1 flex flex-col">
+<div class="flex justify-between items-start mb-2">
+<h3 class="text-lg font-bold text-primary leading-tight">Hi-Fi Studio Headphones</h3>
+<span class="text-xs font-bold text-tertiary-container">• 10% Commission</span>
+</div>
+<p class="text-xs text-on-surface-variant line-clamp-2 mb-4 leading-relaxed">ANC noise cancellation technology. High profit margins for regional distributors.</p>
+<div class="mt-auto space-y-4">
+<div class="bg-surface-container-low p-3 rounded-lg flex items-center justify-between">
+<code class="text-[10px] font-mono text-primary font-bold overflow-hidden text-ellipsis whitespace-nowrap mr-2">gz.direct/ref=8892_hifi</code>
+<button class="p-1.5 hover:bg-white rounded transition-colors text-primary">
+<span class="material-symbols-outlined text-sm">content_copy</span>
+</button>
+</div>
+<div class="flex gap-2">
+<button class="flex-1 py-2 bg-primary-container text-white text-[10px] font-bold uppercase tracking-widest rounded hover:bg-primary transition-colors">Download Media Kit</button>
+<button class="p-2 border border-outline-variant/30 rounded hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined text-on-surface-variant text-sm">share</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+</div>
+<!-- Mobile Navigation Shell -->
+<div class="lg:hidden fixed bottom-0 left-0 w-full flex justify-around items-center px-4 pb-safe pt-2 bg-[#ffffff]/90 dark:bg-slate-950/90 backdrop-blur-lg shadow-[0_-4px_12px_rgba(0,0,0,0.05)] border-t border-[#c2c6d1]/15 z-50">
+<a class="flex flex-col items-center justify-center text-[#424750] dark:text-slate-500 py-2" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="font-['Inter'] text-[10px] font-medium uppercase tracking-widest mt-1">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#003461] dark:text-white bg-[#cbe7f5]/50 dark:bg-[#004B87]/30 rounded-xl px-4 py-2" href="#">
+<span class="material-symbols-outlined" data-icon="show_chart">show_chart</span>
+<span class="font-['Inter'] text-[10px] font-medium uppercase tracking-widest mt-1">Charts</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#424750] dark:text-slate-500 py-2" href="#">
+<span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
+<span class="font-['Inter'] text-[10px] font-medium uppercase tracking-widest mt-1">Orders</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#424750] dark:text-slate-500 py-2" href="#">
+<span class="material-symbols-outlined" data-icon="forum">forum</span>
+<span class="font-['Inter'] text-[10px] font-medium uppercase tracking-widest mt-1">Chat</span>
+</a>
+</div>
+<!-- Footer -->
+<footer class="w-full py-12 px-6 border-t border-[#c2c6d1]/10 bg-[#f2f4f6] dark:bg-slate-950">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
+<div>
+<div class="font-['Manrope'] font-bold text-[#003461] dark:text-white text-lg mb-4">Guangzhou Direct</div>
+<p class="font-['Inter'] text-xs font-normal text-[#424750] leading-relaxed">A platform directly connecting Guangzhou factories with regional markets, optimizing B2B profits through a transparent Affiliate system.</p>
+</div>
+<div>
+<h4 class="font-bold text-sm mb-4 text-[#003461]">Links</h4>
+<ul class="space-y-2">
+<li><a class="font-['Inter'] text-xs font-normal text-[#424750] hover:text-[#004B87]" href="#">Terms of Service</a></li>
+<li><a class="font-['Inter'] text-xs font-normal text-[#424750] hover:text-[#004B87]" href="#">Privacy Policy</a></li>
+<li><a class="font-['Inter'] text-xs font-normal text-[#424750] hover:text-[#004B87]" href="#">Sourcing Guide</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-bold text-sm mb-4 text-[#003461]">Community</h4>
+<ul class="space-y-2">
+<li><a class="font-['Inter'] text-xs font-normal text-[#424750] hover:text-[#004B87]" href="#">Support Group</a></li>
+<li><a class="font-['Inter'] text-xs font-normal text-[#424750] hover:text-[#004B87]" href="#">Seller Community</a></li>
+</ul>
+</div>
+<div class="lg:text-right">
+<div class="font-['Inter'] text-xs font-normal text-[#003461] dark:text-slate-400">© 2024 Guangzhou Curator. Optimal B2B Platform.</div>
+</div>
+</div>
+</footer>
+</body></html>

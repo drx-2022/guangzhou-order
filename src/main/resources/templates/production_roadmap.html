@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "surface-bright": "#f8f9fb",
+              "on-tertiary-fixed": "#00201c",
+              "on-tertiary": "#ffffff",
+              "tertiary-container": "#00544b",
+              "on-surface-variant": "#424750",
+              "secondary": "#48626e",
+              "surface-container-low": "#f2f4f6",
+              "on-error-container": "#93000a",
+              "inverse-on-surface": "#eff1f3",
+              "primary-container": "#004b87",
+              "tertiary-fixed": "#8df5e4",
+              "primary": "#003461",
+              "surface": "#f8f9fb",
+              "on-secondary": "#ffffff",
+              "on-tertiary-container": "#63cbbb",
+              "error": "#ba1a1a",
+              "surface-tint": "#27609d",
+              "surface-container": "#eceef0",
+              "outline-variant": "#c2c6d1",
+              "on-background": "#191c1e",
+              "outline": "#727781",
+              "on-primary-fixed-variant": "#004882",
+              "on-surface": "#191c1e",
+              "primary-fixed": "#d3e4ff",
+              "secondary-fixed": "#cbe7f5",
+              "on-primary-fixed": "#001c38",
+              "on-error": "#ffffff",
+              "surface-dim": "#d8dadc",
+              "surface-variant": "#e0e3e5",
+              "primary-fixed-dim": "#a3c9ff",
+              "inverse-surface": "#2d3133",
+              "inverse-primary": "#a3c9ff",
+              "surface-container-lowest": "#ffffff",
+              "on-secondary-fixed": "#021f29",
+              "surface-container-high": "#e6e8ea",
+              "on-primary-container": "#8abcff",
+              "tertiary-fixed-dim": "#70d8c8",
+              "on-tertiary-fixed-variant": "#005048",
+              "on-secondary-fixed-variant": "#304a55",
+              "secondary-fixed-dim": "#afcbd8",
+              "secondary-container": "#cbe7f5",
+              "error-container": "#ffdad6",
+              "background": "#f8f9fb",
+              "surface-container-highest": "#e0e3e5",
+              "on-primary": "#ffffff",
+              "on-secondary-container": "#4e6874",
+              "tertiary": "#003b34"
+            },
+            fontFamily: {
+              "headline": ["Manrope"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body { font-family: 'Inter', sans-serif; }
+        h1, h2, h3 { font-family: 'Manrope', sans-serif; }
+    </style>
+</head>
+<body class="bg-surface text-on-surface">
+<!-- Top Navigation Bar -->
+<nav class="fixed top-0 w-full z-50 bg-[#f8f9fb]/60 backdrop-blur-xl shadow-sm flex items-center justify-between px-6 py-3 w-full max-w-none">
+<div class="flex items-center gap-8">
+<span class="text-xl font-extrabold tracking-tighter text-[#003461]">Guangzhou Direct</span>
+<div class="hidden md:flex items-center gap-6 font-manrope text-sm font-semibold tracking-tight">
+<a class="text-[#424750] hover:text-[#003461] transition-colors" href="#">Products</a>
+<a class="text-[#003461] border-b-2 border-[#004b87] pb-1" href="#">Orders</a>
+<a class="text-[#424750] hover:text-[#003461] transition-colors" href="#">Community</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 hover:bg-black/5 transition-colors rounded-full active:scale-95 duration-200">
+<span class="material-symbols-outlined text-[#003461]">notifications</span>
+</button>
+<button class="p-2 hover:bg-black/5 transition-colors rounded-full active:scale-95 duration-200">
+<span class="material-symbols-outlined text-[#003461]">account_circle</span>
+</button>
+</div>
+</nav>
+<!-- Side Navigation Bar -->
+<aside class="hidden md:flex h-screen w-64 fixed left-0 top-0 bg-[#f2f4f6] flex-col p-4 gap-2 pt-20">
+<div class="px-4 py-6 mb-4 bg-white rounded-xl shadow-sm">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-primary-fixed flex items-center justify-center text-primary font-bold">GZ</div>
+<div>
+<p class="font-inter text-sm font-bold text-[#003461]">Purchaser</p>
+<p class="text-[10px] text-on-surface-variant uppercase tracking-widest">ID: GZ-9982</p>
+</div>
+</div>
+</div>
+<nav class="space-y-1">
+<a class="flex items-center gap-3 px-4 py-3 text-[#424750] hover:bg-white/50 hover:translate-x-1 transition-transform rounded-lg font-inter text-sm font-medium" href="#">
+<span class="material-symbols-outlined text-lg">grid_view</span>
+<span>Categories</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-[#424750] hover:bg-white/50 hover:translate-x-1 transition-transform rounded-lg font-inter text-sm font-medium" href="#">
+<span class="material-symbols-outlined text-lg">inventory_2</span>
+<span>Orders</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 bg-white text-[#003461] rounded-lg shadow-sm font-inter text-sm font-medium" href="#">
+<span class="material-symbols-outlined text-lg">timeline</span>
+<span>Timeline</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-[#424750] hover:bg-white/50 hover:translate-x-1 transition-transform rounded-lg font-inter text-sm font-medium" href="#">
+<span class="material-symbols-outlined text-lg">settings</span>
+<span>Settings</span>
+</a>
+</nav>
+<div class="mt-auto">
+<button class="w-full bg-gradient-to-br from-primary to-primary-container text-white py-3 rounded-lg font-label text-xs font-bold uppercase tracking-widest shadow-md hover:opacity-90 active:opacity-80 transition-all">
+                Create New Order
+            </button>
+<a class="flex items-center gap-3 px-4 py-3 mt-4 text-[#424750] hover:bg-white/50 rounded-lg font-inter text-sm font-medium" href="#">
+<span class="material-symbols-outlined text-lg">help</span>
+<span>Help Center</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="md:ml-64 pt-24 pb-20 px-6 min-h-screen bg-surface">
+<div class="max-w-6xl mx-auto space-y-10">
+<!-- Header Section -->
+<section class="flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
+<div>
+<div class="flex items-center gap-2 mb-2">
+<span class="px-2 py-0.5 bg-secondary-container text-on-secondary-container text-[10px] font-bold rounded uppercase tracking-tighter">Order ID: ORD-88291-GZ</span>
+</div>
+<h1 class="text-4xl font-extrabold tracking-tight text-primary">Production Progress</h1>
+<p class="text-on-surface-variant mt-2 font-body">Real-time tracking of supply chain operations from Guangzhou.</p>
+</div>
+<div class="flex gap-3">
+<button class="px-4 py-2 bg-surface-container-lowest text-primary font-semibold rounded-lg shadow-sm border border-outline-variant/15 hover:bg-surface-container transition-colors text-sm">Contact Support</button>
+<button class="px-4 py-2 bg-primary text-white font-semibold rounded-lg shadow-md hover:bg-primary-container transition-colors text-sm flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">download</span> Download Report
+                    </button>
+</div>
+</section>
+<!-- Production DNA & Timeline Bento Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+<!-- Timeline Column -->
+<div class="lg:col-span-2 space-y-6">
+<div class="bg-surface-container-lowest p-8 rounded-xl shadow-sm relative overflow-hidden">
+<div class="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-bl-full -mr-8 -mt-8"></div>
+<h2 class="text-xl font-bold mb-10 text-primary flex items-center gap-2">
+<span class="material-symbols-outlined">analytics</span>
+                            Production Journey
+                        </h2>
+<div class="space-y-0 relative">
+<!-- Vertical Line -->
+<div class="absolute left-[19px] top-2 bottom-2 w-0.5 bg-surface-container-high"></div>
+<!-- Step 1: Completed -->
+<div class="relative pl-12 pb-12">
+<div class="absolute left-0 top-0 w-10 h-10 bg-primary rounded-full flex items-center justify-center z-10 shadow-lg">
+<span class="material-symbols-outlined text-white text-lg">search</span>
+</div>
+<div class="flex justify-between items-start">
+<div>
+<h3 class="text-lg font-bold text-primary">Sourcing</h3>
+<p class="text-sm text-on-surface-variant mt-1">Found 12 potential suppliers in Baiyun District.</p>
+<div class="mt-3 flex gap-2">
+<span class="text-[10px] font-medium px-2 py-1 bg-tertiary-fixed text-on-tertiary-fixed rounded-full">Verified</span>
+</div>
+</div>
+<div class="text-right">
+<p class="text-xs font-bold text-primary">COMPLETED</p>
+<p class="text-[10px] text-on-surface-variant">14:20, Apr 12, 2024</p>
+</div>
+</div>
+</div>
+<!-- Step 2: Completed -->
+<div class="relative pl-12 pb-12">
+<div class="absolute left-0 top-0 w-10 h-10 bg-primary rounded-full flex items-center justify-center z-10 shadow-lg">
+<span class="material-symbols-outlined text-white text-lg">payments</span>
+</div>
+<div class="flex justify-between items-start">
+<div>
+<h3 class="text-lg font-bold text-primary">Negotiating</h3>
+<p class="text-sm text-on-surface-variant mt-1">Secured preferential pricing at -15% vs original quote.</p>
+</div>
+<div class="text-right">
+<p class="text-xs font-bold text-primary">COMPLETED</p>
+<p class="text-[10px] text-on-surface-variant">09:45, Apr 15, 2024</p>
+</div>
+</div>
+</div>
+<!-- Step 3: Active -->
+<div class="relative pl-12 pb-12">
+<div class="absolute left-[-4px] top-[-4px] w-12 h-12 bg-primary/20 rounded-full animate-pulse"></div>
+<div class="absolute left-0 top-0 w-10 h-10 bg-primary-container rounded-full flex items-center justify-center z-10 shadow-xl border-4 border-white">
+<span class="material-symbols-outlined text-white text-lg">precision_manufacturing</span>
+</div>
+<div class="flex justify-between items-start bg-surface-container-low p-5 rounded-xl border-l-4 border-primary">
+<div class="flex-1">
+<div class="flex items-center gap-2 mb-1">
+<h3 class="text-lg font-bold text-primary">Manufacturing</h3>
+<span class="inline-block w-2 h-2 rounded-full bg-primary animate-ping"></span>
+</div>
+<p class="text-sm text-on-surface-variant">Batch is being processed at Guangzhou Garment Factory No. 3.</p>
+<div class="mt-4">
+<div class="flex justify-between text-[10px] font-bold text-primary mb-1 uppercase tracking-widest">
+<span>Batch Progress</span>
+<span>65%</span>
+</div>
+<div class="w-full bg-white rounded-full h-2 overflow-hidden">
+<div class="bg-primary h-full w-[65%] rounded-full"></div>
+</div>
+</div>
+</div>
+<div class="text-right ml-4">
+<p class="text-xs font-bold text-primary">IN PROGRESS</p>
+<p class="text-[10px] text-on-surface-variant">Est: Apr 22</p>
+</div>
+</div>
+</div>
+<!-- Step 4: Pending -->
+<div class="relative pl-12 pb-12">
+<div class="absolute left-0 top-0 w-10 h-10 bg-surface-container-high rounded-full flex items-center justify-center z-10 border-2 border-white">
+<span class="material-symbols-outlined text-outline text-lg">verified_user</span>
+</div>
+<div class="flex justify-between items-start opacity-50">
+<div>
+<h3 class="text-lg font-bold text-outline">Quality Control (QC)</h3>
+<p class="text-sm text-on-surface-variant mt-1">Random inspection of 10% products following AQL 2.5 standards.</p>
+</div>
+<div class="text-right">
+<p class="text-xs font-bold text-outline">PENDING</p>
+</div>
+</div>
+</div>
+<!-- Step 5: Pending -->
+<div class="relative pl-12">
+<div class="absolute left-0 top-0 w-10 h-10 bg-surface-container-high rounded-full flex items-center justify-center z-10 border-2 border-white">
+<span class="material-symbols-outlined text-outline text-lg">local_shipping</span>
+</div>
+<div class="flex justify-between items-start opacity-50">
+<div>
+<h3 class="text-lg font-bold text-outline">Packing &amp; Shipping</h3>
+<p class="text-sm text-on-surface-variant mt-1">Official land transport from Guangzhou -&gt; Hanoi.</p>
+</div>
+<div class="text-right">
+<p class="text-xs font-bold text-outline">PENDING</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Summary & Visuals Column -->
+<div class="space-y-6">
+<!-- Product DNA Card -->
+<div class="bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden flex flex-col">
+<div class="h-48 w-full relative">
+<img alt="Product focus" class="w-full h-full object-cover" data-alt="Close up high quality view of professional textile manufacturing in a clean modern factory setting with soft blue lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCiKBu-tZuFd444mbmS4hJhKrgEqkVFV9s66s5kwxsty-sg7cU-KzvGYRpKSxAKrxMA85OgY2v8pFjdIErLdL6QjnbGkSpDQcmir4zpJ77KSiE_bpFg-1M_D8MvUh2saYnCKdl94oU4NLKrOryJuS7FjRVU1HBEl3LL42dKDT1F_gxTevXLRqQse2HfCNIUi-rHW3_xfVRui--GKHbWTRqJrj_6VnxCNiwHnKZ-tiJg9ITQ1rSzehUCzM1nfOQNXwxQ6MJdAt_4sps"/>
+<div class="absolute inset-0 bg-gradient-to-t from-primary/60 to-transparent"></div>
+<div class="absolute bottom-4 left-4">
+<span class="px-2 py-1 bg-white/20 backdrop-blur-md text-white text-[10px] font-bold rounded uppercase">Batch: Spring-Summer Fashion</span>
+</div>
+</div>
+<div class="p-6">
+<h3 class="text-lg font-bold text-primary mb-4">Technical Details</h3>
+<div class="space-y-3">
+<div class="flex justify-between items-center py-2 border-b border-outline-variant/10">
+<span class="text-xs text-on-surface-variant font-medium">SKU Count</span>
+<span class="text-xs font-bold text-primary">05 Variants</span>
+</div>
+<div class="flex justify-between items-center py-2 border-b border-outline-variant/10">
+<span class="text-xs text-on-surface-variant font-medium">Total Quantity</span>
+<span class="text-xs font-bold text-primary">2,500 Units</span>
+</div>
+<div class="flex justify-between items-center py-2 border-b border-outline-variant/10">
+<span class="text-xs text-on-surface-variant font-medium">Material</span>
+<span class="text-xs font-bold text-primary">100% CVC Cotton</span>
+</div>
+<div class="flex justify-between items-center py-2">
+<span class="text-xs text-on-surface-variant font-medium">Estimated Arrival</span>
+<span class="text-xs font-bold text-[#003461]">Apr 28, 2024</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Factory Insight -->
+<div class="bg-primary p-6 rounded-xl text-white shadow-xl">
+<h4 class="font-bold flex items-center gap-2 mb-4">
+<span class="material-symbols-outlined text-tertiary-fixed">location_on</span>
+                            Manufacturing Site
+                        </h4>
+<p class="text-sm font-medium opacity-90 mb-2">Baiyun Industrial Zone, District 4</p>
+<p class="text-xs opacity-70 mb-4 leading-relaxed">The supplier was last inspected on-site by the GZ Direct team this morning.</p>
+<div class="w-full h-32 rounded-lg overflow-hidden bg-white/10 flex items-center justify-center">
+<img alt="Factory map location" class="w-full h-full object-cover opacity-60 grayscale" data-location="Guangzhou" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCO6TT4JxrncTX1xLwoaXlLXMe4ie_izpCDimVx7NJmvMfTnjLyhFJ9NkaSbCADiAyX39zHHdX6CJmZmlt70UlBKipLaJ5OHjfe-IxP9ZO-nvziif9C2R0couCdw8wD9bjxirC6JHN6stWwb78h5ENK9VrJxR0jKlYRK-QrWD7ZcsDJqjCO3zulqHETmuQVKD-7DErgMLGPUeReTnCBMHQc-TAnF4S7OKu_HNNh_vROxdRKAiHbV5gfRNoSU2jG0xMLCMkqhi8Z6zk"/>
+</div>
+</div>
+<!-- Live Update Note -->
+<div class="bg-surface-container p-5 rounded-xl border-2 border-dashed border-outline-variant/50">
+<div class="flex gap-3">
+<span class="material-symbols-outlined text-primary">info</span>
+<div class="text-xs text-on-surface-variant leading-relaxed">
+<strong>Note:</strong> All updates from the factory will be synced instantly. Please check notifications regularly.
+                            </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Bottom Navigation Bar (Mobile) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full flex justify-around items-center px-4 py-3 pb-safe bg-white/80 backdrop-blur-md shadow-[0_-4px_12px_rgba(0,0,0,0.05)] z-50 rounded-t-2xl">
+<button class="flex flex-col items-center text-[#424750]">
+<span class="material-symbols-outlined">home</span>
+<span class="font-inter text-[10px] uppercase tracking-wider mt-1">Home</span>
+</button>
+<button class="flex flex-col items-center text-[#424750]">
+<span class="material-symbols-outlined">search</span>
+<span class="font-inter text-[10px] uppercase tracking-wider mt-1">Products</span>
+</button>
+<button class="flex flex-col items-center text-[#003461] font-bold bg-[#cbe7f5] rounded-xl px-4 py-1">
+<span class="material-symbols-outlined">local_shipping</span>
+<span class="font-inter text-[10px] uppercase tracking-wider mt-1">Orders</span>
+</button>
+<button class="flex flex-col items-center text-[#424750]">
+<span class="material-symbols-outlined">person</span>
+<span class="font-inter text-[10px] uppercase tracking-wider mt-1">Account</span>
+</button>
+</nav>
+</body></html>

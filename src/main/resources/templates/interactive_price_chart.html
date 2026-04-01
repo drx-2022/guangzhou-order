@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Guangzhou Direct - Price Scatter Chart</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-secondary-fixed-variant": "#304a55",
+              "tertiary": "#003b34",
+              "tertiary-container": "#00544b",
+              "on-error-container": "#93000a",
+              "inverse-on-surface": "#eff1f3",
+              "surface-bright": "#f8f9fb",
+              "secondary-container": "#cbe7f5",
+              "background": "#f8f9fb",
+              "primary": "#003461",
+              "on-primary-container": "#8abcff",
+              "secondary-fixed": "#cbe7f5",
+              "surface-container-high": "#e6e8ea",
+              "on-error": "#ffffff",
+              "on-primary": "#ffffff",
+              "on-secondary-container": "#4e6874",
+              "inverse-primary": "#a3c9ff",
+              "surface-variant": "#e0e3e5",
+              "surface-container-highest": "#e0e3e5",
+              "surface-tint": "#27609d",
+              "on-tertiary": "#ffffff",
+              "on-background": "#191c1e",
+              "on-surface-variant": "#424750",
+              "on-tertiary-container": "#63cbbb",
+              "tertiary-fixed-dim": "#70d8c8",
+              "secondary-fixed-dim": "#afcbd8",
+              "tertiary-fixed": "#8df5e4",
+              "on-primary-fixed-variant": "#004882",
+              "on-tertiary-fixed": "#00201c",
+              "on-tertiary-fixed-variant": "#005048",
+              "surface-dim": "#d8dadc",
+              "secondary": "#48626e",
+              "surface": "#f8f9fb",
+              "inverse-surface": "#2d3133",
+              "surface-container": "#eceef0",
+              "primary-fixed-dim": "#a3c9ff",
+              "on-surface": "#191c1e",
+              "surface-container-lowest": "#ffffff",
+              "on-primary-fixed": "#001c38",
+              "on-secondary-fixed": "#021f29",
+              "primary-fixed": "#d3e4ff",
+              "surface-container-low": "#f2f4f6",
+              "error-container": "#ffdad6",
+              "outline": "#727781",
+              "error": "#ba1a1a",
+              "on-secondary": "#ffffff",
+              "primary-container": "#004b87",
+              "outline-variant": "#c2c6d1"
+            },
+            fontFamily: {
+              "headline": ["Manrope"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body { font-family: 'Inter', sans-serif; }
+        h1, h2, h3, .font-headline { font-family: 'Manrope', sans-serif; }
+        
+        .chart-point:hover .tooltip-card {
+            display: block;
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface min-h-screen flex flex-col lg:flex-row overflow-x-hidden">
+<!-- SideNavBar (Desktop) -->
+<aside class="hidden lg:flex flex-col py-6 space-y-2 h-full w-64 bg-[#ffffff] dark:bg-slate-950 font-['Manrope'] text-sm font-semibold fixed left-0 top-0 border-r-0 z-40">
+<div class="px-6 mb-8">
+<h1 class="text-lg font-bold text-[#003461] dark:text-white">Guangzhou Direct</h1>
+</div>
+<div class="flex items-center px-4 py-3 mx-4 mb-6 space-x-3 bg-surface-container-low rounded-xl">
+<div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center text-white">
+<span class="material-symbols-outlined">person</span>
+</div>
+<div>
+<p class="text-xs text-on-surface-variant font-medium">Administrator</p>
+<p class="text-[10px] text-outline">ID: GZ-8892</p>
+</div>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center px-4 py-2 text-[#424750] dark:text-slate-400 hover:bg-[#f2f4f6] dark:hover:bg-slate-800 mx-2 rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined mr-3">dashboard</span>
+<span>Dashboard</span>
+</a>
+<a class="flex items-center px-4 py-2 bg-[#cbe7f5] dark:bg-[#003461] text-[#003461] dark:text-white rounded-lg mx-2 translate-x-1 duration-200" href="#">
+<span class="material-symbols-outlined mr-3">monitoring</span>
+<span>Market</span>
+</a>
+<a class="flex items-center px-4 py-2 text-[#424750] dark:text-slate-400 hover:bg-[#f2f4f6] dark:hover:bg-slate-800 mx-2 rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined mr-3">receipt_long</span>
+<span>Transactions</span>
+</a>
+<a class="flex items-center px-4 py-2 text-[#424750] dark:text-slate-400 hover:bg-[#f2f4f6] dark:hover:bg-slate-800 mx-2 rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined mr-3">chat_bubble</span>
+<span>Messages</span>
+</a>
+<a class="flex items-center px-4 py-2 text-[#424750] dark:text-slate-400 hover:bg-[#f2f4f6] dark:hover:bg-slate-800 mx-2 rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined mr-3">settings</span>
+<span>Settings</span>
+</a>
+</nav>
+<div class="px-4 mt-auto">
+<button class="w-full bg-gradient-to-r from-primary to-primary-container text-white py-3 rounded-xl font-bold uppercase text-[10px] tracking-widest shadow-lg shadow-primary/20">
+            Create New Request
+        </button>
+</div>
+</aside>
+<!-- TopNavBar (Mobile/Tablet and Global) -->
+<header class="fixed top-0 w-full z-50 bg-[#f8f9fb]/80 dark:bg-slate-900/80 backdrop-blur-xl shadow-sm dark:shadow-none font-['Manrope'] font-bold tracking-tight lg:pl-64">
+<div class="flex justify-between items-center px-6 py-3 w-full max-w-screen-2xl mx-auto">
+<div class="flex items-center lg:hidden">
+<span class="text-xl font-black text-[#003461] dark:text-white tracking-tighter">Guangzhou Direct</span>
+</div>
+<div class="hidden md:flex items-center space-x-8 text-sm">
+<a class="text-[#424750] dark:text-slate-400 hover:text-[#004B87]" href="#">Trends</a>
+<a class="text-[#424750] dark:text-slate-400 hover:text-[#004B87]" href="#">Sourcing</a>
+<a class="text-[#004B87] dark:text-[#cbe7f5] border-b-2 border-[#004B87] pb-1" href="#">Orders</a>
+<a class="text-[#424750] dark:text-slate-400 hover:text-[#004B87]" href="#">Support</a>
+</div>
+<div class="flex items-center space-x-4">
+<div class="relative hidden sm:block">
+<input class="bg-surface-container-low border-none rounded-full px-4 py-2 text-sm w-48 focus:ring-2 focus:ring-primary/20 placeholder:text-outline transition-all" placeholder="Search data..." type="text"/>
+<span class="material-symbols-outlined absolute right-3 top-2 text-outline text-sm">search</span>
+</div>
+<button class="p-2 hover:bg-[#f2f4f6]/50 rounded-full transition-colors text-on-surface-variant">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="p-2 hover:bg-[#f2f4f6]/50 rounded-full transition-colors text-on-surface-variant">
+<span class="material-symbols-outlined">account_circle</span>
+</button>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-1 mt-16 lg:ml-64 p-6 lg:p-8 space-y-8 bg-surface">
+<!-- Hero Section & Filters -->
+<section class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+<div class="space-y-2">
+<nav class="flex text-[10px] uppercase tracking-widest text-outline font-bold">
+<span>Market</span>
+<span class="mx-2">/</span>
+<span class="text-primary">Price Analysis</span>
+</nav>
+<h2 class="text-3xl font-extrabold text-primary tracking-tight">Travel Luggage Manufacturing</h2>
+<p class="text-on-surface-variant text-sm max-w-lg">Analysis of 124 historical data points from top factories in Guangzhou (2023-2024).</p>
+</div>
+<div class="flex flex-wrap items-center gap-3">
+<!-- Filter Chips -->
+<div class="flex items-center bg-surface-container-low rounded-xl px-2 py-1">
+<span class="text-[10px] font-bold text-outline uppercase px-2">Material:</span>
+<select class="bg-transparent border-none text-xs font-semibold focus:ring-0 text-primary cursor-pointer">
+<option>All</option>
+<option>PP Plastic</option>
+<option>ABS Plastic</option>
+<option>Polyester Fabric</option>
+</select>
+</div>
+<div class="flex items-center bg-surface-container-low rounded-xl px-2 py-1">
+<span class="text-[10px] font-bold text-outline uppercase px-2">Quantity:</span>
+<select class="bg-transparent border-none text-xs font-semibold focus:ring-0 text-primary cursor-pointer">
+<option>500 - 2,000</option>
+<option>2,000 - 5,000</option>
+<option>5,000+</option>
+</select>
+</div>
+<button class="flex items-center space-x-2 bg-surface-container-highest text-on-surface-variant px-4 py-2 rounded-xl text-xs font-bold hover:bg-surface-variant transition-colors">
+<span class="material-symbols-outlined text-sm">filter_list</span>
+<span>Advanced Filters</span>
+</button>
+</div>
+</section>
+<!-- Price Scatter Chart -->
+<section class="bg-surface-container-lowest rounded-2xl p-6 shadow-sm border border-outline-variant/15 relative">
+<div class="flex justify-between items-center mb-10">
+<div class="flex items-center space-x-4">
+<h3 class="text-lg font-bold text-primary">Price Volatility Scatter Plot</h3>
+<div class="flex items-center space-x-2 text-[10px] font-bold">
+<span class="flex items-center"><span class="w-2 h-2 rounded-full bg-primary mr-1"></span> Actual Orders</span>
+<span class="flex items-center text-outline"><span class="w-2 h-2 rounded-full border-2 border-outline-variant mr-1"></span> Forecasted Price</span>
+</div>
+</div>
+<div class="flex space-x-2">
+<button class="p-1 text-outline hover:text-primary transition-colors"><span class="material-symbols-outlined">zoom_in</span></button>
+<button class="p-1 text-outline hover:text-primary transition-colors"><span class="material-symbols-outlined">download</span></button>
+</div>
+</div>
+<div class="relative w-full h-[400px] border-l-2 border-b-2 border-surface-container-high">
+<!-- Y-Axis (Price) -->
+<div class="absolute -left-12 top-0 h-full flex flex-col justify-between text-[10px] font-bold text-outline py-2">
+<span>900k</span>
+<span>700k</span>
+<span>500k</span>
+<span>300k</span>
+<span>100k</span>
+</div>
+<div class="absolute -left-20 top-1/2 -rotate-90 text-[10px] uppercase tracking-widest font-black text-outline/50">Price (VND / Unit)</div>
+<!-- X-Axis (Month) -->
+<div class="absolute -bottom-8 left-0 w-full flex justify-between text-[10px] font-bold text-outline px-2">
+<span>Jan</span>
+<span>Mar</span>
+<span>May</span>
+<span>Jul</span>
+<span>Sep</span>
+<span>Nov</span>
+</div>
+<!-- Grid Lines -->
+<div class="absolute inset-0 grid grid-rows-4 grid-cols-5 pointer-events-none">
+<div class="border-t border-surface-container/50 border-r"></div><div class="border-t border-surface-container/50 border-r"></div><div class="border-t border-surface-container/50 border-r"></div><div class="border-t border-surface-container/50 border-r"></div><div class="border-t border-surface-container/50"></div>
+<div class="border-t border-surface-container/50 border-r"></div><div class="border-t border-surface-container/50 border-r"></div><div class="border-t border-surface-container/50 border-r"></div><div class="border-t border-surface-container/50 border-r"></div><div class="border-t border-surface-container/50"></div>
+<div class="border-t border-surface-container/50 border-r"></div><div class="border-t border-surface-container/50 border-r"></div><div class="border-t border-surface-container/50 border-r"></div><div class="border-t border-surface-container/50 border-r"></div><div class="border-t border-surface-container/50"></div>
+<div class="border-t border-surface-container/50 border-r"></div><div class="border-t border-surface-container/50 border-r"></div><div class="border-t border-surface-container/50 border-r"></div><div class="border-t border-surface-container/50 border-r"></div><div class="border-t border-surface-container/50"></div>
+</div>
+<!-- Scatter Points -->
+<div class="chart-point absolute bottom-[35%] left-[20%] group">
+<div class="w-4 h-4 bg-primary border-4 border-white shadow-md rounded-full cursor-pointer hover:scale-125 transition-transform z-10 relative"></div>
+<div class="tooltip-card hidden absolute bottom-6 left-1/2 -translate-x-1/2 w-64 bg-surface-container-lowest shadow-2xl rounded-2xl overflow-hidden z-20 border border-outline-variant/10">
+<img class="w-full h-32 object-cover" data-alt="high-quality hardshell polyproplyene suitcase with double wheels and telescopic handle in professional product studio lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA_7TK6EYqerhsx7RPruY7QX2dBurKthQ0YGWZ0K6uKEU3srrfNzysaylgfOL_0EQZdyf0K1HIMpx5_zUj-8sBGZ7Fyaw207Xsq49_dPcZDOBOBRxuxrSrGjKY63p_xH1YmoIvtuqgUJit3EQEQP6cqxPBMaIGoSQOU99DGzLmPgKmMIxvGwMJBi_-oyqcLuX2y_SbiJ5wR7cUtvWC3XWdf8IjizBk0kE4FiNpnDpS7gk9c50NNh_-a-dKKo4fNU17OqHs54VXpJGc"/>
+<div class="p-4 space-y-3">
+<div class="flex justify-between items-start">
+<div>
+<h4 class="text-xs font-bold text-primary">Product DNA: Luggage GZ-X1</h4>
+<p class="text-[10px] text-outline font-medium">Batch: 1,500 units</p>
+</div>
+<span class="text-xs font-black text-primary">320,000 ₫</span>
+</div>
+<div class="grid grid-cols-2 gap-2 text-[9px] uppercase tracking-tighter font-bold text-on-surface-variant">
+<div class="bg-surface-container px-2 py-1 rounded">Shell: 100% PP</div>
+<div class="bg-surface-container px-2 py-1 rounded">Size: 20 inch</div>
+<div class="bg-surface-container px-2 py-1 rounded">Weight: 2.8kg</div>
+<div class="bg-surface-container px-2 py-1 rounded">Warranty: 2 yrs</div>
+</div>
+<button class="w-full bg-primary text-white py-2 rounded-lg text-[10px] font-bold flex items-center justify-center space-x-2 active:scale-95 transition-all">
+<span class="material-symbols-outlined text-sm">content_copy</span>
+<span>CLONE ORDER</span>
+</button>
+</div>
+</div>
+</div>
+<div class="chart-point absolute bottom-[65%] left-[45%] group">
+<div class="w-4 h-4 bg-primary border-4 border-white shadow-md rounded-full cursor-pointer hover:scale-125 transition-transform z-10 relative"></div>
+</div>
+<div class="chart-point absolute bottom-[25%] left-[70%] group">
+<div class="w-4 h-4 bg-primary border-4 border-white shadow-md rounded-full cursor-pointer hover:scale-125 transition-transform z-10 relative"></div>
+</div>
+<div class="chart-point absolute bottom-[45%] left-[85%] group">
+<div class="w-4 h-4 border-2 border-outline-variant bg-white shadow-sm rounded-full cursor-pointer hover:scale-125 transition-transform z-10 relative"></div>
+</div>
+<svg class="absolute inset-0 w-full h-full pointer-events-none opacity-20">
+<line stroke="#003461" stroke-dasharray="8 4" stroke-width="2" x1="0" x2="100%" y1="350" y2="150"></line>
+</svg>
+</div>
+</section>
+<!-- Data Table Details -->
+<section class="space-y-4">
+<div class="flex justify-between items-center">
+<h3 class="text-xl font-bold text-primary">Data Point Details</h3>
+<div class="flex space-x-2">
+<span class="text-[10px] font-bold text-outline py-1 px-3 bg-surface-container-low rounded-full">Total: 124 records</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest rounded-2xl overflow-hidden border border-outline-variant/10 shadow-sm">
+<table class="w-full text-left border-collapse">
+<thead class="bg-surface-container-low border-b border-outline-variant/10">
+<tr>
+<th class="px-6 py-4 text-[10px] font-bold text-outline uppercase tracking-widest">Source ID</th>
+<th class="px-6 py-4 text-[10px] font-bold text-outline uppercase tracking-widest">Material</th>
+<th class="px-6 py-4 text-[10px] font-bold text-outline uppercase tracking-widest">Scale (Qty)</th>
+<th class="px-6 py-4 text-[10px] font-bold text-outline uppercase tracking-widest">Unit Price</th>
+<th class="px-6 py-4 text-[10px] font-bold text-outline uppercase tracking-widest">Status</th>
+<th class="px-6 py-4"></th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/10">
+<tr class="hover:bg-surface-container-low/30 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center">
+<div class="w-8 h-8 rounded bg-surface-container mr-3 overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="close up macro shot of suitcase locking mechanism and durable zipper texture" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBNLhxlstRskE7XzIlMIuydgND3f8c2opnlRcHZmeTvGTJdUId-Za-L1laQs084yAlbnZeL9KMpBvDvBIfmA3cclUoNKcuwID46cvtrUXbj1yRY4bGbSATWt3eO1ZGpruUABlpVlK6WNHxn7tJW_-9khmr-9eWAB0jq87Rg0r8Ej3PsOr6wUpNyXjHtINNo_bWcwna6bfyLNcL_qxLyxiKquhdSeSgipdl8YdbqWhFhNORZC-Kg9riJ3MCcbc7FhJqeGrzF2qNXQzY"/>
+</div>
+<span class="text-xs font-bold text-primary">GZ-LUGG-202</span>
+</div>
+</td>
+<td class="px-6 py-4 text-xs font-medium text-on-surface-variant">ABS + PC Plastic</td>
+<td class="px-6 py-4 text-xs font-medium text-on-surface-variant">2,500</td>
+<td class="px-6 py-4 text-xs font-bold text-primary">285,000 ₫</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center text-[9px] font-bold text-tertiary px-2 py-0.5 border border-tertiary/20 rounded-full">
+<span class="w-1 h-1 bg-tertiary rounded-full mr-1.5"></span> Verified
+                            </span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="text-primary hover:scale-110 transition-transform"><span class="material-symbols-outlined text-lg">arrow_forward</span></button>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low/30 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center">
+<div class="w-8 h-8 rounded bg-surface-container mr-3 overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="professional manufacturing floor showing a stack of high quality luggage shells in a factory" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA52aXSP6SgsoY8MnwuR_ZQ2HDqW09jW_LuxlgsRr6pL51q4qtwddC87Q0-WVZFayXoHeNP8KpzbRgudnIcS9JiowZQ487yOcFhp9yTdgPides0MAlLNNofTGb1K0NW88uVZgueHnmxknQEtmF9ZdmirAb3epO9RF7WxmJzcLpJBcw0OMDM6U8NmVHJs457SAkbSA7AXtJtK8HaQr1gINMO8L0Bmk16oiJyas8JqrR1RSUBNmhNDAkBO-DOQXtRhMaRM7_CdTqQRvU"/>
+</div>
+<span class="text-xs font-bold text-primary">GZ-VALI-998</span>
+</div>
+</td>
+<td class="px-6 py-4 text-xs font-medium text-on-surface-variant">100% Polypropylene</td>
+<td class="px-6 py-4 text-xs font-medium text-on-surface-variant">1,200</td>
+<td class="px-6 py-4 text-xs font-bold text-primary">345,000 ₫</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center text-[9px] font-bold text-outline px-2 py-0.5 border border-outline/20 rounded-full">
+<span class="w-1 h-1 bg-outline rounded-full mr-1.5"></span> Archived
+                            </span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="text-primary hover:scale-110 transition-transform"><span class="material-symbols-outlined text-lg">arrow_forward</span></button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<!-- Footer -->
+<footer class="w-full py-12 px-6 border-t border-[#c2c6d1]/10 bg-[#f2f4f6] dark:bg-slate-950 font-['Inter'] text-xs font-normal">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
+<div class="space-y-4">
+<span class="font-['Manrope'] font-bold text-[#003461] dark:text-white text-lg">Guangzhou Direct</span>
+<p class="text-[#424750] dark:text-slate-400">The most optimized B2B price analysis platform for the Vietnam - China market.</p>
+</div>
+<div class="flex flex-col space-y-3">
+<span class="font-bold text-[#003461] mb-2 uppercase tracking-widest text-[10px]">Resources</span>
+<a class="text-[#424750] hover:text-[#004B87] transition-colors" href="#">Terms &amp; Conditions</a>
+<a class="text-[#424750] hover:text-[#004B87] transition-colors" href="#">Privacy Policy</a>
+</div>
+<div class="flex flex-col space-y-3">
+<span class="font-bold text-[#003461] mb-2 uppercase tracking-widest text-[10px]">Services</span>
+<a class="text-[#424750] hover:text-[#004B87] transition-colors" href="#">Sourcing Guide</a>
+<a class="text-[#424750] hover:text-[#004B87] transition-colors" href="#">Contact Us</a>
+</div>
+<div class="flex flex-col space-y-4">
+<span class="font-bold text-[#003461] mb-2 uppercase tracking-widest text-[10px]">Copyright</span>
+<p class="text-[#424750] dark:text-slate-400">© 2024 Guangzhou Curator. Ultimate B2B Platform.</p>
+<div class="flex space-x-4">
+<span class="material-symbols-outlined text-outline">language</span>
+<span class="material-symbols-outlined text-outline">verified_user</span>
+</div>
+</div>
+</div>
+</footer>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="lg:hidden fixed bottom-0 left-0 w-full flex justify-around items-center px-4 pb-safe pt-2 bg-[#ffffff]/90 dark:bg-slate-950/90 backdrop-blur-lg z-50 shadow-[0_-4px_12px_rgba(0,0,0,0.05)] border-t border-[#c2c6d1]/15 font-['Inter'] text-[10px] font-medium uppercase tracking-widest">
+<a class="flex flex-col items-center justify-center text-[#424750] dark:text-slate-500 py-2" href="#">
+<span class="material-symbols-outlined mb-1">home</span>
+<span>Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#003461] dark:text-white bg-[#cbe7f5]/50 dark:bg-[#004B87]/30 rounded-xl px-4 py-2 scale-90" href="#">
+<span class="material-symbols-outlined mb-1">show_chart</span>
+<span>Charts</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#424750] dark:text-slate-500 py-2" href="#">
+<span class="material-symbols-outlined mb-1">inventory_2</span>
+<span>Orders</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#424750] dark:text-slate-500 py-2" href="#">
+<span class="material-symbols-outlined mb-1">forum</span>
+<span>Chat</span>
+</a>
+</nav>
+</body></html>

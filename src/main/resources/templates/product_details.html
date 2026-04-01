@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "surface-bright": "#f8f9fb",
+              "on-tertiary-fixed": "#00201c",
+              "on-tertiary": "#ffffff",
+              "tertiary-container": "#00544b",
+              "on-surface-variant": "#424750",
+              "secondary": "#48626e",
+              "surface-container-low": "#f2f4f6",
+              "on-error-container": "#93000a",
+              "inverse-on-surface": "#eff1f3",
+              "primary-container": "#004b87",
+              "tertiary-fixed": "#8df5e4",
+              "primary": "#003461",
+              "surface": "#f8f9fb",
+              "on-secondary": "#ffffff",
+              "on-tertiary-container": "#63cbbb",
+              "error": "#ba1a1a",
+              "surface-tint": "#27609d",
+              "surface-container": "#eceef0",
+              "outline-variant": "#c2c6d1",
+              "on-background": "#191c1e",
+              "outline": "#727781",
+              "on-primary-fixed-variant": "#004882",
+              "on-surface": "#191c1e",
+              "primary-fixed": "#d3e4ff",
+              "secondary-fixed": "#cbe7f5",
+              "on-primary-fixed": "#001c38",
+              "on-error": "#ffffff",
+              "surface-dim": "#d8dadc",
+              "surface-variant": "#e0e3e5",
+              "primary-fixed-dim": "#a3c9ff",
+              "inverse-surface": "#2d3133",
+              "inverse-primary": "#a3c9ff",
+              "surface-container-lowest": "#ffffff",
+              "on-secondary-fixed": "#021f29",
+              "surface-container-high": "#e6e8ea",
+              "on-primary-container": "#8abcff",
+              "tertiary-fixed-dim": "#70d8c8",
+              "on-tertiary-fixed-variant": "#005048",
+              "on-secondary-fixed-variant": "#304a55",
+              "secondary-fixed-dim": "#afcbd8",
+              "secondary-container": "#cbe7f5",
+              "error-container": "#ffdad6",
+              "background": "#f8f9fb",
+              "surface-container-highest": "#e0e3e5",
+              "on-primary": "#ffffff",
+              "on-secondary-container": "#4e6874",
+              "tertiary": "#003b34"
+            },
+            fontFamily: {
+              "headline": ["Manrope"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+      .glass-effect {
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+      }
+    </style>
+</head>
+<body class="bg-surface font-body text-on-surface">
+<!-- Top Navigation Bar -->
+<header class="fixed top-0 w-full z-50 bg-[#f8f9fb]/60 backdrop-blur-xl shadow-sm flex items-center justify-between px-6 py-3 w-full max-w-none">
+<div class="flex items-center gap-8">
+<span class="text-xl font-extrabold tracking-tighter text-[#003461]">Guangzhou Direct</span>
+<nav class="hidden md:flex gap-6">
+<a class="font-manrope text-sm font-semibold tracking-tight text-[#003461] border-b-2 border-[#004b87] pb-1" href="#">Products</a>
+<a class="font-manrope text-sm font-semibold tracking-tight text-[#424750] hover:text-[#003461] transition-colors" href="#">Orders</a>
+<a class="font-manrope text-sm font-semibold tracking-tight text-[#424750] hover:text-[#003461] transition-colors" href="#">Community</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 hover:bg-black/5 transition-colors active:scale-95 duration-200">
+<span class="material-symbols-outlined text-[#003461]">notifications</span>
+</button>
+<button class="p-2 hover:bg-black/5 transition-colors active:scale-95 duration-200">
+<span class="material-symbols-outlined text-[#003461]">account_circle</span>
+</button>
+</div>
+</header>
+<main class="pt-24 pb-32 px-4 md:px-12 max-w-7xl mx-auto">
+<!-- Breadcrumb & Title -->
+<div class="mb-10">
+<div class="flex items-center gap-2 text-on-surface-variant text-sm mb-4">
+<span>Community</span>
+<span class="material-symbols-outlined text-xs">chevron_right</span>
+<span>Sourcing Directory</span>
+<span class="material-symbols-outlined text-xs">chevron_right</span>
+<span class="text-primary font-medium">Industrial Pro Desk</span>
+</div>
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+<div>
+<h1 class="font-headline text-4xl font-extrabold text-primary tracking-tight leading-tight mb-2">Industrial Pro Desk – Steel Edition</h1>
+<div class="flex items-center gap-3">
+<span class="bg-secondary-container text-on-secondary-container px-3 py-1 rounded-full text-xs font-bold tracking-wider uppercase">Verified Supplier</span>
+<span class="text-on-surface-variant text-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">schedule</span>
+                            Updated 2 hours ago
+                        </span>
+</div>
+</div>
+<!-- Clone CTA Button -->
+<button class="flex items-center justify-center gap-3 px-8 py-4 bg-gradient-to-br from-primary to-primary-container text-white rounded-xl shadow-lg hover:opacity-90 active:scale-95 transition-all">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">content_copy</span>
+<span class="font-headline font-bold tracking-tight text-lg">CLONE ORDER</span>
+</button>
+</div>
+</div>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
+<!-- Left Column: Product DNA (Specifications) -->
+<div class="md:col-span-4 flex flex-col gap-6">
+<section class="bg-surface-container-lowest p-8 rounded-xl border border-outline-variant/15">
+<h2 class="font-headline text-xl font-bold text-primary mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined">analytics</span>
+                        Technical DNA
+                    </h2>
+<div class="space-y-6">
+<div class="flex flex-col gap-1">
+<span class="text-xs font-bold text-on-surface-variant uppercase tracking-widest">Main Material</span>
+<span class="text-on-surface font-semibold text-lg">C45 Carbon Steel &amp; Natural Oak Wood</span>
+</div>
+<div class="flex flex-col gap-1">
+<span class="text-xs font-bold text-on-surface-variant uppercase tracking-widest">Dimensions (LxWxH)</span>
+<span class="text-on-surface font-semibold text-lg">1600mm x 800mm x 750mm</span>
+</div>
+<div class="flex flex-col gap-1">
+<span class="text-xs font-bold text-on-surface-variant uppercase tracking-widest">Surface Treatment</span>
+<span class="text-on-surface font-semibold text-lg">AkzoNobel Matte Powder Coating</span>
+</div>
+<div class="flex flex-col gap-1">
+<span class="text-xs font-bold text-on-surface-variant uppercase tracking-widest">Max Load Capacity</span>
+<span class="text-on-surface font-semibold text-lg">150 kg</span>
+</div>
+<div class="flex flex-col gap-1">
+<span class="text-xs font-bold text-on-surface-variant uppercase tracking-widest">Net Weight</span>
+<span class="text-on-surface font-semibold text-lg">42.5 kg</span>
+</div>
+</div>
+<div class="mt-8 pt-6 border-t border-outline-variant/15">
+<div class="bg-surface-container-low p-4 rounded-lg">
+<div class="flex items-center gap-2 mb-2 text-primary">
+<span class="material-symbols-outlined text-sm">inventory_2</span>
+<span class="text-xs font-bold uppercase tracking-widest">Standard Packaging</span>
+</div>
+<p class="text-sm text-on-surface-variant leading-relaxed">
+                                5-layer carton box, EPS contoured foam, ABS plastic corner protectors against impact.
+                            </p>
+</div>
+</div>
+</section>
+<!-- Order History Snippet -->
+<section class="bg-surface-container-high/30 p-6 rounded-xl border border-outline-variant/15">
+<h3 class="font-headline text-sm font-bold text-primary mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">history</span>
+                        Sourcing History
+                    </h3>
+<div class="space-y-4">
+<div class="flex justify-between items-center text-sm">
+<span class="text-on-surface-variant">Last Order</span>
+<span class="font-medium">12/05/2024</span>
+</div>
+<div class="flex justify-between items-center text-sm">
+<span class="text-on-surface-variant">Imported Quantity</span>
+<span class="font-medium text-primary">240 sets</span>
+</div>
+<div class="flex justify-between items-center text-sm">
+<span class="text-on-surface-variant">Lead Time</span>
+<span class="font-medium">18 days</span>
+</div>
+</div>
+</section>
+</div>
+<!-- Right Column: Visual Proof (Gallery) -->
+<div class="md:col-span-8 space-y-8">
+<section>
+<div class="flex items-center justify-between mb-6">
+<h2 class="font-headline text-xl font-bold text-primary flex items-center gap-2">
+<span class="material-symbols-outlined">visibility</span>
+                            Visual Proof
+                        </h2>
+<span class="text-sm text-on-surface-variant font-medium">8 Images &amp; 1 Real Video</span>
+</div>
+<!-- Gallery Grid -->
+<div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+<!-- Large Featured Image -->
+<div class="col-span-2 row-span-2 group relative overflow-hidden rounded-xl bg-surface-container">
+<img alt="high quality close up of heavy industrial metal desk frame with clean welds and premium black powder coating finish" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDEW7XdyXlG5j4y9fi7IK57zcqGlzdowCFytqYaNNOzInSdnOSNC15vbnCtNxGG1_yOT5VSMRW1ywl-cQ6JR1-QPUYwE8letsPjo2MaiTDlgI5wyXZ777JnJgAzDM1ZfxPm6v_XfEsYftipX7llX_TD7Kyg_pyjZq9dRgKCrcDj4GjogMvyX0UmI1SGY4lCRpKErEmblpp3oC2XbXuuO7wjNGEPEKsmDYn65UATkTRE2BNibiSBnfgiG325K76cOEYg-KWDbI6JX9k"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
+<span class="text-white text-xs font-medium">Real heavy-duty steel frame structure</span>
+</div>
+</div>
+<!-- Video/Action Card -->
+<div class="group relative overflow-hidden rounded-xl aspect-square bg-surface-container">
+<img alt="modern factory floor with rows of industrial desks being assembled under bright white LED lighting" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAYePfejEaYslcyS5v4mcCoFmrSGagUnr0mfoVYgEpP5GYg0B490nr35PBfg2ADujVySj2bFxpzKfxehMTDChmix16MUZgp5JHGlowf0rkkRvxtmmeEqntLwVgaXGaL2TRiuRAowpVWW8qHYQpPGoDogBvfxK_nk49uW5zn5JhaiKDIqjIxzCTyOls2ehdksGtoQ_iHeWvNC7OJdHiKAD-elAmZXGh8J1oIB4R1CnfX-5gDLPAuHAgGNPrAxaTxnjwT7s0jm947mWc"/>
+<div class="absolute inset-0 flex items-center justify-center bg-black/20">
+<div class="w-12 h-12 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center text-white border border-white/30">
+<span class="material-symbols-outlined text-3xl" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</div>
+</div>
+<div class="absolute bottom-3 left-3">
+<span class="bg-primary text-white text-[10px] px-2 py-0.5 rounded font-bold uppercase">QC Video</span>
+</div>
+</div>
+<!-- Secondary Thumbnails -->
+<div class="group relative overflow-hidden rounded-xl aspect-square bg-surface-container">
+<img alt="top view of solid oak wood desk surface with natural grain patterns and smooth matte finish" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC7qmeJYsf9qynZ_uzu-ab1N038R87gAI8PfqtWxSkK_PW1cA7oc0bvxiVrJbFmUWP6Zg9mGl6YFnzI56XQMePAn_XFS0K0CoTPFJEM1KpY3bpeCQlFxZOxhuaLRNmHFNEooWevAjxxJIhG1jggYrQwnsrjrXJZWWauEGgXbAPGCHx_SEDEkxaGmxoJnFwucaaWqyiaWA10YX7cGA2HQfFiPs9s7E6XtXujvjre46-alIhbqgCrpE3-GH_rYP8JzXZdZzFkpXZqRww"/>
+</div>
+<div class="group relative overflow-hidden rounded-xl aspect-square bg-surface-container">
+<img alt="industrial warehouse detail showing heavy duty packaging boxes stacked neatly on pallets for shipping" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCv2ZeqpvFDvNjZNdoArDhQrs-HJSfxIBVDFmit75RlPo_l6Uf5e5m9sRF7v066Il6h-m5zb4cIDYZ0Uza2xmh0bIdN4J5HH3DG4VIGTd27daNShoR-4GbEOokfGBykwgJkkn1oB2W0QaGhyJHItzMZoSuA4mtTIaKTEfBoJ8WFO91jRT_YbpWBq1nrhdQKRXKNMnWcLzQPsEor9I2HpmDRJLuPyHOuh40hi7WQ9BMOS1pZa5RYTtD8u66ZLG6fBL0KsOWAsnrgTfo"/>
+</div>
+<div class="group relative overflow-hidden rounded-xl aspect-square bg-surface-container">
+<img alt="close up of premium adjustable leg leveler on an industrial metal desk against a workshop floor" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDEEheCw9iDSU-9Y0nP0wJQZhWETI-N5yT1TImTw582m93kUyoJt1G1b0q4MEriQYFr_oRG_kmKRyMJ30sfGWE0J4bJNCwWgfc24f4CfC56uCZiYrl4WIB4jhQV7M3RSsmFl7szTcsLbuT-0E5eqN_ryErqo754l8bngTUEe5_YSRvmMTMMMQc_H8gHBx-B6aUmTEyKHLbM4AETLrO8LWXZOviNdShSwMw5VRiBjV2CRc1AVVYu9z9i8ZiFUkM5bHhKpVUUKuBKizc"/>
+<div class="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="text-white font-bold text-sm">+4 More</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Detailed Description / Proof Points -->
+<section class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="bg-surface-container-low p-6 rounded-xl border border-outline-variant/15">
+<h4 class="font-headline font-bold text-primary mb-3">Supplier Commitment</h4>
+<ul class="space-y-3">
+<li class="flex items-start gap-2 text-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-tertiary-container text-sm mt-0.5">check_circle</span>
+<span>100% Stainless steel meeting GB/T 700 standards.</span>
+</li>
+<li class="flex items-start gap-2 text-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-tertiary-container text-sm mt-0.5">check_circle</span>
+<span>5-year structural warranty for Clone orders.</span>
+</li>
+<li class="flex items-start gap-2 text-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-tertiary-container text-sm mt-0.5">check_circle</span>
+<span>Laser-engraved logo customization supported for qty &gt; 50 sets.</span>
+</li>
+</ul>
+</div>
+<div class="bg-surface-container-low p-6 rounded-xl border border-outline-variant/15">
+<h4 class="font-headline font-bold text-primary mb-3">Notes for Buyers</h4>
+<p class="text-sm text-on-surface-variant leading-relaxed">
+                            This model requires oversized packaging. Sea freight (LCL) is recommended to optimize costs. Customs clearance usually takes 3-5 business days.
+                        </p>
+</div>
+</section>
+</div>
+</div>
+</main>
+<!-- Bottom Navigation Bar (Mobile only) -->
+<footer class="md:hidden fixed bottom-0 left-0 w-full flex justify-around items-center px-4 py-3 pb-safe bg-white/80 backdrop-blur-md z-50 rounded-t-2xl shadow-[0_-4px_12px_rgba(0,0,0,0.05)] border-t border-[#c2c6d1]/15">
+<a class="flex flex-col items-center text-[#424750]" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="font-inter text-[10px] uppercase tracking-wider mt-1">Home</span>
+</a>
+<a class="flex flex-col items-center text-[#003461] font-bold bg-[#cbe7f5] rounded-xl px-4 py-1" href="#">
+<span class="material-symbols-outlined">search</span>
+<span class="font-inter text-[10px] uppercase tracking-wider mt-1">Products</span>
+</a>
+<a class="flex flex-col items-center text-[#424750]" href="#">
+<span class="material-symbols-outlined">local_shipping</span>
+<span class="font-inter text-[10px] uppercase tracking-wider mt-1">Orders</span>
+</a>
+<a class="flex flex-col items-center text-[#424750]" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="font-inter text-[10px] uppercase tracking-wider mt-1">Account</span>
+</a>
+</footer>
+</body></html>
