@@ -113,7 +113,7 @@ public class AuthController {
         return "login";
     }
 
-    public String showLogin(@RequestParam(required = false) String registered, Model model) {
+    
         if (registered != null) {
             model.addAttribute("successMessage", "Account created! Please log in.");
         }
@@ -126,7 +126,7 @@ public class AuthController {
             model.addAttribute("loginError", "Invalid or expired verification token.");
         }
         return "login";
-    }
+    
 
     @PostMapping("/login")
     public String processLogin(@RequestParam String email,
