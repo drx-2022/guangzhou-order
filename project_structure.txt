@@ -1,466 +1,84 @@
-================================================================================
-                    GUANGZHOU ORDER - PROJECT STRUCTURE
-================================================================================
-
-Project Type: Spring Boot 3.x with Maven
-Database: PostgreSQL with Flyway Migrations
-Frontend: Thymeleaf Templates with Tailwind CSS
-Security: JWT Authentication with Spring Security
-Current Date: April 2, 2026
-
-================================================================================
-                            DIRECTORY LAYOUT
-================================================================================
-
-guangzhou-order (Root Project)
-│
-├── .git/                                    Git repository
-├── .gitattributes                           Git attributes configuration
-├── .gitignore                               Git ignore rules
-├── .idea/                                   IntelliJ IDEA configuration
-│   ├── .gitignore
-│   ├── compiler.xml
-│   ├── encodings.xml
-│   ├── jarRepositories.xml
-│   ├── misc.xml
-│   ├── vcs.xml
-│   └── workspace.xml
-│
-├── .mvn/                                    Maven wrapper
-│   └── wrapper/
-│       └── maven-wrapper.properties
-│
-├── mvnw                                     Maven wrapper script (Linux/Mac)
-├── mvnw.cmd                                 Maven wrapper script (Windows)
-├── pom.xml                                  Maven configuration and dependencies
-│
-├── README.md                                Project documentation
-├── git_branch.txt                           Current git branch info (in .gitignore)
-├── project_structure.txt                    This file (in .gitignore)
-│
+guangzhou-order/
 ├── src/
-│   │
 │   ├── main/
-│   │   │
 │   │   ├── java/
-│   │   │   └── com/example/guangzhouorder/
-│   │   │       │
-│   │   │       ├── GuangzhouOrderApplication.java     Spring Boot entry point
-│   │   │       ├── DataSeeder.java                    Database seeding (@Component, @Order(1))
-│   │   │       │
-│   │   │       ├── config/
-│   │   │       │   └── SecurityConfig.java            Spring Security + JWT configuration
-│   │   │       │
-│   │   │       ├── controller/
-│   │   │       │   ├── AuthController.java            Auth endpoints (/signup, /login, /logout, /verify-email)
-│   │   │       │   ├── HomeController.java            Homepage (/ with featured products)
-│   │   │       │   ├── CatalogController.java         Catalog (/catalog)
-│   │   │       │   └── DashboardController.java       Dashboard (/dashboard)
-│   │   │       │
-│   │   │       ├── dto/
-│   │   │       │   └── SignUpRequest.java             Sign-up form DTO with validation
-│   │   │       │
-│   │   │       ├── entity/                            JPA Entities with Lombok
-│   │   │       │   ├── User.java                      User entity (email verification support)
-│   │   │       │   ├── Category.java                  Product category entity
-│   │   │       │   ├── ProductCard.java               Product card entity
-│   │   │       │   ├── Order.java                     Order entity
-│   │   │       │   ├── OrderItem.java                 Order item entity
-│   │   │       │   ├── Commission.java                Commission entity
-│   │   │       │   ├── CommissionPolicy.java          Commission policy entity
-│   │   │       │   ├── Conversation.java              Chat conversation entity
-│   │   │       │   ├── ConversationRead.java          Conversation read status entity
-│   │   │       │   └── Message.java                   Chat message entity
-│   │   │       │
-│   │   │       ├── repository/                        Spring Data JPA Repositories
-│   │   │       │   ├── UserRepository.java            User data access (findByVerificationToken)
-│   │   │       │   ├── CategoryRepository.java        Category data access
-│   │   │       │   ├── ProductCardRepository.java     Product card data access (findTop6ByIsPublicTrue)
-│   │   │       │   ├── OrderRepository.java           Order data access
-│   │   │       │   ├── OrderItemRepository.java       Order item data access
-│   │   │       │   ├── CommissionRepository.java      Commission data access
-│   │   │       │   ├── CommissionPolicyRepository.java Commission policy data access
-│   │   │       │   ├── ConversationRepository.java    Conversation data access
-│   │   │       │   ├── ConversationReadRepository.java Conversation read data access
-│   │   │       │   └── MessageRepository.java         Message data access
-│   │   │       │
-│   │   │       ├── security/                          JWT Authentication
-│   │   │       │   ├── JwtTokenProvider.java          JWT token generation/validation
-│   │   │       │   ├── JwtAuthenticationFilter.java   JWT filter for requests
-│   │   │       │   └── CustomUserDetailsService.java  Custom user details service
-│   │   │       │
-│   │   │       └── service/
-│   │   │           ├── UserService.java               User business logic (registration, email verification)
-│   │   │           └── EmailService.java              Email sending service (@Service, @RequiredArgsConstructor)
-│   │   │
+│   │   │   └── com/
+│   │   │       └── example/
+│   │   │           └── guangzhouorder/
+│   │   │               ├── DataSeeder.java
+│   │   │               ├── GuangzhouOrderApplication.java
+│   │   │               ├── config/
+│   │   │               │   └── SecurityConfig.java
+│   │   │               ├── controller/
+│   │   │               │   ├── AuthController.java
+│   │   │               │   ├── CatalogController.java
+│   │   │               │   ├── DashboardController.java
+│   │   │               │   └── HomeController.java
+│   │   │               ├── dto/
+│   │   │               │   └── SignUpRequest.java
+│   │   │               ├── entity/
+│   │   │               │   ├── Category.java
+│   │   │               │   ├── Commission.java
+│   │   │               │   ├── CommissionPolicy.java
+│   │   │               │   ├── Conversation.java
+│   │   │               │   ├── ConversationRead.java
+│   │   │               │   ├── Message.java
+│   │   │               │   ├── Order.java
+│   │   │               │   ├── OrderItem.java
+│   │   │               │   ├── ProductCard.java
+│   │   │               │   └── User.java
+│   │   │               ├── repository/
+│   │   │               │   ├── CategoryRepository.java
+│   │   │               │   ├── CommissionPolicyRepository.java
+│   │   │               │   ├── CommissionRepository.java
+│   │   │               │   ├── ConversationReadRepository.java
+│   │   │               │   ├── ConversationRepository.java
+│   │   │               │   ├── MessageRepository.java
+│   │   │               │   ├── OrderItemRepository.java
+│   │   │               │   ├── OrderRepository.java
+│   │   │               │   ├── ProductCardRepository.java
+│   │   │               │   └── UserRepository.java
+│   │   │               ├── security/
+│   │   │               │   ├── CustomUserDetailsService.java
+│   │   │               │   ├── JwtAuthenticationFilter.java
+│   │   │               │   └── JwtTokenProvider.java
+│   │   │               └── service/
+│   │   │                   ├── EmailService.java
+│   │   │                   └── UserService.java
 │   │   └── resources/
-│   │       │
-│   │       ├── application.properties                 Default application configuration
-│   │       ├── application-local.properties           Local profile configuration
-│   │       ├── application-prod.properties            Production profile configuration
-│   │       │
+│   │       ├── application.properties
 │   │       ├── db/
-│   │       │   └── migration/                         Flyway SQL migrations
+│   │       │   └── migration/
 │   │       │       └── V2__add_email_verification_to_users.sql
-│   │       │           - email_verified BOOLEAN NOT NULL DEFAULT FALSE
-│   │       │           - verification_token VARCHAR(255)
-│   │       │           - verification_token_expiry TIMESTAMP
-│   │       │
-│   │       └── templates/                             Thymeleaf HTML templates (Tailwind CSS)
-│   │           ├── home.html                          Homepage with featured products section
-│   │           ├── login.html                         Login page (with email verification messages)
-│   │           ├── sign_up.html                       Sign-up page
-│   │           ├── customer_dashboard.html            Customer dashboard
-│   │           ├── affiliate_dashboard.html           Affiliate dashboard
-│   │           ├── product_details.html               Product details page
-│   │           ├── checkout.html                      Checkout page
-│   │           ├── my_orders.html                     Customer orders page
-│   │           ├── community_catalog.html             Community product catalog
-│   │           ├── chat_with_customizer.html          Chat interface
-│   │           ├── interactive_price_chart.html       Price chart visualization
-│   │           ├── visual_proof_review.html           Visual proof review
-│   │           └── production_roadmap.html            Production roadmap
-│   │
+│   │       └── templates/
+│   │           ├── affiliate_dashboard.html
+│   │           ├── chat_with_customizer.html
+│   │           ├── checkout.html
+│   │           ├── community_catalog.html
+│   │           ├── customer_dashboard.html
+│   │           ├── home.html
+│   │           ├── interactive_price_chart.html
+│   │           ├── login.html
+│   │           ├── my_orders.html
+│   │           ├── product_details.html
+│   │           ├── production_roadmap.html
+│   │           ├── sign_up.html
+│   │           ├── verify_pending.html
+│   │           └── visual_proof_review.html
 │   └── test/
 │       └── java/
-│           └── com/example/guangzhouorder/
-│               └── GuangzhouOrderApplicationTests.java Spring Boot test class
-│
-└── target/                                  Maven build output (generated)
-    ├── classes/                             Compiled Java classes and resources
-    ├── generated-sources/                   Generated source files
-    └── (other build artifacts)
-
-================================================================================
-                        KEY COMPONENTS OVERVIEW
-================================================================================
-
-ENTITIES (JPA with Lombok):
-  ✓ User
-    - id (Long), name, email, phone, hashedPassword
-    - role (ADMIN, CUSTOMER)
-    - emailVerified (boolean, default: false)
-    - verificationToken (UUID string)
-    - verificationTokenExpiry (LocalDateTime, 24 hours)
-    - created_at, updated_at timestamps
-
-  ✓ Category
-    - id, name, description
-
-  ✓ ProductCard
-    - id, cardName, cardDna (JSON specs)
-    - displayPrice, isPublic (boolean)
-    - sourceOrder (FK to Order)
-
-  ✓ Order
-    - id, customerID (FK to User)
-    - status (DONE, PENDING, etc.)
-    - paymentStatus (DONE, PENDING, etc.)
-    - depositAmount, finalPrice
-    - structuredSpecs (JSON)
-    - created_at, updated_at
-
-  ✓ OrderItem
-    - id, orderID (FK), productID, quantity, price
-
-  ✓ Commission, CommissionPolicy, Conversation, ConversationRead, Message
-    - Supporting entities for commissions and chat functionality
-
-REPOSITORIES (Spring Data JPA):
-  ✓ UserRepository
-    - Optional<User> findByEmail(String email)
-    - boolean existsByEmail(String email)
-    - Optional<User> findByVerificationToken(String verificationToken)
-
-  ✓ ProductCardRepository
-    - List<ProductCard> findTop6ByIsPublicTrue() - Featured products query
-    - All standard CRUD operations
-
-  ✓ Other repositories: CategoryRepository, OrderRepository, OrderItemRepository,
-    CommissionRepository, CommissionPolicyRepository, ConversationRepository,
-    ConversationReadRepository, MessageRepository
-
-CONTROLLERS:
-  ✓ AuthController
-    - GET  /signup                - Show sign-up form
-    - POST /signup               - Process sign-up
-    - GET  /login?registered=true - Show login with success message
-    - POST /login                - Process login (checks emailVerified)
-    - GET  /verify-email?token=  - Email verification endpoint
-    - GET  /logout               - Logout and clear JWT cookie
-
-  ✓ HomeController
-    - GET  /                     - Homepage with featured products list
-
-  ✓ CatalogController
-    - GET  /catalog              - Product catalog page
-
-  ✓ DashboardController
-    - GET  /dashboard            - User dashboard (authenticated)
-
-SECURITY:
-  ✓ SecurityConfig.java
-    - Configures Spring Security with JWT filter
-    - BCryptPasswordEncoder for password hashing
-    - CORS and HTTP security settings
-
-  ✓ JwtTokenProvider
-    - generateToken(email)       - Creates 24-hour JWT
-    - validateToken(token)       - Validates JWT signature and expiry
-    - getEmailFromToken(token)   - Extracts email claim
-
-  ✓ JwtAuthenticationFilter
-    - Intercepts requests and validates JWT cookie
-    - Populates SecurityContext for authenticated requests
-
-  ✓ CustomUserDetailsService
-    - Implements UserDetailsService for Spring Security
-
-SERVICES:
-  ✓ UserService (@Service, @RequiredArgsConstructor)
-    - registerUser(name, email, phone, password, role)
-      • Validates email uniqueness
-      • Generates UUID verification token
-      • Sets expiry to now + 24 hours
-      • Sets emailVerified = false
-      • Saves user to database
-      • Sends verification email
-
-    - verifyEmail(token)
-      • Finds user by verification token
-      • Throws IllegalArgumentException if not found
-      • Checks token expiry (throws if expired)
-      • Sets emailVerified = true
-      • Clears verification token and expiry
-      • Saves and returns user
-
-    - findByEmail(email)
-      • Looks up user by email
-      • Throws IllegalArgumentException if not found
-
-  ✓ EmailService (@Service, @RequiredArgsConstructor)
-    - Injects JavaMailSender and app.frontend.base-url
-    - sendVerificationEmail(toEmail, token)
-      • Creates SimpleMailMessage
-      • Sets subject: "Verify your Guangzhou Order account"
-      • Sets body: URL to /verify-email?token={token}
-      • Sends via JavaMailSender
-
-COMPONENTS:
-  ✓ DataSeeder (@Component, @Order(1))
-    - ApplicationRunner: runs on startup
-    - Idempotent seeding (checks table counts before inserting)
-    - Seeds demo data if tables are empty:
-      • Users (1 admin, 2 customers)
-      • Categories (5 categories)
-      • Orders (3 orders for customer1)
-      • ProductCards (3 cards linked to orders)
-
-================================================================================
-                        EMAIL VERIFICATION FLOW
-================================================================================
-
-1. REGISTRATION
-   User submits sign-up form
-   ↓
-   UserService.registerUser() creates user with:
-   - emailVerified = false
-   - verificationToken = UUID.randomUUID().toString()
-   - verificationTokenExpiry = now + 24 hours
-   ↓
-   EmailService sends verification email:
-   - To: user's email
-   - Subject: "Verify your Guangzhou Order account"
-   - Body: Link to {app.frontend.base-url}/verify-email?token={token}
-   ↓
-   Redirect to /login?registered=true
-
-2. EMAIL VERIFICATION
-   User clicks link in email
-   ↓
-   GET /verify-email?token={token}
-   ↓
-   AuthController.verifyEmail(token)
-   ↓
-   UserService.verifyEmail(token):
-   - Find user by verification token
-   - Check if token is expired
-   - If valid: set emailVerified = true, clear token/expiry
-   ↓
-   Redirect to /login?verified=true
-
-3. LOGIN
-   User enters email/password
-   ↓
-   AuthController.processLogin():
-   - Find user by email
-   - Validate password
-   - CHECK: if !emailVerified → redirect to /login?error=unverified
-   - If verified: generate JWT and set cookie
-   ↓
-   Redirect to /dashboard
-
-================================================================================
-                        DATABASE MIGRATIONS
-================================================================================
-
-Flyway Configuration:
-  - Location: src/main/resources/db/migration/
-  - Naming: V{VERSION}__{DESCRIPTION}.sql
-  - Auto-migration: enabled on startup
-
-V2__add_email_verification_to_users.sql:
-  - Adds 3 columns to users table:
-    ALTER TABLE users ADD COLUMN email_verified BOOLEAN NOT NULL DEFAULT FALSE;
-    ALTER TABLE users ADD COLUMN verification_token VARCHAR(255);
-    ALTER TABLE users ADD COLUMN verification_token_expiry TIMESTAMP;
-
-================================================================================
-                        CONFIGURATION FILES
-================================================================================
-
-application.properties:
-  - Default Spring Boot configuration
-  - Database URL, username, password
-  - JPA/Hibernate settings
-  - Flyway configuration
-  - Mail server settings (SMTP)
-  - app.frontend.base-url property
-
-application-local.properties:
-  - Local development overrides
-  - Local database configuration
-  - Debug logging levels
-
-application-prod.properties:
-  - Production database configuration
-  - Production mail server settings
-  - Security settings
-  - Optimized performance settings
-
-================================================================================
-                        TEMPLATES (Thymeleaf + Tailwind CSS)
-================================================================================
-
-login.html:
-  - Email/password form
-  - Messages for:
-    • successMessage: "Account created! Please log in."
-    • verifiedMessage: "Your email has been verified. Please log in."
-    • loginError: "Please verify your email before logging in."
-    • loginError: "Invalid or expired verification token."
-  - Sign-up link
-  - Material Design icons
-  - Responsive layout (mobile + desktop)
-
-home.html:
-  - Featured products section (using featuredProducts model attribute)
-  - Navigation with links:
-    • /register - Get Started button
-    • /catalog - Explore Market button
-    • / - Trends link
-    • /chat - Sourcing link
-    • /my-orders - Orders link (authenticated only)
-  - Hero section with Guangzhou branding
-
-sign_up.html:
-  - Sign-up form with validation
-  - Name, email, phone, password fields
-  - Role selection (ADMIN/CUSTOMER)
-  - Submit button
-  - Login link
-
-Other templates:
-  - customer_dashboard.html, affiliate_dashboard.html
-  - product_details.html, checkout.html
-  - my_orders.html, community_catalog.html
-  - chat_with_customizer.html, interactive_price_chart.html
-  - visual_proof_review.html, production_roadmap.html
-
-================================================================================
-                        NOTABLE IMPLEMENTATION DETAILS
-================================================================================
-
-1. IMPORT ISSUE FIX (DataSeeder.java):
-   Problem: Conflict between @org.springframework.core.annotation.Order
-            and com.example.guangzhouorder.entity.Order
-   Solution: Used fully qualified name for Spring annotation:
-            @org.springframework.core.annotation.Order(1)
-
-2. IDEMPOTENT SEEDING:
-   - Checks if tables are empty before inserting
-   - Safe for repeated runs
-   - Demo data only inserted once
-
-3. JWT AUTHENTICATION:
-   - Token stored in HTTP-only cookie (secure)
-   - 24-hour expiration
-   - Verified on each request by JwtAuthenticationFilter
-
-4. EMAIL VERIFICATION:
-   - Required before login
-   - 24-hour token expiry (prevents indefinite access)
-   - Clear token/expiry fields after verification
-
-5. FEATURED PRODUCTS:
-   - Limited to 6 public products (findTop6ByIsPublicTrue)
-   - Displayed on homepage
-   - Linked to ProductCard and Order entities
-
-================================================================================
-                        BUILD & DEPLOYMENT
-================================================================================
-
-Build Tool: Maven (with wrapper scripts)
-
-Commands:
-  ./mvnw clean install                    # Full build
-  ./mvnw spring-boot:run                  # Run application
-  ./mvnw test                             # Run tests
-  ./mvnw clean package                    # Create JAR
-
-Output: target/guangzhou-order-*.jar (executable JAR)
-
-System Requirements:
-  - Java 17+
-  - PostgreSQL database
-  - SMTP server for email sending
-
-================================================================================
-                        VERSION CONTROL (.gitignore)
-================================================================================
-
-Tracked:
-  ✓ Source code (src/)
-  ✓ Maven configuration (pom.xml)
-  ✓ Templates and resources
-  ✓ Documentation (README.md)
-
-Ignored:
-  ✓ target/ (compiled output)
-  ✓ .idea/ (IDE configuration)
-  ✓ .mvn/ (wrapper cache)
-  ✗ project_structure.txt (RECOMMENDED: add to .gitignore)
-  ✗ git_branch.txt (RECOMMENDED: add to .gitignore)
-  ✓ *.class, *.jar, *.war
-  ✓ .DS_Store, Thumbs.db
-  ✓ System-specific files
-
-================================================================================
-                        DEVELOPMENT BEST PRACTICES
-================================================================================
-
-✓ All entities use Lombok for boilerplate reduction (@Data, @Builder, etc.)
-✓ Constructor injection used throughout (@RequiredArgsConstructor)
-✓ Spring Data JPA provides repository implementations
-✓ Thymeleaf for server-side rendering with Tailwind CSS
-✓ Flyway for version-controlled database migrations
-✓ Spring Security with JWT for stateless authentication
-✓ Service layer for business logic
-✓ DTOs for API/form binding
-✓ Proper exception handling (IllegalArgumentException, etc.)
-✓ Responsive design with Material Design icons
-✓ Role-based access control (RBAC)
-
-================================================================================
-
+│           └── com/
+│               └── example/
+│                   └── guangzhouorder/
+│                       └── GuangzhouOrderApplicationTests.java
+├── .gitattributes
+├── .gitignore
+├── .mvn/
+│   └── wrapper/
+│       └── maven-wrapper.properties
+├── README.md
+├── git_branch.txt
+├── mvnw
+├── mvnw.cmd
+├── pom.xml
+└── project_structure.txt

@@ -79,12 +79,13 @@ public class AuthController {
     }
 
     @GetMapping("/verify-email")
-    public String verifyEmail(@RequestParam String token) {
+    public String verifyEmail(@RequestParam String token, Model model) {
         try {
             userService.verifyEmail(token);
             return "redirect:/login?verified=true";
         } catch (IllegalArgumentException e) {
-            return "redirect:/login?error=invalid-token";
+            model.addAttribute("error", e.getMessage());
+            return "login";
         }
     }
 
@@ -118,7 +119,7 @@ public class AuthController {
                 model.addAttribute("loginError", "Invalid email or password.");
                 return "login";
             }
-            if (!user.isEmailVerified()) {
+            if (!user.isAccountVerified()) {
                 model.addAttribute("loginError", "Please verify your email before logging in.");
                 return "redirect:/login?error=unverified";
             }
