@@ -10,4 +10,5 @@ import java.util.List;
 public interface ProductCardRepository extends JpaRepository<ProductCard, Long> {
     List<ProductCard> findByIsPublicTrue();
     List<ProductCard> findByIsPublicTrueOrderByCreatedAtDesc();
+    List<ProductCard> findTop6ByIsPublicTrue();
 }

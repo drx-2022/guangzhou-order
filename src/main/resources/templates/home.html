@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html class="light" lang="en" xmlns:th="http://www.thymeleaf.org"><head>
+<html class="light" lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
@@ -88,9 +88,9 @@
                 Guangzhou Direct
             </div>
 <div class="hidden md:flex items-center space-x-8 font-headline font-bold tracking-tight">
-<a class="text-[#004B87] dark:text-[#cbe7f5] border-b-2 border-[#004B87] pb-1" href="#">Trends</a>
-<a class="text-[#424750] dark:text-slate-400 hover:text-[#004B87] transition-colors" href="#">Sourcing</a>
-<a class="text-[#424750] dark:text-slate-400 hover:text-[#004B87] transition-colors" href="#">Orders</a>
+<a class="text-[#004B87] dark:text-[#cbe7f5] border-b-2 border-[#004B87] pb-1" th:href="@{/}">Trends</a>
+<a class="text-[#424750] dark:text-slate-400 hover:text-[#004B87] transition-colors" th:href="@{/chat}">Sourcing</a>
+<a class="text-[#424750] dark:text-slate-400 hover:text-[#004B87] transition-colors" th:href="@{/my-orders}" sec:authorize="isAuthenticated()">Orders</a>
 <a class="text-[#424750] dark:text-slate-400 hover:text-[#004B87] transition-colors" href="#">Support</a>
 </div>
 <div class="flex items-center space-x-4">
@@ -118,7 +118,7 @@
                         Transparent process, clear product DNA. Connect directly with leading factories at the global trade hub.
                     </p>
 <div class="flex flex-col sm:flex-row gap-4">
-<a th:href="@{/signup}" class="px-8 py-4 bg-gradient-to-br from-primary to-primary-container text-white rounded-lg font-headline font-bold text-sm tracking-widest uppercase shadow-lg hover:opacity-90 transition-all active:scale-95">
+<a th:href="@{/register}" class="px-8 py-4 bg-gradient-to-br from-primary to-primary-container text-white rounded-lg font-headline font-bold text-sm tracking-widest uppercase shadow-lg hover:opacity-90 transition-all active:scale-95">
                             Get Started
                         </a>
 <a th:href="@{/catalog}" class="px-8 py-4 border-2 border-outline-variant text-primary rounded-lg font-headline font-bold text-sm tracking-widest uppercase hover:bg-surface-container-low transition-all active:scale-95">
@@ -283,6 +283,7 @@
 <h2 class="font-headline text-3xl lg:text-4xl font-extrabold text-primary mb-4">Professional Sourcing Community</h2>
 <p class="text-on-surface-variant max-w-2xl mx-auto">Join a network sharing trusted sources and an Affiliate system connecting supply and demand.</p>
 </div>
+<!-- th:each="card : ${featuredProducts}" placeholder for future trending section -->
 <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
 <!-- Community Catalog Card -->
 <div class="group relative overflow-hidden rounded-xl bg-surface-container-low p-12 transition-all hover:bg-surface-container-high">
@@ -290,7 +291,7 @@
 <span class="material-symbols-outlined text-5xl text-primary mb-6" data-icon="groups">groups</span>
 <h3 class="font-headline text-2xl font-extrabold text-primary mb-4">Community Catalog</h3>
 <p class="text-on-surface-variant mb-8 leading-relaxed">Explore product catalogs audited and rated by the community for quality. Find "hidden gems" from lesser-known factories.</p>
-<a class="inline-flex items-center text-primary font-bold gap-2 hover:gap-4 transition-all" href="#">
+<a class="inline-flex items-center text-primary font-bold gap-2 hover:gap-4 transition-all" th:href="@{/catalog}">
                                 View Catalog <span class="material-symbols-outlined" data-icon="arrow_forward">arrow_forward</span>
 </a>
 </div>
