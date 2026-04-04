@@ -122,225 +122,92 @@
             </p>
 </header>
 <!-- Filters Section -->
+<form method="get" th:action="@{/catalog}">
 <section class="mb-10 bg-surface-container-low rounded-xl p-6 flex flex-wrap gap-6 items-end">
 <div class="flex-1 min-w-[200px]">
 <label class="block text-xs font-semibold uppercase tracking-wider text-on-surface-variant mb-2">Category</label>
-<select class="w-full bg-surface-container-lowest border-none rounded-lg py-3 px-4 text-sm focus:ring-2 focus:ring-primary/20">
-<option>All Products</option>
-<option>Men/Women Fashion</option>
-<option>Electronics &amp; Appliances</option>
-<option>Office Furniture</option>
-<option>Premium Accessories</option>
+<select name="categoryId" class="w-full bg-surface-container-lowest border-none rounded-lg py-3 px-4 text-sm focus:ring-2 focus:ring-primary/20">
+<option value="">All Products</option>
+<option th:each="cat : ${categories}"
+        th:value="${cat.categoryId}"
+        th:text="${cat.name}"
+        th:selected="${cat.categoryId == selectedCategoryId}">Category</option>
 </select>
 </div>
-<div class="flex-1 min-w-[200px]">
-<label class="block text-xs font-semibold uppercase tracking-wider text-on-surface-variant mb-2">Material</label>
-<select class="w-full bg-surface-container-lowest border-none rounded-lg py-3 px-4 text-sm focus:ring-2 focus:ring-primary/20">
-<option>All Materials</option>
-<option>Organic Cotton</option>
-<option>Microfiber Leather</option>
-<option>304 Stainless Steel</option>
-<option>Recycled ABS Plastic</option>
-</select>
-</div>
-<div class="flex-1 min-w-[200px]">
-<label class="block text-xs font-semibold uppercase tracking-wider text-on-surface-variant mb-2">Price Range (VND)</label>
-<select class="w-full bg-surface-container-lowest border-none rounded-lg py-3 px-4 text-sm focus:ring-2 focus:ring-primary/20">
-<option>All Prices</option>
-<option>Under 500,000 ₫</option>
-<option>500,000 ₫ - 2,000,000 ₫</option>
-<option>Above 2,000,000 ₫</option>
-</select>
-</div>
-<button class="bg-primary text-white font-headline font-bold text-sm px-8 py-3.5 rounded-lg hover:opacity-90 transition-all flex items-center gap-2">
+<button type="submit" class="bg-primary text-white font-headline font-bold text-sm px-8 py-3.5 rounded-lg hover:opacity-90 transition-all flex items-center gap-2">
 <span class="material-symbols-outlined text-sm">filter_list</span>
                 Filter Results
             </button>
+<a th:href="@{/catalog}" class="font-headline font-bold text-sm px-4 py-3.5 rounded-lg border border-outline-variant text-on-surface-variant hover:bg-surface-container transition-all">
+                Clear
+            </a>
 </section>
+</form>
 <!-- Product Catalog Grid -->
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-<!-- Product Card 1 -->
-<div class="group relative bg-surface-container-lowest rounded-xl overflow-hidden transition-all hover:translate-y-[-4px]">
-<div class="aspect-[4/5] overflow-hidden relative">
-<img alt="Premium Jacket" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" data-alt="Studio shot of a minimalist high-end beige jacket on a neutral gray background, clean lighting, editorial fashion style" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBEG_NEWfVeTpWBYkXj1SMSiTJ3UHh3E_GTVZj96pf0KfGHSUGkIyafUP6U3FBXA_oJhFX-IykVAubgK-pzkgezRDIhvUHuurjHBcFGbSu5oN-OjO-aDhhffnMN3DHD3n1egQP08Yv_h4k3hJPGyVwYR7yxdymMIDOjYLZPFd_7ra8YXHa9NkrDd6S042-JsTZQ5OJS3LdeXP3Z9ZOzo6LyXXgJAcTNzgf9F1NjQNZXu1W28K6TK5vN_hQ37b9PDVpxu9myS2iRjRU"/>
+<!-- Empty state -->
+<div th:if="${cards.isEmpty()}" class="col-span-4 text-center py-20">
+<span class="material-symbols-outlined text-5xl text-outline mb-4 block">inventory_2</span>
+<h3 class="font-headline font-bold text-xl text-primary mb-2">No products found</h3>
+<p class="text-on-surface-variant text-sm mb-6">Try clearing the filter or check back later.</p>
+<a th:href="@{/catalog}" class="inline-flex items-center gap-2 px-6 py-3 bg-primary text-white rounded-lg font-bold text-sm">
+<span class="material-symbols-outlined text-sm">refresh</span>View All Products
+</a>
+</div>
+<!-- Dynamic product cards -->
+<div th:each="card : ${cards}" class="group relative bg-surface-container-lowest rounded-xl overflow-hidden transition-all hover:translate-y-[-4px]">
+<div class="aspect-[4/5] overflow-hidden relative bg-surface-container">
+<img th:if="${!#strings.isEmpty(card.imageUrl)}"
+     th:src="${card.imageUrl}"
+     th:alt="${card.name}"
+     class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"/>
+<div th:if="${#strings.isEmpty(card.imageUrl)}" class="w-full h-full flex items-center justify-center">
+<span class="material-symbols-outlined text-6xl text-outline">image</span>
+</div>
 <div class="absolute top-4 left-4 flex gap-2">
 <span class="bg-tertiary-fixed text-on-tertiary-fixed text-[10px] font-bold px-2 py-1 rounded-full flex items-center gap-1">
 <span class="material-symbols-outlined text-[12px]" style="font-variation-settings: 'FILL' 1;">verified</span>
-                            VERIFIED
-                        </span>
+VERIFIED
+</span>
 </div>
 </div>
 <div class="p-5">
 <div class="flex justify-between items-start mb-2">
-<h3 class="font-headline font-bold text-lg text-primary">Minimalist Tech Parka</h3>
-<span class="text-xs font-mono text-outline">SKU: GZ-9921</span>
+<h3 class="font-headline font-bold text-lg text-primary" th:text="${card.name}">Product Name</h3>
+<span class="text-xs font-mono text-outline" th:text="'SKU: ' + ${card.sku}">SKU: GZ-0</span>
 </div>
-<!-- Product DNA Section -->
 <div class="space-y-3 mb-6">
 <div class="flex items-center gap-4 text-xs">
-<div class="flex items-center gap-1 text-on-surface-variant">
+<div class="flex items-center gap-1 text-on-surface-variant" th:if="${card.stock != '—'}">
 <span class="material-symbols-outlined text-sm">inventory_2</span>
-<span>Stock: 1,200</span>
+<span th:text="'Stock: ' + ${card.stock}">Stock</span>
 </div>
-<div class="flex items-center gap-1 text-on-surface-variant">
+<div class="flex items-center gap-1 text-on-surface-variant" th:if="${card.material != '—'}">
 <span class="material-symbols-outlined text-sm">conveyor_belt</span>
-<span>Material: GoreTex</span>
+<span th:text="'Material: ' + ${card.material}">Material</span>
 </div>
 </div>
-<div class="p-3 bg-surface-container-low rounded-lg">
+<div class="p-3 bg-surface-container-low rounded-lg" th:if="${card.configuration != '—'}">
 <p class="text-[10px] text-outline font-semibold uppercase tracking-widest mb-1">Standard Configuration</p>
-<p class="text-xs text-on-surface-variant italic">Size: S, M, L, XL • Black, Sand, Olive</p>
+<p class="text-xs text-on-surface-variant italic" th:text="${card.configuration}">Configuration</p>
 </div>
 </div>
 <div class="flex items-end justify-between mb-6">
 <div class="flex flex-col">
-<span class="text-[10px] text-outline line-through">1,250,000 ₫</span>
-<span class="text-xl font-black text-primary">890,000 ₫</span>
+<span class="text-xl font-black text-primary"
+      th:text="${card.displayPrice != null} ? ${#numbers.formatDecimal(card.displayPrice, 0, 'COMMA', 0, 'POINT') + ' ₫'} : 'Contact for price'">Price</span>
 </div>
-<span class="text-[10px] bg-secondary-container text-on-secondary-container px-2 py-1 rounded font-bold">-28%</span>
-</div>
-<div class="grid grid-cols-2 gap-3">
-<button class="py-2.5 px-4 rounded-lg bg-surface-container-high text-primary font-headline font-bold text-xs hover:bg-surface-container-highest transition-colors">
-                            View Details
-                        </button>
-<button class="py-2.5 px-4 rounded-lg bg-gradient-to-br from-primary to-primary-container text-white font-headline font-bold text-xs shadow-sm hover:opacity-90 transition-all">
-                            Copy Order
-                        </button>
-</div>
-</div>
-</div>
-<!-- Product Card 2 -->
-<div class="group relative bg-surface-container-lowest rounded-xl overflow-hidden transition-all hover:translate-y-[-4px]">
-<div class="aspect-[4/5] overflow-hidden relative">
-<img alt="Sport Shoes" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" data-alt="Vibrant red running sneakers showcased on a clean white surface with sharp shadows and dynamic studio lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAjUJw_tFkUOJY8NU8YZb6HYDchTUMLaz7zSvUbkOu5IQPB5-_Us9uaQD8bBHMS6gTnUC-wYxef-TnfzLuckUeoGqQb4ev4K8oqbALebq7qjBSdczOCaVzFnD_qt6sq74XJtGzYVzZUHeYzvwAzCdyX7WQj6HtjsX5d-Ejlip8ISKY36h8rfCK6QiGiHbfesUcEvluonCCJ6CAQ_05EEFb0PdupOJVPdtDSdDGjy_IsjRveTwwbgHMzH0glPRbPh65hiWT_PYHiyEU"/>
-<div class="absolute top-4 left-4 flex gap-2">
-<span class="bg-tertiary-fixed text-on-tertiary-fixed text-[10px] font-bold px-2 py-1 rounded-full flex items-center gap-1">
-<span class="material-symbols-outlined text-[12px]" style="font-variation-settings: 'FILL' 1;">verified</span>
-                            VERIFIED
-                        </span>
-</div>
-</div>
-<div class="p-5">
-<div class="flex justify-between items-start mb-2">
-<h3 class="font-headline font-bold text-lg text-primary">Aero-Pulse Runner</h3>
-<span class="text-xs font-mono text-outline">SKU: GZ-3342</span>
-</div>
-<div class="space-y-3 mb-6">
-<div class="flex items-center gap-4 text-xs">
-<div class="flex items-center gap-1 text-on-surface-variant">
-<span class="material-symbols-outlined text-sm">inventory_2</span>
-<span>Stock: 450</span>
-</div>
-<div class="flex items-center gap-1 text-on-surface-variant">
-<span class="material-symbols-outlined text-sm">conveyor_belt</span>
-<span>Material: Knit</span>
-</div>
-</div>
-<div class="p-3 bg-surface-container-low rounded-lg">
-<p class="text-[10px] text-outline font-semibold uppercase tracking-widest mb-1">Standard Configuration</p>
-<p class="text-xs text-on-surface-variant italic">EU 38-44 • Breathable Tech • Red, Blue</p>
-</div>
-</div>
-<div class="flex items-end justify-between mb-6">
-<div class="flex flex-col">
-<span class="text-xl font-black text-primary">1,450,000 ₫</span>
-</div>
+<span th:if="${card.categoryName != '—'}" class="text-[10px] bg-secondary-container text-on-secondary-container px-2 py-1 rounded font-bold" th:text="${card.categoryName}">Category</span>
 </div>
 <div class="grid grid-cols-2 gap-3">
-<button class="py-2.5 px-4 rounded-lg bg-surface-container-high text-primary font-headline font-bold text-xs hover:bg-surface-container-highest transition-colors">
-                            View Details
-                        </button>
-<button class="py-2.5 px-4 rounded-lg bg-gradient-to-br from-primary to-primary-container text-white font-headline font-bold text-xs shadow-sm hover:opacity-90 transition-all">
-                            Copy Order
-                        </button>
-</div>
-</div>
-</div>
-<!-- Product Card 3 -->
-<div class="group relative bg-surface-container-lowest rounded-xl overflow-hidden transition-all hover:translate-y-[-4px]">
-<div class="aspect-[4/5] overflow-hidden relative">
-<img alt="Smart Watch" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" data-alt="Luxury smartwatch with white strap on a light marble background, soft natural lighting, elegant product photography" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCb56TfJVJhwFxcC4ql6AgfNkzNh5CgO726gVjsX5olLCJ9-5nbkyX0dDJcn1VMQBq6Ly2fgZpEHCkS14GM8PXOlaCA249hRPu34BwuLledCFo6o4tyswIXh268-lh7jNVPDjPv8r50GgC7D7-1qvWzWo13pL3a7IJblwPZMl71Zk1XGPg2GmqhGXdKoMhfoYYGYPXWgJJ1wnJbS-69NbvLAfd9-PQZRahWCpw8R03Hmuuhf6r98BDTPBVjX8eWilsbn8jCWfkobBQ"/>
-</div>
-<div class="p-5">
-<div class="flex justify-between items-start mb-2">
-<h3 class="font-headline font-bold text-lg text-primary">Titan-V Pro Watch</h3>
-<span class="text-xs font-mono text-outline">SKU: GZ-7718</span>
-</div>
-<div class="space-y-3 mb-6">
-<div class="flex items-center gap-4 text-xs">
-<div class="flex items-center gap-1 text-on-surface-variant">
-<span class="material-symbols-outlined text-sm">inventory_2</span>
-<span>Stock: 85</span>
-</div>
-<div class="flex items-center gap-1 text-on-surface-variant">
-<span class="material-symbols-outlined text-sm">conveyor_belt</span>
-<span>Material: Titanium</span>
-</div>
-</div>
-<div class="p-3 bg-surface-container-low rounded-lg">
-<p class="text-[10px] text-outline font-semibold uppercase tracking-widest mb-1">Standard Configuration</p>
-<p class="text-xs text-on-surface-variant italic">AMOLED 1.4" • eSIM Support • 48h Battery</p>
-</div>
-</div>
-<div class="flex items-end justify-between mb-6">
-<div class="flex flex-col">
-<span class="text-xl font-black text-primary">3,200,000 ₫</span>
-</div>
-</div>
-<div class="grid grid-cols-2 gap-3">
-<button class="py-2.5 px-4 rounded-lg bg-surface-container-high text-primary font-headline font-bold text-xs hover:bg-surface-container-highest transition-colors">
-                            View Details
-                        </button>
-<button class="py-2.5 px-4 rounded-lg bg-gradient-to-br from-primary to-primary-container text-white font-headline font-bold text-xs shadow-sm hover:opacity-90 transition-all">
-                            Copy Order
-                        </button>
-</div>
-</div>
-</div>
-<!-- Product Card 4 -->
-<div class="group relative bg-surface-container-lowest rounded-xl overflow-hidden transition-all hover:translate-y-[-4px]">
-<div class="aspect-[4/5] overflow-hidden relative">
-<img alt="Headphones" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" data-alt="Professional studio headphones on a dark wooden desk with warm bokeh background lights, cinematic mood" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAM4tOhHg_oN8aiiBmr9onj9z_mxhjKfTDAy1qcRpiOkcWvmcNiVKihCwXpnwZ_EvwKzGJXJQwCCpeAj5qP4glLzV9VNz3ibRVOsPYoZdHvlKKm9wH2URUX-klGDVp8aO3czZBMTIp9GheM8yaFnEnpb1FTkNImIYnKXO1AjARqnMhY5ShfRYKaPIjB-viR8kZOr_A2sbVNiTOOrUd40I39uUvbfTUk2ugWToiAZdkupA5-vb5Z2hlkMgnD2T4SDmZqrHqIEQ3b3Fs"/>
-<div class="absolute top-4 left-4 flex gap-2">
-<span class="bg-tertiary-fixed text-on-tertiary-fixed text-[10px] font-bold px-2 py-1 rounded-full flex items-center gap-1">
-<span class="material-symbols-outlined text-[12px]" style="font-variation-settings: 'FILL' 1;">verified</span>
-                            VERIFIED
-                        </span>
-</div>
-</div>
-<div class="p-5">
-<div class="flex justify-between items-start mb-2">
-<h3 class="font-headline font-bold text-lg text-primary">Sonic-Pure H1</h3>
-<span class="text-xs font-mono text-outline">SKU: GZ-1109</span>
-</div>
-<div class="space-y-3 mb-6">
-<div class="flex items-center gap-4 text-xs">
-<div class="flex items-center gap-1 text-on-surface-variant">
-<span class="material-symbols-outlined text-sm">inventory_2</span>
-<span>Stock: 2,100</span>
-</div>
-<div class="flex items-center gap-1 text-on-surface-variant">
-<span class="material-symbols-outlined text-sm">conveyor_belt</span>
-<span>Material: Carbon</span>
-</div>
-</div>
-<div class="p-3 bg-surface-container-low rounded-lg">
-<p class="text-[10px] text-outline font-semibold uppercase tracking-widest mb-1">Standard Configuration</p>
-<p class="text-xs text-on-surface-variant italic">Active Noise Cancel • Hi-Res Audio • Black</p>
-</div>
-</div>
-<div class="flex items-end justify-between mb-6">
-<div class="flex flex-col">
-<span class="text-xl font-black text-primary">1,850,000 ₫</span>
-</div>
-</div>
-<div class="grid grid-cols-2 gap-3">
-<button class="py-2.5 px-4 rounded-lg bg-surface-container-high text-primary font-headline font-bold text-xs hover:bg-surface-container-highest transition-colors">
-                            View Details
-                        </button>
-<button class="py-2.5 px-4 rounded-lg bg-gradient-to-br from-primary to-primary-container text-white font-headline font-bold text-xs shadow-sm hover:opacity-90 transition-all">
-                            Copy Order
-                        </button>
+<a th:href="@{/products/{id}(id=${card.productCardId})}"
+   class="py-2.5 px-4 rounded-lg bg-surface-container-high text-primary font-headline font-bold text-xs hover:bg-surface-container-highest transition-colors text-center">
+View Details
+</a>
+<a th:href="@{/chat(cloneFrom=${card.productCardId})}"
+   class="py-2.5 px-4 rounded-lg bg-gradient-to-br from-primary to-primary-container text-white font-headline font-bold text-xs shadow-sm hover:opacity-90 transition-all text-center">
+Copy Order
+</a>
 </div>
 </div>
 </div>

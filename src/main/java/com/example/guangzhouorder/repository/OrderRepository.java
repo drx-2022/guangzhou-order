@@ -10,6 +10,11 @@ import java.util.List;
 @Repository
 public interface OrderRepository extends JpaRepository<Order, Long> {
     List<Order> findByCustomer(User customer);
+    List<Order> findByCustomerOrderByUpdatedAtDesc(User customer);
     List<Order> findByCustomerAndStatus(User customer, String status);
     List<Order> findByStatus(String status);
+
+    long countByCustomerAndStatus(User customer, String status);
+
+    List<Order> findTop5ByCustomerAndStatusNotInOrderByUpdatedAtDesc(User customer, List<String> excludedStatuses);
 }

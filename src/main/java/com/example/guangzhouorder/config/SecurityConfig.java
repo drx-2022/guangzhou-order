@@ -34,10 +34,10 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/", "/signup", "/login", "/logout", "/catalog", 
-                                 "/verify-email", "/resend-verification", 
-                                 "/error", "/css/**", "/js/**", "/images/**").permitAll()
-                .requestMatchers("/dashboard").authenticated()
+                .requestMatchers("/", "/signup", "/login", "/catalog", "/catalog/**", "/products", "/products/**", "/logout", "/error", "/verify-email", 
+                                 "/resend-verification", "/error", "/css/**", "/js/**", "/images/**").permitAll()
+                .requestMatchers("/dashboard", "/orders", "/orders/**", "/chat").authenticated()
+                                   
                 .anyRequest().authenticated()
             )
             .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)

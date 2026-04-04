@@ -25,6 +25,10 @@ public class ProductCard {
     @JoinColumn(name = "source_order_id", unique = true)
     private Order sourceOrder;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "category_id")
+    private Category category;
+
     /**
      * Verified product "DNA": materials, dimensions, photos, technical notes.
      * Stored as a JSON string.

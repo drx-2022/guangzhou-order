@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html class="light" lang="en"><head>
+<html class="light" lang="en" xmlns:th="http://www.thymeleaf.org"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
@@ -104,28 +104,33 @@
 <!-- Breadcrumb & Title -->
 <div class="mb-10">
 <div class="flex items-center gap-2 text-on-surface-variant text-sm mb-4">
-<span>Community</span>
+<a th:href="@{/}" class="hover:text-primary transition-colors">Community</a>
 <span class="material-symbols-outlined text-xs">chevron_right</span>
-<span>Sourcing Directory</span>
+<a th:href="@{/catalog}" class="hover:text-primary transition-colors">Sourcing Directory</a>
 <span class="material-symbols-outlined text-xs">chevron_right</span>
-<span class="text-primary font-medium">Industrial Pro Desk</span>
+<span class="text-primary font-medium" th:text="${card.name}">Product Name</span>
 </div>
 <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
 <div>
-<h1 class="font-headline text-4xl font-extrabold text-primary tracking-tight leading-tight mb-2">Industrial Pro Desk – Steel Edition</h1>
+<h1 class="font-headline text-4xl font-extrabold text-primary tracking-tight leading-tight mb-2" th:text="${card.name}">Product Name</h1>
 <div class="flex items-center gap-3">
 <span class="bg-secondary-container text-on-secondary-container px-3 py-1 rounded-full text-xs font-bold tracking-wider uppercase">Verified Supplier</span>
 <span class="text-on-surface-variant text-sm flex items-center gap-1">
-<span class="material-symbols-outlined text-sm">schedule</span>
-                            Updated 2 hours ago
-                        </span>
+<span class="material-symbols-outlined text-sm">sell</span>
+<span th:text="'SKU: ' + ${card.sku}">SKU</span>
+</span>
+<span th:if="${card.categoryName != '—'}" class="text-on-surface-variant text-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">category</span>
+<span th:text="${card.categoryName}">Category</span>
+</span>
 </div>
 </div>
 <!-- Clone CTA Button -->
-<button class="flex items-center justify-center gap-3 px-8 py-4 bg-gradient-to-br from-primary to-primary-container text-white rounded-xl shadow-lg hover:opacity-90 active:scale-95 transition-all">
+<a th:href="@{/chat(cloneFrom=${card.productCardId})}"
+   class="flex items-center justify-center gap-3 px-8 py-4 bg-gradient-to-br from-primary to-primary-container text-white rounded-xl shadow-lg hover:opacity-90 active:scale-95 transition-all">
 <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">content_copy</span>
 <span class="font-headline font-bold tracking-tight text-lg">CLONE ORDER</span>
-</button>
+</a>
 </div>
 </div>
 <!-- Bento Grid Layout -->
@@ -138,36 +143,33 @@
                         Technical DNA
                     </h2>
 <div class="space-y-6">
-<div class="flex flex-col gap-1">
+<!-- Always show material and configuration if present -->
+<div class="flex flex-col gap-1" th:if="${card.material != '—'}">
 <span class="text-xs font-bold text-on-surface-variant uppercase tracking-widest">Main Material</span>
-<span class="text-on-surface font-semibold text-lg">C45 Carbon Steel &amp; Natural Oak Wood</span>
+<span class="text-on-surface font-semibold text-lg" th:text="${card.material}">Material</span>
 </div>
-<div class="flex flex-col gap-1">
-<span class="text-xs font-bold text-on-surface-variant uppercase tracking-widest">Dimensions (LxWxH)</span>
-<span class="text-on-surface font-semibold text-lg">1600mm x 800mm x 750mm</span>
+<div class="flex flex-col gap-1" th:if="${card.configuration != '—'}">
+<span class="text-xs font-bold text-on-surface-variant uppercase tracking-widest">Configuration</span>
+<span class="text-on-surface font-semibold text-lg" th:text="${card.configuration}">Config</span>
 </div>
-<div class="flex flex-col gap-1">
-<span class="text-xs font-bold text-on-surface-variant uppercase tracking-widest">Surface Treatment</span>
-<span class="text-on-surface font-semibold text-lg">AkzoNobel Matte Powder Coating</span>
+<!-- Dynamic specs from the specs array -->
+<div th:each="spec : ${card.specs}" class="flex flex-col gap-1">
+<span class="text-xs font-bold text-on-surface-variant uppercase tracking-widest" th:text="${spec.label}">Label</span>
+<span class="text-on-surface font-semibold text-lg" th:text="${spec.value}">Value</span>
 </div>
-<div class="flex flex-col gap-1">
-<span class="text-xs font-bold text-on-surface-variant uppercase tracking-widest">Max Load Capacity</span>
-<span class="text-on-surface font-semibold text-lg">150 kg</span>
-</div>
-<div class="flex flex-col gap-1">
-<span class="text-xs font-bold text-on-surface-variant uppercase tracking-widest">Net Weight</span>
-<span class="text-on-surface font-semibold text-lg">42.5 kg</span>
+<!-- Fallback when no specs -->
+<div th:if="${card.specs.isEmpty() and card.material == '—' and card.configuration == '—'}" class="text-sm text-on-surface-variant italic">
+No technical specifications available.
 </div>
 </div>
 <div class="mt-8 pt-6 border-t border-outline-variant/15">
 <div class="bg-surface-container-low p-4 rounded-lg">
 <div class="flex items-center gap-2 mb-2 text-primary">
-<span class="material-symbols-outlined text-sm">inventory_2</span>
-<span class="text-xs font-bold uppercase tracking-widest">Standard Packaging</span>
+<span class="material-symbols-outlined text-sm">payments</span>
+<span class="text-xs font-bold uppercase tracking-widest">Display Price</span>
 </div>
-<p class="text-sm text-on-surface-variant leading-relaxed">
-                                5-layer carton box, EPS contoured foam, ABS plastic corner protectors against impact.
-                            </p>
+<p class="text-2xl font-black text-primary"
+   th:text="${card.displayPrice != null} ? ${#numbers.formatDecimal(card.displayPrice, 0, 'COMMA', 0, 'POINT') + ' ₫'} : 'Contact for price'">Price</p>
 </div>
 </div>
 </section>
@@ -207,9 +209,15 @@
 <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
 <!-- Large Featured Image -->
 <div class="col-span-2 row-span-2 group relative overflow-hidden rounded-xl bg-surface-container">
-<img alt="high quality close up of heavy industrial metal desk frame with clean welds and premium black powder coating finish" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDEW7XdyXlG5j4y9fi7IK57zcqGlzdowCFytqYaNNOzInSdnOSNC15vbnCtNxGG1_yOT5VSMRW1ywl-cQ6JR1-QPUYwE8letsPjo2MaiTDlgI5wyXZ777JnJgAzDM1ZfxPm6v_XfEsYftipX7llX_TD7Kyg_pyjZq9dRgKCrcDj4GjogMvyX0UmI1SGY4lCRpKErEmblpp3oC2XbXuuO7wjNGEPEKsmDYn65UATkTRE2BNibiSBnfgiG325K76cOEYg-KWDbI6JX9k"/>
+<img th:if="${!#strings.isEmpty(card.imageUrl)}"
+     th:src="${card.imageUrl}"
+     th:alt="${card.name}"
+     class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"/>
+<div th:if="${#strings.isEmpty(card.imageUrl)}" class="w-full h-64 flex items-center justify-center">
+<span class="material-symbols-outlined text-7xl text-outline">image</span>
+</div>
 <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
-<span class="text-white text-xs font-medium">Real heavy-duty steel frame structure</span>
+<span class="text-white text-xs font-medium" th:text="${card.name}">Product Name</span>
 </div>
 </div>
 <!-- Video/Action Card -->
@@ -260,9 +268,8 @@
 </div>
 <div class="bg-surface-container-low p-6 rounded-xl border border-outline-variant/15">
 <h4 class="font-headline font-bold text-primary mb-3">Notes for Buyers</h4>
-<p class="text-sm text-on-surface-variant leading-relaxed">
-                            This model requires oversized packaging. Sea freight (LCL) is recommended to optimize costs. Customs clearance usually takes 3-5 business days.
-                        </p>
+<p class="text-sm text-on-surface-variant leading-relaxed"
+   th:text="${!#strings.isEmpty(card.notes)} ? ${card.notes} : 'No additional notes for this product.'">Notes</p>
 </div>
 </section>
 </div>

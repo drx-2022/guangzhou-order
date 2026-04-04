@@ -145,32 +145,32 @@ Sign Out
 </div>
 </div>
 <nav class="flex-1 space-y-1">
-<a class="flex items-center space-x-3 py-3 px-4 bg-[#cbe7f5] text-[#003461] rounded-lg mx-2 transition-all" href="#">
+<a class="flex items-center space-x-3 py-3 px-4 bg-[#cbe7f5] text-[#003461] rounded-lg mx-2 transition-all" th:href="@{/dashboard}">
 <span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
 <span>Dashboard</span>
 </a>
-<a class="flex items-center space-x-3 py-3 px-4 text-[#424750] hover:bg-[#f2f4f6] mx-2 rounded-lg transition-all" href="#">
+<a class="flex items-center space-x-3 py-3 px-4 text-[#424750] hover:bg-[#f2f4f6] mx-2 rounded-lg transition-all" th:href="@{/catalog}">
 <span class="material-symbols-outlined" data-icon="monitoring">monitoring</span>
 <span>Markets</span>
 </a>
-<a class="flex items-center space-x-3 py-3 px-4 text-[#424750] hover:bg-[#f2f4f6] mx-2 rounded-lg transition-all" href="#">
+<a class="flex items-center space-x-3 py-3 px-4 text-[#424750] hover:bg-[#f2f4f6] mx-2 rounded-lg transition-all" th:href="@{/orders}">
 <span class="material-symbols-outlined" data-icon="receipt_long">receipt_long</span>
 <span>Transactions</span>
 </a>
-<a class="flex items-center space-x-3 py-3 px-4 text-[#424750] hover:bg-[#f2f4f6] mx-2 rounded-lg transition-all" href="#">
+<a class="flex items-center space-x-3 py-3 px-4 text-[#424750] hover:bg-[#f2f4f6] mx-2 rounded-lg transition-all" th:href="@{/chat}">
 <span class="material-symbols-outlined" data-icon="chat_bubble">chat_bubble</span>
 <span>Messages</span>
 </a>
-<a class="flex items-center space-x-3 py-3 px-4 text-[#424750] hover:bg-[#f2f4f6] mx-2 rounded-lg transition-all" href="#">
+<a class="flex items-center space-x-3 py-3 px-4 text-[#424750] hover:bg-[#f2f4f6] mx-2 rounded-lg transition-all" th:href="@{/dashboard}">
 <span class="material-symbols-outlined" data-icon="settings">settings</span>
 <span>Settings</span>
 </a>
 </nav>
 <div class="px-4 mt-auto space-y-2">
-<button class="w-full bg-primary-gradient text-white py-3 rounded-xl font-headline font-bold text-xs uppercase tracking-wider flex items-center justify-center space-x-2 shadow-lg shadow-primary/20 active:scale-95 transition-all">
+<a th:href="@{/chat}" class="w-full bg-primary-gradient text-white py-3 rounded-xl font-headline font-bold text-xs uppercase tracking-wider flex items-center justify-center space-x-2 shadow-lg shadow-primary/20 active:scale-95 transition-all">
 <span class="material-symbols-outlined text-sm">add_circle</span>
 <span>Create New Request</span>
-</button>
+</a>
 </div>
 </aside>
 <!-- Main Content Area -->
@@ -182,14 +182,14 @@ Sign Out
 <p class="text-on-surface-variant font-medium">Track your Guangzhou sourcing progress for today.</p>
 </div>
 <div class="flex items-center gap-3">
-<button class="px-6 py-2.5 bg-surface-container-lowest text-primary font-bold rounded-lg border border-outline-variant/20 hover:bg-surface-container-low transition-colors flex items-center gap-2">
+<a th:href="@{/orders}" class="px-6 py-2.5 bg-surface-container-lowest text-primary font-bold rounded-lg border border-outline-variant/20 hover:bg-surface-container-low transition-colors flex items-center gap-2">
 <span class="material-symbols-outlined text-lg">download</span>
 <span>Export Report</span>
-</button>
-<button class="px-6 py-2.5 bg-primary-gradient text-white font-bold rounded-lg flex items-center gap-2 shadow-lg shadow-primary/20">
+</a>
+<a th:href="@{/chat}" class="px-6 py-2.5 bg-primary-gradient text-white font-bold rounded-lg flex items-center gap-2 shadow-lg shadow-primary/20">
 <span class="material-symbols-outlined text-lg" style="font-variation-settings: 'FILL' 1;">support_agent</span>
 <span>Contact Specialist</span>
-</button>
+</a>
 </div>
 </section>
 <!-- Bento Grid: Order Overview -->
@@ -200,7 +200,7 @@ Sign Out
 <div class="p-3 bg-secondary-container rounded-lg text-primary">
 <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">handshake</span>
 </div>
-<span class="text-3xl font-black text-primary font-headline">08</span>
+<span class="text-3xl font-black text-primary font-headline" th:text="${stats.negotiating}">0</span>
 </div>
 <h3 class="font-headline font-bold text-on-surface-variant mb-1">Negotiating</h3>
 <p class="text-xs text-on-surface-variant/70">Quote response required</p>
@@ -211,7 +211,7 @@ Sign Out
 <div class="p-3 bg-tertiary-fixed text-tertiary">
 <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">factory</span>
 </div>
-<span class="text-3xl font-black text-primary font-headline">14</span>
+<span class="text-3xl font-black text-primary font-headline" th:text="${stats.inProduction}">0</span>
 </div>
 <h3 class="font-headline font-bold text-on-surface-variant mb-1">In Production</h3>
 <p class="text-xs text-on-surface-variant/70">On schedule</p>
@@ -222,10 +222,11 @@ Sign Out
 <div class="p-3 bg-[#fff4e5] text-[#b45d00] rounded-lg">
 <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">camera_enhance</span>
 </div>
-<span class="text-3xl font-black text-primary font-headline">03</span>
+<span class="text-3xl font-black text-primary font-headline" th:text="${stats.pendingApproval}">0</span>
 </div>
 <h3 class="font-headline font-bold text-on-surface-variant mb-1">Pending Approval</h3>
-<p class="text-xs text-[#b45d00] font-bold">Action required</p>
+<p class="text-xs text-[#b45d00] font-bold" th:classappend="${stats.pendingApproval > 0} ? '' : 'hidden'">Action required</p>
+<p class="text-xs text-on-surface-variant/70" th:classappend="${stats.pendingApproval == 0} ? '' : 'hidden'">No items pending</p>
 </div>
 <!-- Card 4 -->
 <div class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant/10 group hover:border-primary/20 transition-all">
@@ -233,10 +234,10 @@ Sign Out
 <div class="p-3 bg-primary-fixed text-primary rounded-lg">
 <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">task_alt</span>
 </div>
-<span class="text-3xl font-black text-primary font-headline">124</span>
+<span class="text-3xl font-black text-primary font-headline" th:text="${stats.completed}">0</span>
 </div>
 <h3 class="font-headline font-bold text-on-surface-variant mb-1">Completed</h3>
-<p class="text-xs text-on-surface-variant/70">This month: +12 orders</p>
+<p class="text-xs text-on-surface-variant/70">Total completed orders</p>
 </div>
 </section>
 <!-- Main Layout Split -->
@@ -244,75 +245,50 @@ Sign Out
 <!-- Production Roadmap (2/3 width) -->
 <div class="lg:col-span-2">
 <div class="flex items-center justify-between mb-6">
-<h2 class="text-xl font-black text-primary font-headline tracking-tight">Order Tracking</h2>
-<a class="text-sm font-bold text-primary-container hover:underline" href="#">View all orders</a>
+<h2 class="text-xl font-black text-primary font-headline tracking-tight">Production Roadmap</h2>
+<a class="text-sm font-bold text-primary-container hover:underline" th:href="@{/orders}">View all orders</a>
 </div>
 <div class="space-y-4">
-<!-- Order Item 1 -->
-<div class="bg-surface-container-lowest p-5 rounded-xl border border-outline-variant/10 flex flex-col md:flex-row gap-6">
-<div class="w-24 h-24 rounded-lg bg-surface-container overflow-hidden shrink-0">
-<img class="w-full h-full object-cover" data-alt="Modern minimalist watch on light background with soft shadows for B2B product showcase" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBfxmJraNBhZAElrykR-DhFWtAzcW99k3JTkLxQ64N6FcMKtTlcV_QFj9my8bjAZ-s6rZWya66hDN9AAJZmsqQZVnx_YyNCRA7nXvfJSeGSF7X-CyL-9mfRtbJ6-nXvEL9fgm2LTUNV0-CQa-45BVlCZj8cYL6EZw0GoGW61j9S3HCeP_1JHoWv-oeYPXORfFs1P_V5GiyUogF9JeAaK9uCcodDNBV2yid61wgFrRyUfLUOpd0xjPrhH1EoR-ghdmT2QRj4RUG4rOg"/>
+<!-- Empty state -->
+<div th:if="${activeOrders.isEmpty()}" class="bg-surface-container-lowest p-8 rounded-xl border border-outline-variant/10 text-center">
+<span class="material-symbols-outlined text-4xl text-outline mb-3 block">inventory_2</span>
+<p class="font-headline font-bold text-on-surface-variant mb-1">No active orders</p>
+<p class="text-xs text-on-surface-variant/70">Your active orders will appear here once created.</p>
+<a th:href="@{/chat}" class="inline-flex items-center gap-2 mt-4 px-4 py-2 bg-primary-gradient text-white text-xs font-bold rounded-lg">
+<span class="material-symbols-outlined text-sm">add_circle</span>Create New Request
+</a>
+</div>
+<!-- Dynamic order cards -->
+<div th:each="o : ${activeOrders}" class="bg-surface-container-lowest p-5 rounded-xl border border-outline-variant/10 flex flex-col md:flex-row gap-6">
+<div class="w-24 h-24 rounded-lg bg-surface-container flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-4xl text-outline">inventory_2</span>
 </div>
 <div class="flex-1 space-y-3">
 <div class="flex justify-between items-start">
 <div>
-<h4 class="font-headline font-extrabold text-primary">GZ-ORD-7721 • Minimalist Watch</h4>
-<p class="text-xs text-on-surface-variant">Supplier: Shenzhen Precision Tech</p>
+<h4 class="font-headline font-extrabold text-primary" th:text="${o.displayId + ' • ' + o.name}">GZ-ORD-0000</h4>
+<p class="text-xs text-on-surface-variant" th:text="'Status: ' + ${o.statusLabel}">Status</p>
 </div>
-<span class="px-2 py-1 bg-tertiary-fixed text-[10px] font-black uppercase tracking-tighter rounded">In Production</span>
-</div>
-<div class="space-y-1.5">
-<div class="flex justify-between text-[10px] font-bold text-on-surface-variant">
-<span>Stage: Surface Finishing</span>
-<span>75%</span>
-</div>
-<div class="w-full h-2 bg-surface-container rounded-full overflow-hidden">
-<div class="h-full bg-primary-gradient" style="width: 75%"></div>
-</div>
-</div>
-<div class="flex items-center gap-4 pt-1">
-<div class="flex items-center gap-1 text-[10px] text-on-surface-variant">
-<span class="material-symbols-outlined text-sm">calendar_today</span>
-<span>Estimated: 24/11/2024</span>
-</div>
-<div class="flex items-center gap-1 text-[10px] text-on-surface-variant">
-<span class="material-symbols-outlined text-sm">package_2</span>
-<span>Quantity: 500 pcs</span>
-</div>
-</div>
-</div>
-</div>
-<!-- Order Item 2 -->
-<div class="bg-surface-container-lowest p-5 rounded-xl border border-outline-variant/10 flex flex-col md:flex-row gap-6">
-<div class="w-24 h-24 rounded-lg bg-surface-container overflow-hidden shrink-0">
-<img class="w-full h-full object-cover" data-alt="Vibrant red athletic sneakers on clean white surface highlighting commercial product photography" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDT45eaquqZxZpDTqbdMDwLyb1Z42MW0g1OIuXzw14_-t-_YfMPwVNOOQcLTEx8hvBh1JeaL-djxXtpS6dYWufoPaeRUkQgreQB_c3JUmaqhPPfu5OYnSq5pUVFonhfwzPcrvwDM6S-scNcGHnOdCOG6pULq-h6qJhhFLuz4ZsBek2zyK5U627fS-f3kiJmcTf_s-QGzAV65cU77YgsnKwMnHnLpzFkErK7VqtnJKu271o9SMCevxHkltVHJjAUG9AXfrUJqneSA5A"/>
-</div>
-<div class="flex-1 space-y-3">
-<div class="flex justify-between items-start">
-<div>
-<h4 class="font-headline font-extrabold text-primary">GZ-ORD-8812 • Athletic Sneaker X-1</h4>
-<p class="text-xs text-on-surface-variant">Supplier: Fujian Footwear Group</p>
-</div>
-<span class="px-2 py-1 bg-secondary-container text-primary text-[10px] font-black uppercase tracking-tighter rounded">Sample Approved</span>
+<span class="px-2 py-1 bg-tertiary-fixed text-[10px] font-black uppercase tracking-tighter rounded" th:text="${o.statusLabel}">Active</span>
 </div>
 <div class="space-y-1.5">
 <div class="flex justify-between text-[10px] font-bold text-on-surface-variant">
-<span>Stage: Quality Control</span>
-<span>90%</span>
+<span th:text="'Progress: ' + ${o.progressPercent} + '%'">Progress: 0%</span>
+<span th:text="${o.progressPercent} + '%'">0%</span>
 </div>
 <div class="w-full h-2 bg-surface-container rounded-full overflow-hidden">
-<div class="h-full bg-tertiary" style="width: 90%"></div>
+<div class="h-full bg-primary-gradient" th:style="'width: ' + ${o.progressPercent} + '%'"></div>
 </div>
 </div>
 <div class="flex items-center gap-4 pt-1">
-<div class="flex items-center gap-1 text-[10px] text-on-surface-variant">
-<span class="material-symbols-outlined text-sm">calendar_today</span>
-<span>Estimated: 18/11/2024</span>
-</div>
-<div class="flex items-center gap-1 text-[10px] text-on-surface-variant">
-<span class="material-symbols-outlined text-sm">package_2</span>
-<span>Quantity: 1,200 pcs</span>
-</div>
+<a th:href="@{/orders/{id}(id=${o.orderId})}" class="flex items-center gap-1 text-[10px] font-bold text-primary-container hover:underline">
+<span class="material-symbols-outlined text-sm">open_in_new</span>
+View Order
+</a>
+<a th:if="${o.status == 'PENDING_CUSTOMER_APPROVAL'}" th:href="@{/orders/{id}/review(id=${o.orderId})}" class="flex items-center gap-1 text-[10px] font-bold text-[#b45d00] hover:underline">
+<span class="material-symbols-outlined text-sm">camera_enhance</span>
+Approve Visual Proof
+</a>
 </div>
 </div>
 </div>
@@ -322,56 +298,71 @@ Sign Out
 <div>
 <h2 class="text-xl font-black text-primary font-headline tracking-tight mb-6">Latest Updates</h2>
 <div class="bg-surface-container-low rounded-2xl p-6 space-y-6">
-<!-- Notification 1 -->
-<div class="flex gap-4 group cursor-pointer">
-<div class="shrink-0 w-10 h-10 rounded-full bg-primary-fixed flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
-<span class="material-symbols-outlined text-xl">image_search</span>
+<!-- Dynamic: orders awaiting visual proof approval -->
+<div th:each="o, iter : ${pendingOrders}">
+<div class="flex gap-4 group">
+<div class="shrink-0 w-10 h-10 rounded-full bg-[#fff4e5] flex items-center justify-center text-[#b45d00] group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-xl">camera_enhance</span>
 </div>
 <div class="space-y-1">
 <div class="flex justify-between items-center">
 <p class="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">Photo QC</p>
-<span class="text-[10px] text-on-surface-variant/60">2 hours ago</span>
+<span class="text-[10px] text-on-surface-variant/60">Action required</span>
 </div>
-<h5 class="text-sm font-bold text-primary font-headline">Product photos for GZ-ORD-902 ready</h5>
-<p class="text-xs text-on-surface-variant leading-relaxed">Please review and approve the factory photos before bulk packaging starts.</p>
-<button class="text-xs font-black text-primary-container pt-2 flex items-center gap-1">
-                                    Approve now <span class="material-symbols-outlined text-sm">chevron_right</span>
-</button>
+<h5 class="text-sm font-bold text-primary font-headline" th:text="'Visual proof ready for ' + ${o.displayId}">Order ready</h5>
+<p class="text-xs text-on-surface-variant leading-relaxed" th:text="${o.name}">Product name</p>
+<a th:href="@{/orders/{id}/review(id=${o.orderId})}" class="text-xs font-black text-primary-container pt-2 flex items-center gap-1">
+Approve now <span class="material-symbols-outlined text-sm">chevron_right</span>
+</a>
+</div>
+</div>
+<div class="h-px bg-outline-variant/15" th:if="${!iter.last or !pendingOrders.isEmpty()}"></div>
+</div>
+<!-- Empty state for pending approvals -->
+<div th:if="${pendingOrders.isEmpty()}" class="flex gap-4 group cursor-pointer">
+<div class="shrink-0 w-10 h-10 rounded-full bg-primary-fixed flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-xl">task_alt</span>
+</div>
+<div class="space-y-1">
+<p class="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">All Clear</p>
+<h5 class="text-sm font-bold text-primary font-headline">No items need approval</h5>
+<p class="text-xs text-on-surface-variant leading-relaxed">You're all caught up. New updates will appear here.</p>
 </div>
 </div>
 <!-- Divider -->
-<div class="h-px bg-outline-variant/15"></div>
-<!-- Notification 2 -->
+<div class="h-px bg-outline-variant/15" th:if="${pendingOrders.isEmpty()}"></div>
+<!-- Static: Negotiating orders notification -->
 <div class="flex gap-4 group cursor-pointer">
 <div class="shrink-0 w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
-<span class="material-symbols-outlined text-xl">payments</span>
+<span class="material-symbols-outlined text-xl">handshake</span>
 </div>
 <div class="space-y-1">
 <div class="flex justify-between items-center">
-<p class="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">New Quote</p>
-<span class="text-[10px] text-on-surface-variant/60">5 hours ago</span>
+<p class="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">Negotiating</p>
+<span class="text-[10px] text-on-surface-variant/60" th:text="${stats.negotiating} + ' orders'">0 orders</span>
 </div>
-<h5 class="text-sm font-bold text-primary font-headline">Updated ocean freight rates</h5>
-<p class="text-xs text-on-surface-variant leading-relaxed">Rates for Guangzhou - Cat Lai route for November updated. 5% discount for orders &gt; 10 CBM.</p>
-<button class="text-xs font-black text-primary-container pt-2 flex items-center gap-1">
-                                    View details <span class="material-symbols-outlined text-sm">chevron_right</span>
-</button>
+<h5 class="text-sm font-bold text-primary font-headline" th:text="${stats.negotiating} + ' order(s) awaiting quote response'">Orders in negotiation</h5>
+<a th:href="@{/orders}" class="text-xs font-black text-primary-container pt-2 flex items-center gap-1">
+View orders <span class="material-symbols-outlined text-sm">chevron_right</span>
+</a>
 </div>
 </div>
 <!-- Divider -->
 <div class="h-px bg-outline-variant/15"></div>
-<!-- Notification 3 -->
+<!-- Static: Community Catalog -->
 <div class="flex gap-4 group cursor-pointer">
 <div class="shrink-0 w-10 h-10 rounded-full bg-tertiary-fixed flex items-center justify-center text-tertiary group-hover:scale-110 transition-transform">
-<span class="material-symbols-outlined text-xl">verified_user</span>
+<span class="material-symbols-outlined text-xl">storefront</span>
 </div>
 <div class="space-y-1">
 <div class="flex justify-between items-center">
-<p class="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">Verification</p>
-<span class="text-[10px] text-on-surface-variant/60">Yesterday</span>
+<p class="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">Catalog</p>
 </div>
-<h5 class="text-sm font-bold text-primary font-headline">KingSteel factory successfully audited</h5>
-<p class="text-xs text-on-surface-variant leading-relaxed">Direct inspection result: ISO 9001 compliant. Ready for ordering.</p>
+<h5 class="text-sm font-bold text-primary font-headline">Browse the Community Catalog</h5>
+<p class="text-xs text-on-surface-variant leading-relaxed">Find proven product configurations and clone them into a new request.</p>
+<a th:href="@{/catalog}" class="text-xs font-black text-primary-container pt-2 flex items-center gap-1">
+Explore now <span class="material-symbols-outlined text-sm">chevron_right</span>
+</a>
 </div>
 </div>
 </div>
@@ -381,19 +372,19 @@ Sign Out
 </div>
 <!-- Bottom Navigation Bar (Mobile Only) -->
 <nav class="lg:hidden fixed bottom-0 left-0 w-full bg-[#ffffff]/90 backdrop-blur-lg flex justify-around items-center px-4 pb-safe pt-2 z-50 shadow-[0_-4px_12px_rgba(0,0,0,0.05)] border-t border-[#c2c6d1]/15">
-<a class="flex flex-col items-center justify-center text-[#003461] bg-[#cbe7f5]/50 rounded-xl px-4 py-1" href="#">
+<a class="flex flex-col items-center justify-center text-[#003461] bg-[#cbe7f5]/50 rounded-xl px-4 py-1" th:href="@{/dashboard}">
 <span class="material-symbols-outlined" data-icon="home">home</span>
 <span class="font-['Inter'] text-[10px] font-medium uppercase tracking-widest">Home</span>
 </a>
-<a class="flex flex-col items-center justify-center text-[#424750]" href="#">
+<a class="flex flex-col items-center justify-center text-[#424750]" th:href="@{/catalog}">
 <span class="material-symbols-outlined" data-icon="show_chart">show_chart</span>
 <span class="font-['Inter'] text-[10px] font-medium uppercase tracking-widest">Charts</span>
 </a>
-<a class="flex flex-col items-center justify-center text-[#424750]" href="#">
+<a class="flex flex-col items-center justify-center text-[#424750]" th:href="@{/orders}">
 <span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
 <span class="font-['Inter'] text-[10px] font-medium uppercase tracking-widest">Orders</span>
 </a>
-<a class="flex flex-col items-center justify-center text-[#424750]" href="#">
+<a class="flex flex-col items-center justify-center text-[#424750]" th:href="@{/chat}">
 <span class="material-symbols-outlined" data-icon="forum">forum</span>
 <span class="font-['Inter'] text-[10px] font-medium uppercase tracking-widest">Chat</span>
 </a>
