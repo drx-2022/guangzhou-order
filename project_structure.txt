@@ -1,0 +1,84 @@
+guangzhou-order/
+├── src/
+│   ├── main/
+│   │   ├── java/
+│   │   │   └── com/
+│   │   │       └── example/
+│   │   │           └── guangzhouorder/
+│   │   │               ├── DataSeeder.java
+│   │   │               ├── GuangzhouOrderApplication.java
+│   │   │               ├── config/
+│   │   │               │   └── SecurityConfig.java
+│   │   │               ├── controller/
+│   │   │               │   ├── AuthController.java
+│   │   │               │   ├── CatalogController.java
+│   │   │               │   ├── DashboardController.java
+│   │   │               │   └── HomeController.java
+│   │   │               ├── dto/
+│   │   │               │   └── SignUpRequest.java
+│   │   │               ├── entity/
+│   │   │               │   ├── Category.java
+│   │   │               │   ├── Commission.java
+│   │   │               │   ├── CommissionPolicy.java
+│   │   │               │   ├── Conversation.java
+│   │   │               │   ├── ConversationRead.java
+│   │   │               │   ├── Message.java
+│   │   │               │   ├── Order.java
+│   │   │               │   ├── OrderItem.java
+│   │   │               │   ├── ProductCard.java
+│   │   │               │   └── User.java
+│   │   │               ├── repository/
+│   │   │               │   ├── CategoryRepository.java
+│   │   │               │   ├── CommissionPolicyRepository.java
+│   │   │               │   ├── CommissionRepository.java
+│   │   │               │   ├── ConversationReadRepository.java
+│   │   │               │   ├── ConversationRepository.java
+│   │   │               │   ├── MessageRepository.java
+│   │   │               │   ├── OrderItemRepository.java
+│   │   │               │   ├── OrderRepository.java
+│   │   │               │   ├── ProductCardRepository.java
+│   │   │               │   └── UserRepository.java
+│   │   │               ├── security/
+│   │   │               │   ├── CustomUserDetailsService.java
+│   │   │               │   ├── JwtAuthenticationFilter.java
+│   │   │               │   └── JwtTokenProvider.java
+│   │   │               └── service/
+│   │   │                   ├── EmailService.java
+│   │   │                   └── UserService.java
+│   │   └── resources/
+│   │       ├── application.properties
+│   │       ├── db/
+│   │       │   └── migration/
+│   │       │       └── V2__add_email_verification_to_users.sql
+│   │       └── templates/
+│   │           ├── affiliate_dashboard.html
+│   │           ├── chat_with_customizer.html
+│   │           ├── checkout.html
+│   │           ├── community_catalog.html
+│   │           ├── customer_dashboard.html
+│   │           ├── home.html
+│   │           ├── interactive_price_chart.html
+│   │           ├── login.html
+│   │           ├── my_orders.html
+│   │           ├── product_details.html
+│   │           ├── production_roadmap.html
+│   │           ├── sign_up.html
+│   │           ├── verify_pending.html
+│   │           └── visual_proof_review.html
+│   └── test/
+│       └── java/
+│           └── com/
+│               └── example/
+│                   └── guangzhouorder/
+│                       └── GuangzhouOrderApplicationTests.java
+├── .gitattributes
+├── .gitignore
+├── .mvn/
+│   └── wrapper/
+│       └── maven-wrapper.properties
+├── README.md
+├── git_branch.txt
+├── mvnw
+├── mvnw.cmd
+├── pom.xml
+└── project_structure.txt

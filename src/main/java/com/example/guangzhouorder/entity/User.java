@@ -34,6 +34,12 @@ public class User {
     @Column(nullable = false)
     private String role;
 
+    @Column(name = "account_verified", nullable = false)
+    private boolean accountVerified;
+
+    @Column(name = "login_disabled", nullable = false)
+    private boolean loginDisabled;
+
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;

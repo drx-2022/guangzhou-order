@@ -33,3 +33,7 @@ build/
 .vscode/
 src/main/resources/application.properties
 *.properties
+
+# Project metadata files
+project_structure.txt
+git_branch.txt
