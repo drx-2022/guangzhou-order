@@ -32,6 +32,9 @@ public class MessageResponse {
 
     private LocalDateTime createdAt;
 
+    private SpecProposalCardResponse proposalCard;
+    private PriceQuoteResponse priceQuote;
+
     public static MessageResponse from(Message message) {
         return MessageResponse.builder()
                 .messageId(message.getMessageId())

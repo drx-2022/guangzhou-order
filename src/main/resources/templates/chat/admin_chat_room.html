@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html class="light" lang="en"><head>
+<html class="light" lang="en" xmlns:th="http://www.thymeleaf.org"><head>
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
     <title>Guangzhou Direct - Admin Chat Room</title>
@@ -160,6 +160,10 @@
             </div>
             <div class="flex gap-2">
                 <button class="p-2 hover:bg-surface-container text-on-surface-variant rounded-full"><span class="material-symbols-outlined">search</span></button>
+                <button id="proposalModalBtn" class="px-4 py-2 bg-tertiary-container text-white rounded-lg font-headline font-bold text-sm flex items-center gap-2 hover:bg-tertiary transition-all">
+                    <span class="material-symbols-outlined text-sm">description</span>
+                    Create Proposal
+                </button>
                 <a th:href="@{/admin/chat}" class="px-4 py-2 bg-primary text-white rounded-lg font-headline font-bold text-sm flex items-center gap-2 hover:bg-primary/90 transition-all">
                     <span class="material-symbols-outlined text-sm">list</span>
                     All Conversations
@@ -183,58 +187,242 @@
             <th:block th:each="msg : ${messages}">
                 <!-- Determine if message is from current user -->
                 <div th:classappend="${msg.senderEmail == currentUserEmail} ? 'items-end' : 'items-start'" class="flex flex-col gap-2">
-                    <!-- Message: From Current User (Right aligned) -->
-                    <div th:if="${msg.senderEmail == currentUserEmail}" class="max-w-[80%] bg-primary text-white p-4 rounded-xl rounded-tr-none shadow-sm">
-                        <p class="text-sm" th:text="${msg.content}"></p>
-                    </div>
+                    <!-- Message from Current User (Right aligned) -->
+                    <th:block th:if="${msg.senderEmail == currentUserEmail}">
+                        <!-- Regular text/file/image message -->
+                        <div th:if="${msg.messageType != 'SPEC_PROPOSAL_CARD' and msg.messageType != 'PRICE_QUOTE'}"
+                             class="max-w-[80%] bg-primary text-white p-4 rounded-xl rounded-tr-none shadow-sm">
+                            <p class="text-sm" th:text="${msg.content}"></p>
+                        </div>
+
+                        <!-- Proposal card sent by admin (right aligned) -->
+                        <div th:if="${msg.messageType == 'SPEC_PROPOSAL_CARD' and msg.proposalCard != null}"
+                             class="bg-white rounded-xl shadow-lg overflow-hidden border border-outline-variant/20 max-w-md" th:attr="data-proposal-id=${msg.proposalCard.proposalCardId}">
+                            <div class="bg-primary px-4 py-3 flex justify-between items-center">
+                                <h3 class="font-headline text-white font-bold text-sm">Specification Proposal</h3>
+                                <span class="text-[10px] text-primary-fixed-dim font-bold tracking-tighter uppercase"
+                                      th:text="'ID: ' + ${msg.proposalCard.proposalCardId}"></span>
+                            </div>
+                            <div class="p-5 space-y-4">
+                                <div class="border-b border-outline-variant/20 pb-3">
+                                    <p class="text-[10px] font-headline font-bold text-on-surface-variant uppercase tracking-wide mb-1">Materials</p>
+                                    <p class="text-sm font-semibold text-on-surface"
+                                       th:text="${msg.proposalCard.materials ?: 'Not specified'}"></p>
+                                </div>
+                                <div class="border-b border-outline-variant/20 pb-3">
+                                    <p class="text-[10px] font-headline font-bold text-on-surface-variant uppercase tracking-wide mb-1">Dimensions</p>
+                                    <p class="text-sm font-semibold text-on-surface"
+                                       th:text="${msg.proposalCard.dimensions ?: 'Not specified'}"></p>
+                                </div>
+                                <!-- Color -->
+                                <div th:if="${msg.proposalCard.color}" class="border-b border-outline-variant/20 pb-3">
+                                    <p class="text-[10px] font-headline font-bold text-on-surface-variant uppercase tracking-wide mb-1">Color</p>
+                                    <p class="text-sm font-semibold text-on-surface" th:text="${msg.proposalCard.color}"></p>
+                                </div>
+                                <!-- Quantity -->
+                                <div th:if="${msg.proposalCard.quantity}" class="border-b border-outline-variant/20 pb-3">
+                                    <p class="text-[10px] font-headline font-bold text-on-surface-variant uppercase tracking-wide mb-1">Quantity</p>
+                                    <p class="text-sm font-semibold text-on-surface" th:text="${msg.proposalCard.quantity}"></p>
+                                </div>
+                                <!-- Estimate Price -->
+                                <div th:if="${msg.proposalCard.estimatePrice}" class="border-b border-outline-variant/20 pb-3">
+                                    <p class="text-[10px] font-headline font-bold text-on-surface-variant uppercase tracking-wide mb-1">Estimate Price (Ceiling)</p>
+                                    <p class="text-sm font-semibold text-primary" th:text="'$' + ${msg.proposalCard.estimatePrice}"></p>
+                                </div>
+                                <div th:if="${msg.proposalCard.technicalNotes}" class="border-b border-outline-variant/20 pb-3">
+                                    <p class="text-[10px] font-headline font-bold text-on-surface-variant uppercase tracking-wide mb-1">Technical Notes</p>
+                                    <p class="text-xs text-on-surface-variant leading-relaxed"
+                                       th:text="${msg.proposalCard.technicalNotes}"></p>
+                                </div>
+                                <!-- Reference Photos -->
+                                <div th:if="${msg.proposalCard.referencePhotoUrls != null and msg.proposalCard.referencePhotoUrls.size() > 0}" class="border-b border-outline-variant/20 pb-3">
+                                    <p class="text-[10px] font-headline font-bold text-on-surface-variant uppercase tracking-wide mb-2">Reference Photos</p>
+                                    <div class="flex flex-wrap gap-2">
+                                        <a th:each="photoUrl : ${msg.proposalCard.referencePhotoUrls}"
+                                           th:href="${photoUrl}" target="_blank"
+                                           class="inline-flex items-center gap-1 text-xs px-3 py-1.5 bg-primary/10 text-primary hover:bg-primary/20 rounded-lg transition-all">
+                                            <span class="material-symbols-outlined text-sm">image</span>
+                                            <span>View</span>
+                                        </a>
+                                    </div>
+                                </div>
+                                <!-- Status Badge -->
+                                <div class="pt-2">
+                                    <span th:classappend="${msg.proposalCard.status == 'PENDING' ? 'bg-orange-100 text-orange-700' :
+                                                           msg.proposalCard.status == 'ACCEPTED' ? 'bg-green-100 text-green-700' :
+                                                           'bg-red-100 text-red-700'}"
+                                          class="text-[10px] font-bold px-2.5 py-1 rounded-full"
+                                          th:text="${msg.proposalCard.status}"></span>
+                                </div>
+                                <!-- Go to Negotiation link for ACCEPTED proposals -->
+                                <div th:if="${msg.proposalCard.status == 'ACCEPTED' and msg.proposalCard.resultOrderId != null}" class="pt-2">
+                                    <a th:href="@{/admin/chat/order/{orderId}(orderId=${msg.proposalCard.resultOrderId})}"
+                                       class="inline-flex items-center gap-2 px-4 py-2 bg-tertiary-container hover:bg-tertiary text-white rounded-lg font-headline text-xs font-bold transition-all">
+                                        <span class="material-symbols-outlined text-sm">gavel</span>
+                                        Go to Price Negotiation
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Price Quote sent by admin (right aligned) -->
+                        <div th:if="${msg.messageType == 'PRICE_QUOTE' and msg.priceQuote != null}"
+                             class="bg-white rounded-2xl shadow-md overflow-hidden border border-outline-variant/10 max-w-sm" th:attr="data-quote-id=${msg.priceQuote.quoteId}">
+                            <div class="bg-primary px-5 py-3 flex items-center justify-between">
+                                <div class="flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-white/80 text-[18px]" style="font-variation-settings: 'FILL' 1;">request_quote</span>
+                                    <h3 class="font-headline text-white font-bold text-sm tracking-tight">Price Quote<span class="text-white/50 font-normal text-xs ml-1" th:text="'#' + ${msg.priceQuote.quoteId}"></span></h3>
+                                </div>
+                            </div>
+                            <div class="p-5">
+                                <div th:if="${msg.priceQuote.orderId != null}" class="flex items-center gap-1.5 text-xs text-on-surface-variant mb-3">
+                                    <span class="material-symbols-outlined text-[16px]">orders</span>
+                                    <span>Order #<span th:text="${msg.priceQuote.orderId}"></span></span>
+                                </div>
+                                <div class="flex items-baseline gap-1 mb-1">
+                                    <p class="text-[10px] font-headline font-bold text-on-surface-variant/60 uppercase tracking-widest">PROPOSED PRICE</p>
+                                </div>
+                                <p class="text-3xl font-extrabold text-on-surface font-headline tracking-tight" th:text="'$' + ${msg.priceQuote.proposedPrice}"></p>
+                                <div th:if="${msg.priceQuote.note != null and !msg.priceQuote.note.isEmpty()}" class="mt-4 bg-surface-container-low rounded-xl px-4 py-3">
+                                    <p class="text-xs text-on-surface-variant leading-relaxed" th:text="${msg.priceQuote.note}"></p>
+                                </div>
+                                <div class="mt-4">
+                                    <span th:classappend="${msg.priceQuote.status == 'PENDING' ? 'bg-amber-50 text-amber-600 ring-1 ring-amber-200' : msg.priceQuote.status == 'ACCEPTED' ? 'bg-emerald-50 text-emerald-600 ring-1 ring-emerald-200' : msg.priceQuote.status == 'COUNTERED' ? 'bg-blue-50 text-blue-600 ring-1 ring-blue-200' : 'bg-red-50 text-red-600 ring-1 ring-red-200'}"
+                                          class="text-[10px] font-bold px-3 py-1 rounded-full"
+                                          th:text="${msg.priceQuote.status}"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </th:block>
 
                     <!-- Message: From Other User (Left aligned) -->
                     <div th:unless="${msg.senderEmail == currentUserEmail}" class="flex items-end gap-3 max-w-[85%]">
                         <div class="w-8 h-8 rounded-full bg-secondary-container flex items-center justify-center shrink-0">
                             <span class="material-symbols-outlined text-secondary text-sm">person</span>
                         </div>
-                        <div th:if="${msg.messageType == 'TEXT'}" class="bg-surface-container-lowest p-4 rounded-xl rounded-bl-none shadow-sm border border-outline-variant/10">
-                            <p class="text-xs font-semibold text-primary mb-1" th:text="${msg.senderName}"></p>
-                            <p class="text-sm text-on-surface" th:text="${msg.content}"></p>
-                        </div>
-
-                        <!-- Spec Proposal Card -->
-                        <div th:if="${msg.messageType == 'SPEC_PROPOSAL_CARD'}" class="bg-white rounded-xl shadow-lg overflow-hidden border border-outline-variant/20 max-w-sm">
-                            <div class="bg-primary px-4 py-3 flex justify-between items-center">
-                                <h3 class="font-headline text-white font-bold text-sm">Specification Proposal</h3>
-                                <span class="text-[10px] text-primary-fixed-dim font-bold tracking-tighter uppercase" th:text="'ID: ' + ${msg.messageId}"></span>
+                        <div>
+                            <!-- Text message -->
+                            <div th:if="${msg.messageType == 'TEXT'}" class="bg-surface-container-lowest p-4 rounded-xl rounded-bl-none shadow-sm border border-outline-variant/10">
+                                <p class="text-xs font-semibold text-primary mb-1" th:text="${msg.senderName}"></p>
+                                <p class="text-sm text-on-surface" th:text="${msg.content}"></p>
                             </div>
-                            <div class="p-5 space-y-4">
-                                <div class="text-sm text-on-surface" th:utext="${msg.content}"></div>
-                                <div class="flex flex-col gap-2 pt-2">
-                                    <button class="w-full bg-tertiary-container hover:bg-tertiary text-white py-2.5 rounded-lg font-headline text-xs font-bold flex items-center justify-center gap-2 transition-all">
-                                        <span class="material-symbols-outlined text-sm">verified_user</span>
-                                        Accept Proposal
-                                    </button>
-                                    <button class="w-full border-2 border-outline-variant text-on-surface-variant hover:bg-surface py-2 rounded-lg font-headline text-xs font-bold transition-all">
-                                        Request Revisions
-                                    </button>
+
+                            <!-- Spec Proposal Card from customer (shouldn't happen but safe) -->
+                            <div th:if="${msg.messageType == 'SPEC_PROPOSAL_CARD' and msg.proposalCard != null}" class="bg-white rounded-xl shadow-lg overflow-hidden border border-outline-variant/20 max-w-md" th:attr="data-proposal-id=${msg.proposalCard.proposalCardId}">
+                                <div class="bg-primary px-4 py-3 flex justify-between items-center">
+                                    <h3 class="font-headline text-white font-bold text-sm">Specification Proposal</h3>
+                                    <span class="text-[10px] text-primary-fixed-dim font-bold tracking-tighter uppercase" th:text="'ID: ' + ${msg.proposalCard.proposalCardId}"></span>
+                                </div>
+                                <div class="p-5 space-y-4">
+                                    <div class="border-b border-outline-variant/20 pb-3">
+                                        <p class="text-[10px] font-headline font-bold text-on-surface-variant uppercase tracking-wide mb-1">Materials</p>
+                                        <p class="text-sm font-semibold text-on-surface" th:text="${msg.proposalCard.materials ?: 'Not specified'}"></p>
+                                    </div>
+                                    <div class="border-b border-outline-variant/20 pb-3">
+                                        <p class="text-[10px] font-headline font-bold text-on-surface-variant uppercase tracking-wide mb-1">Dimensions</p>
+                                        <p class="text-sm font-semibold text-on-surface" th:text="${msg.proposalCard.dimensions ?: 'Not specified'}"></p>
+                                    </div>
+                                    <div th:if="${msg.proposalCard.color}" class="border-b border-outline-variant/20 pb-3">
+                                        <p class="text-[10px] font-headline font-bold text-on-surface-variant uppercase tracking-wide mb-1">Color</p>
+                                        <p class="text-sm font-semibold text-on-surface" th:text="${msg.proposalCard.color}"></p>
+                                    </div>
+                                    <div th:if="${msg.proposalCard.quantity}" class="border-b border-outline-variant/20 pb-3">
+                                        <p class="text-[10px] font-headline font-bold text-on-surface-variant uppercase tracking-wide mb-1">Quantity</p>
+                                        <p class="text-sm font-semibold text-on-surface" th:text="${msg.proposalCard.quantity}"></p>
+                                    </div>
+                                    <div th:if="${msg.proposalCard.estimatePrice}" class="border-b border-outline-variant/20 pb-3">
+                                        <p class="text-[10px] font-headline font-bold text-on-surface-variant uppercase tracking-wide mb-1">Estimate Price (Ceiling)</p>
+                                        <p class="text-sm font-semibold text-primary" th:text="'$' + ${msg.proposalCard.estimatePrice}"></p>
+                                    </div>
+                                    <div th:if="${msg.proposalCard.technicalNotes}" class="border-b border-outline-variant/20 pb-3">
+                                        <p class="text-[10px] font-headline font-bold text-on-surface-variant uppercase tracking-wide mb-1">Technical Notes</p>
+                                        <p class="text-xs text-on-surface-variant leading-relaxed" th:text="${msg.proposalCard.technicalNotes}"></p>
+                                    </div>
+                                    <div th:if="${msg.proposalCard.referencePhotoUrls != null and msg.proposalCard.referencePhotoUrls.size() > 0}" class="pb-3">
+                                        <p class="text-[10px] font-headline font-bold text-on-surface-variant uppercase tracking-wide mb-2">Reference Photos</p>
+                                        <div class="flex flex-wrap gap-2">
+                                            <a th:each="photoUrl : ${msg.proposalCard.referencePhotoUrls}" th:href="${photoUrl}" target="_blank"
+                                               class="inline-flex items-center gap-1 text-xs px-3 py-1.5 bg-primary/10 text-primary hover:bg-primary/20 rounded-lg transition-all">
+                                                <span class="material-symbols-outlined text-sm">image</span><span>View</span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="pt-2 pb-3">
+                                        <span th:classappend="${msg.proposalCard.status == 'PENDING' ? 'bg-orange-100 text-orange-700' : msg.proposalCard.status == 'ACCEPTED' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}"
+                                              class="text-[10px] font-bold px-2.5 py-1 rounded-full"
+                                              th:text="${msg.proposalCard.status}"></span>
+                                    </div>
+                                    <div th:if="${msg.proposalCard.status == 'ACCEPTED' and msg.proposalCard.resultOrderId != null}" class="pt-2">
+                                        <a th:href="@{/admin/chat/order/{orderId}(orderId=${msg.proposalCard.resultOrderId})}"
+                                           class="inline-flex items-center gap-2 px-4 py-2 bg-tertiary-container hover:bg-tertiary text-white rounded-lg font-headline text-xs font-bold transition-all">
+                                            <span class="material-symbols-outlined text-sm">gavel</span>
+                                            Go to Price Negotiation
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <!-- File Attachment -->
-                        <div th:if="${msg.messageType == 'FILE'}" class="bg-surface-container-highest/50 p-3 rounded-xl border border-outline-variant/10 flex items-center gap-4 max-w-sm">
-                            <div class="w-10 h-10 bg-white rounded-lg flex items-center justify-center shadow-sm">
-                                <span class="material-symbols-outlined text-error">description</span>
+                            <!-- Price Quote from customer (left aligned) -->
+                            <div th:if="${msg.messageType == 'PRICE_QUOTE' and msg.priceQuote != null}"
+                                 class="bg-white rounded-2xl shadow-md overflow-hidden border border-outline-variant/10 max-w-sm" th:attr="data-quote-id=${msg.priceQuote.quoteId}">
+                                <div class="bg-primary px-5 py-3 flex items-center justify-between">
+                                    <div class="flex items-center gap-2">
+                                        <span class="material-symbols-outlined text-white/80 text-[18px]" style="font-variation-settings: 'FILL' 1;">request_quote</span>
+                                        <h3 class="font-headline text-white font-bold text-sm tracking-tight">Price Quote<span class="text-white/50 font-normal text-xs ml-1" th:text="'#' + ${msg.priceQuote.quoteId}"></span></h3>
+                                    </div>
+                                </div>
+                                <div class="p-5">
+                                    <div th:if="${msg.priceQuote.orderId != null}" class="flex items-center gap-1.5 text-xs text-on-surface-variant mb-3">
+                                        <span class="material-symbols-outlined text-[16px]">orders</span>
+                                        <span>Order #<span th:text="${msg.priceQuote.orderId}"></span></span>
+                                    </div>
+                                    <div class="flex items-center gap-2 text-xs text-on-surface-variant mb-3">
+                                        <span class="material-symbols-outlined text-[16px]">person</span>
+                                        <span th:text="${msg.priceQuote.proposedByName}"></span>
+                                    </div>
+                                    <div class="mb-1">
+                                        <p class="text-[10px] font-headline font-bold text-on-surface-variant/60 uppercase tracking-widest">PROPOSED PRICE</p>
+                                    </div>
+                                    <p class="text-3xl font-extrabold text-on-surface font-headline tracking-tight" th:text="'$' + ${msg.priceQuote.proposedPrice}"></p>
+                                    <div th:if="${msg.priceQuote.note != null and !msg.priceQuote.note.isEmpty()}" class="mt-4 bg-surface-container-low rounded-xl px-4 py-3">
+                                        <p class="text-xs text-on-surface-variant leading-relaxed" th:text="${msg.priceQuote.note}"></p>
+                                    </div>
+                                    <div class="mt-4" th:attr="id='quote-status-' + ${msg.priceQuote.quoteId}">
+                                        <span th:classappend="${msg.priceQuote.status == 'PENDING' ? 'bg-amber-50 text-amber-600 ring-1 ring-amber-200' : msg.priceQuote.status == 'ACCEPTED' ? 'bg-emerald-50 text-emerald-600 ring-1 ring-emerald-200' : msg.priceQuote.status == 'COUNTERED' ? 'bg-blue-50 text-blue-600 ring-1 ring-blue-200' : 'bg-red-50 text-red-600 ring-1 ring-red-200'}"
+                                              class="text-[10px] font-bold px-3 py-1 rounded-full"
+                                              th:text="${msg.priceQuote.status}"></span>
+                                    </div>
+                                    <!-- Accept button for quotes from customer, only if PENDING -->
+                                    <div th:if="${msg.priceQuote.status == 'PENDING' and msg.priceQuote.proposedByEmail != currentUserEmail}" class="mt-4"
+                                         th:attr="id='quote-actions-' + ${msg.priceQuote.quoteId}">
+                                        <button class="w-full bg-tertiary-container hover:bg-tertiary text-white py-2.5 rounded-xl font-headline text-xs font-bold flex items-center justify-center gap-2 transition-all shadow-sm"
+                                                th:attr="data-quote-id=${msg.priceQuote.quoteId}"
+                                                onclick="acceptQuote(this)">
+                                            <span class="material-symbols-outlined text-sm">check_circle</span>
+                                            Accept This Price
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="flex-1 min-w-0">
-                                <p class="text-xs font-bold truncate" th:text="${msg.content}"></p>
-                                <p class="text-[10px] text-on-surface-variant" th:text="${msg.mediaUrl}"></p>
-                            </div>
-                            <a th:if="${msg.mediaUrl}" th:href="${msg.mediaUrl}" target="_blank" class="p-1 hover:bg-white rounded-full transition-all">
-                                <span class="material-symbols-outlined text-primary text-lg">download</span>
-                            </a>
-                        </div>
 
-                        <!-- Image Attachment -->
-                        <div th:if="${msg.messageType == 'IMAGE'}" class="max-w-sm">
-                            <img th:if="${msg.mediaUrl}" th:src="${msg.mediaUrl}" class="rounded-xl shadow-md max-h-64 object-cover" alt="Attached image">
+                            <!-- File Attachment -->
+                            <div th:if="${msg.messageType == 'FILE'}" class="bg-surface-container-highest/50 p-3 rounded-xl border border-outline-variant/10 flex items-center gap-4 max-w-sm">
+                                <div class="w-10 h-10 bg-white rounded-lg flex items-center justify-center shadow-sm">
+                                    <span class="material-symbols-outlined text-error">description</span>
+                                </div>
+                                <div class="flex-1 min-w-0">
+                                    <p class="text-xs font-bold truncate" th:text="${msg.content}"></p>
+                                    <p class="text-[10px] text-on-surface-variant" th:text="${msg.mediaUrl}"></p>
+                                </div>
+                                <a th:if="${msg.mediaUrl}" th:href="${msg.mediaUrl}" target="_blank" class="p-1 hover:bg-white rounded-full transition-all">
+                                    <span class="material-symbols-outlined text-primary text-lg">download</span>
+                                </a>
+                            </div>
+
+                            <!-- Image Attachment -->
+                            <div th:if="${msg.messageType == 'IMAGE'}" class="max-w-sm">
+                                <img th:if="${msg.mediaUrl}" th:src="${msg.mediaUrl}" class="rounded-xl shadow-md max-h-64 object-cover" alt="Attached image">
+                            </div>
                         </div>
                     </div>
 
@@ -260,6 +448,95 @@
             </div>
         </div>
     </section>
+
+    <!-- Proposal Modal -->
+    <div id="proposalModal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/20 backdrop-blur-sm">
+        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-lg mx-4 max-h-[90vh] overflow-y-auto">
+            <!-- Modal Header -->
+            <div class="sticky top-0 bg-primary px-6 py-4 flex justify-between items-center border-b border-outline-variant/10">
+                <h2 class="font-headline text-white font-bold text-lg flex items-center gap-2">
+                    <span class="material-symbols-outlined">description</span>
+                    Create Specification Proposal
+                </h2>
+                <button id="closeProposalModal" class="text-white hover:bg-primary/80 p-1 rounded-full transition-all">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+            </div>
+
+            <!-- Modal Form -->
+            <form id="proposalForm" method="POST" th:action="@{/admin/chat/{conversationId}/proposal(conversationId=${conversation.conversationId})}" class="p-6 space-y-5">
+                <!-- Materials Field -->
+                <div>
+                    <label for="materials" class="block text-sm font-headline font-bold text-on-surface mb-2">Materials <span class="text-error">*</span></label>
+                    <input type="text" id="materials" name="materials" required placeholder="e.g., Stainless Steel, Aluminum"
+                           class="w-full px-4 py-2.5 border border-outline-variant rounded-lg focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all text-sm">
+                    <p class="text-[10px] text-on-surface-variant mt-1">Specify the materials needed for this specification</p>
+                </div>
+
+                <!-- Dimensions Field -->
+                <div>
+                    <label for="dimensions" class="block text-sm font-headline font-bold text-on-surface mb-2">Dimensions <span class="text-error">*</span></label>
+                    <input type="text" id="dimensions" name="dimensions" required placeholder="e.g., 100mm x 50mm x 30mm"
+                           class="w-full px-4 py-2.5 border border-outline-variant rounded-lg focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all text-sm">
+                    <p class="text-[10px] text-on-surface-variant mt-1">Provide the exact dimensions required</p>
+                </div>
+
+                <!-- Color Field -->
+                <div>
+                    <label for="color" class="block text-sm font-headline font-bold text-on-surface mb-2">Color <span class="text-error">*</span></label>
+                    <input type="text" id="color" name="color" required placeholder="e.g., Matte Black, Silver"
+                           class="w-full px-4 py-2.5 border border-outline-variant rounded-lg focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all text-sm">
+                    <p class="text-[10px] text-on-surface-variant mt-1">Specify the color or finish</p>
+                </div>
+
+                <!-- Quantity Field -->
+                <div>
+                    <label for="quantity" class="block text-sm font-headline font-bold text-on-surface mb-2">Quantity <span class="text-error">*</span></label>
+                    <input type="number" id="quantity" name="quantity" required min="1" placeholder="e.g., 100"
+                           class="w-full px-4 py-2.5 border border-outline-variant rounded-lg focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all text-sm">
+                    <p class="text-[10px] text-on-surface-variant mt-1">Number of units required</p>
+                </div>
+
+                <!-- Estimate Price Field -->
+                <div>
+                    <label for="estimatePrice" class="block text-sm font-headline font-bold text-on-surface mb-2">Estimate Price (Ceiling) <span class="text-error">*</span></label>
+                    <input type="number" id="estimatePrice" name="estimatePrice" required step="0.01" min="0.01" placeholder="e.g., 25.00"
+                           class="w-full px-4 py-2.5 border border-outline-variant rounded-lg focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all text-sm">
+                    <p class="text-[10px] text-on-surface-variant mt-1">Maximum price per unit (price ceiling for negotiation)</p>
+                </div>
+
+                <!-- Technical Notes Field -->
+                <div>
+                    <label for="technicalNotes" class="block text-sm font-headline font-bold text-on-surface mb-2">Technical Notes</label>
+                    <textarea id="technicalNotes" name="technicalNotes" rows="3" placeholder="Add any technical specifications, finish requirements, tolerances, etc."
+                              class="w-full px-4 py-2.5 border border-outline-variant rounded-lg focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all text-sm resize-none"></textarea>
+                    <p class="text-[10px] text-on-surface-variant mt-1">Optional: Include any special requirements or technical details</p>
+                </div>
+
+                <!-- Reference Photo URLs Field -->
+                <div>
+                    <label for="referencePhotoUrls" class="block text-sm font-headline font-bold text-on-surface mb-2">Reference Photo URLs</label>
+                    <textarea id="referencePhotoUrls" name="referencePhotoUrls" rows="2" placeholder="Paste photo URLs (one per line)"
+                              class="w-full px-4 py-2.5 border border-outline-variant rounded-lg focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all text-sm resize-none"></textarea>
+                    <p class="text-[10px] text-on-surface-variant mt-1">Optional: Add reference image URLs separated by new lines</p>
+                </div>
+
+                <!-- Error Message -->
+                <div id="proposalError" class="hidden p-3 bg-error-container border border-error rounded-lg text-error text-sm"></div>
+
+                <!-- Modal Actions -->
+                <div class="flex gap-3 pt-4 border-t border-outline-variant/10">
+                    <button type="button" id="cancelProposalModal" class="flex-1 px-4 py-2.5 border-2 border-outline-variant text-on-surface-variant hover:bg-surface rounded-lg font-headline font-bold text-sm transition-all">
+                        Cancel
+                    </button>
+                    <button type="submit" class="flex-1 px-4 py-2.5 bg-primary text-white hover:bg-primary/90 rounded-lg font-headline font-bold text-sm flex items-center justify-center gap-2 transition-all">
+                        <span class="material-symbols-outlined text-sm">send</span>
+                        Send Proposal
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
 </main>
 <!-- WebSocket Scripts -->
 <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
@@ -274,28 +551,31 @@
         const socket = new SockJS('/ws');
         stompClient = Stomp.over(socket);
 
-        // Extract JWT from cookies
         const jwtToken = getCookie('jwt');
 
         stompClient.connect(
-            { jwt: jwtToken },  // ← Send JWT in STOMP headers
+            { jwt: jwtToken },
             function(frame) {
                 console.log('Connected to WebSocket: ' + frame.headers['server']);
 
-                // Subscribe to conversation topic
                 stompClient.subscribe('/topic/conversation.' + conversationId, function(message) {
-                    const messageResponse = JSON.parse(message.body);
-                    displayReceivedMessage(messageResponse);
+                    const data = JSON.parse(message.body);
+                    if (data.eventType === 'PROPOSAL_STATUS_UPDATE') {
+                        updateProposalCardStatus(data.proposalCardId, data.status, data.resultOrderId);
+                    } else if (data.eventType === 'PRICE_QUOTE_UPDATE') {
+                        updateQuoteStatusFromWS(data.quoteId, data.status);
+                    } else {
+                        displayReceivedMessage(data);
+                    }
                 });
             },
             function(error) {
                 console.error('WebSocket connection error:', error);
-                setTimeout(connect, 5000); // Retry after 5 seconds
+                setTimeout(connect, 5000);
             }
         );
     }
 
-    // Helper: Extract cookie value by name
     function getCookie(name) {
         const nameEQ = name + "=";
         const cookies = document.cookie.split(';');
@@ -308,17 +588,87 @@
         return null;
     }
 
+    // Update proposal card status in real-time
+    function updateProposalCardStatus(proposalCardId, newStatus, resultOrderId) {
+        const cards = document.querySelectorAll('[data-proposal-id="' + proposalCardId + '"]');
+        cards.forEach(function(card) {
+            const badge = card.querySelector('.rounded-full');
+            if (badge) {
+                badge.textContent = newStatus;
+                badge.className = 'text-[10px] font-bold px-2.5 py-1 rounded-full ' +
+                    (newStatus === 'ACCEPTED' ? 'bg-green-100 text-green-700' :
+                     newStatus === 'DECLINED' ? 'bg-red-100 text-red-700' :
+                     'bg-orange-100 text-orange-700');
+            }
+            // Add negotiation link if accepted
+            if (newStatus === 'ACCEPTED' && resultOrderId) {
+                const existingLink = card.querySelector('a[href*="/admin/chat/order/"]');
+                if (!existingLink) {
+                    const linkDiv = document.createElement('div');
+                    linkDiv.className = 'pt-2';
+                    linkDiv.innerHTML = `
+                        <a href="/admin/chat/order/${resultOrderId}"
+                           class="inline-flex items-center gap-2 px-4 py-2 bg-tertiary-container hover:bg-tertiary text-white rounded-lg font-headline text-xs font-bold transition-all">
+                            <span class="material-symbols-outlined text-sm">gavel</span>
+                            Go to Price Negotiation
+                        </a>
+                    `;
+                    card.querySelector('.p-5').appendChild(linkDiv);
+                }
+            }
+        });
+    }
+
+    // Update quote status from WebSocket
+    function updateQuoteStatusFromWS(quoteId, newStatus) {
+        const statusEl = document.getElementById('quote-status-' + quoteId);
+        if (statusEl) {
+            const badge = statusEl.querySelector('.rounded-full');
+            if (badge) {
+                badge.textContent = newStatus;
+                badge.className = 'text-[10px] font-bold px-2.5 py-1 rounded-full ' +
+                    (newStatus === 'ACCEPTED' ? 'bg-green-100 text-green-700' :
+                     newStatus === 'DECLINED' ? 'bg-red-100 text-red-700' :
+                     'bg-orange-100 text-orange-700');
+            }
+        }
+        const actionsEl = document.getElementById('quote-actions-' + quoteId);
+        if (actionsEl) actionsEl.remove();
+    }
+
+    // Accept quote (admin accepting customer's quote)
+    function acceptQuote(button) {
+        const quoteId = button.getAttribute('data-quote-id');
+        if (!confirm('Accept this price quote?')) return;
+
+        button.disabled = true;
+        button.textContent = 'Accepting...';
+
+        fetch('/admin/chat/quote/' + quoteId + '/accept', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            redirect: 'manual'
+        }).then(function(response) {
+            if (response.ok || response.type === 'opaqueredirect' || response.status === 0) {
+                updateQuoteStatusFromWS(quoteId, 'ACCEPTED');
+            } else {
+                throw new Error('Failed');
+            }
+        }).catch(function(err) {
+            console.error('Error accepting quote:', err);
+            alert('Failed to accept quote. Please try again.');
+            button.disabled = false;
+            button.textContent = 'Accept This Price';
+        });
+    }
+
     // Display received message
     function displayReceivedMessage(messageResponse) {
         const container = document.getElementById('messagesContainer');
 
-        // Remove empty state if exists
         const emptyState = container.querySelector('.flex.flex-col.items-center');
-        if (emptyState) {
-            emptyState.remove();
-        }
+        if (emptyState) emptyState.remove();
 
-        // Create message element
         const messageDiv = document.createElement('div');
         messageDiv.className = 'flex flex-col gap-2 ' +
             (messageResponse.senderEmail === currentUserEmail ? 'items-end' : 'items-start');
@@ -326,15 +676,20 @@
         let messageContent = '';
 
         if (messageResponse.senderEmail === currentUserEmail) {
-            // Sent message (right aligned)
-            messageContent = `
-                <div class="max-w-[80%] bg-primary text-white p-4 rounded-xl rounded-tr-none shadow-sm">
-                    <p class="text-sm">${escapeHtml(messageResponse.content)}</p>
-                </div>
-                <span class="text-[10px] text-on-surface-variant">${formatTime(messageResponse.createdAt)}</span>
-            `;
+            if (messageResponse.messageType === 'SPEC_PROPOSAL_CARD' && messageResponse.proposalCard) {
+                const card = messageResponse.proposalCard;
+                messageContent = buildProposalCardHtml(card, messageResponse.createdAt);
+            } else if (messageResponse.messageType === 'PRICE_QUOTE' && messageResponse.priceQuote) {
+                messageContent = buildPriceQuoteHtml(messageResponse.priceQuote, messageResponse.createdAt, true);
+            } else {
+                messageContent = `
+                    <div class="max-w-[80%] bg-primary text-white p-4 rounded-xl rounded-tr-none shadow-sm">
+                        <p class="text-sm">${escapeHtml(messageResponse.content)}</p>
+                    </div>
+                    <span class="text-[10px] text-on-surface-variant">${formatTime(messageResponse.createdAt)}</span>
+                `;
+            }
         } else {
-            // Received message (left aligned)
             let messageDisplay = '';
 
             if (messageResponse.messageType === 'TEXT') {
@@ -344,27 +699,10 @@
                         <p class="text-sm text-on-surface">${escapeHtml(messageResponse.content)}</p>
                     </div>
                 `;
-            } else if (messageResponse.messageType === 'SPEC_PROPOSAL_CARD') {
-                messageDisplay = `
-                    <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-outline-variant/20 max-w-sm">
-                        <div class="bg-primary px-4 py-3 flex justify-between items-center">
-                            <h3 class="font-headline text-white font-bold text-sm">Specification Proposal</h3>
-                            <span class="text-[10px] text-primary-fixed-dim font-bold tracking-tighter uppercase">ID: ${escapeHtml(messageResponse.messageId)}</span>
-                        </div>
-                        <div class="p-5 space-y-4">
-                            <div class="text-sm text-on-surface">${messageResponse.content}</div>
-                            <div class="flex flex-col gap-2 pt-2">
-                                <button class="w-full bg-tertiary-container hover:bg-tertiary text-white py-2.5 rounded-lg font-headline text-xs font-bold flex items-center justify-center gap-2 transition-all">
-                                    <span class="material-symbols-outlined text-sm">verified_user</span>
-                                    Accept Proposal
-                                </button>
-                                <button class="w-full border-2 border-outline-variant text-on-surface-variant hover:bg-surface py-2 rounded-lg font-headline text-xs font-bold transition-all">
-                                    Request Revisions
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                `;
+            } else if (messageResponse.messageType === 'SPEC_PROPOSAL_CARD' && messageResponse.proposalCard) {
+                messageDisplay = buildProposalCardHtml(messageResponse.proposalCard, messageResponse.createdAt);
+            } else if (messageResponse.messageType === 'PRICE_QUOTE' && messageResponse.priceQuote) {
+                messageDisplay = buildPriceQuoteHtml(messageResponse.priceQuote, messageResponse.createdAt, false);
             } else if (messageResponse.messageType === 'FILE') {
                 messageDisplay = `
                     <div class="bg-surface-container-highest/50 p-3 rounded-xl border border-outline-variant/10 flex items-center gap-4 max-w-sm">
@@ -403,9 +741,134 @@
 
         messageDiv.innerHTML = messageContent;
         container.appendChild(messageDiv);
-
-        // Auto-scroll to bottom
         container.scrollTop = container.scrollHeight;
+    }
+
+    // Build proposal card HTML for JS rendering
+    function buildProposalCardHtml(card, createdAt) {
+        const statusClass = card.status === 'ACCEPTED' ? 'bg-green-100 text-green-700' :
+                           card.status === 'DECLINED' ? 'bg-red-100 text-red-700' :
+                           'bg-orange-100 text-orange-700';
+        let html = `
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-outline-variant/20 max-w-md" data-proposal-id="${card.proposalCardId}">
+                <div class="bg-primary px-4 py-3 flex justify-between items-center">
+                    <h3 class="font-headline text-white font-bold text-sm">Specification Proposal</h3>
+                    <span class="text-[10px] text-primary-fixed-dim font-bold">ID: ${card.proposalCardId}</span>
+                </div>
+                <div class="p-5 space-y-3">
+                    <div class="border-b border-outline-variant/20 pb-3">
+                        <p class="text-[10px] font-bold text-on-surface-variant uppercase mb-1">Materials</p>
+                        <p class="text-sm font-semibold">${escapeHtml(card.materials) || 'Not specified'}</p>
+                    </div>
+                    <div class="border-b border-outline-variant/20 pb-3">
+                        <p class="text-[10px] font-bold text-on-surface-variant uppercase mb-1">Dimensions</p>
+                        <p class="text-sm font-semibold">${escapeHtml(card.dimensions) || 'Not specified'}</p>
+                    </div>`;
+        if (card.color) {
+            html += `
+                    <div class="border-b border-outline-variant/20 pb-3">
+                        <p class="text-[10px] font-bold text-on-surface-variant uppercase mb-1">Color</p>
+                        <p class="text-sm font-semibold">${escapeHtml(card.color)}</p>
+                    </div>`;
+        }
+        if (card.quantity) {
+            html += `
+                    <div class="border-b border-outline-variant/20 pb-3">
+                        <p class="text-[10px] font-bold text-on-surface-variant uppercase mb-1">Quantity</p>
+                        <p class="text-sm font-semibold">${card.quantity}</p>
+                    </div>`;
+        }
+        if (card.estimatePrice) {
+            html += `
+                    <div class="border-b border-outline-variant/20 pb-3">
+                        <p class="text-[10px] font-bold text-on-surface-variant uppercase mb-1">Estimate Price (Ceiling)</p>
+                        <p class="text-sm font-semibold text-primary">$${card.estimatePrice}</p>
+                    </div>`;
+        }
+        if (card.technicalNotes) {
+            html += `
+                    <div class="border-b border-outline-variant/20 pb-3">
+                        <p class="text-[10px] font-bold text-on-surface-variant uppercase mb-1">Technical Notes</p>
+                        <p class="text-xs text-on-surface-variant">${escapeHtml(card.technicalNotes)}</p>
+                    </div>`;
+        }
+        html += `
+                    <div class="pt-1">
+                        <span class="text-[10px] font-bold px-2.5 py-1 rounded-full ${statusClass}">${card.status}</span>
+                    </div>`;
+        if (card.status === 'ACCEPTED' && card.resultOrderId) {
+            html += `
+                    <div class="pt-2">
+                        <a href="/admin/chat/order/${card.resultOrderId}"
+                           class="inline-flex items-center gap-2 px-4 py-2 bg-tertiary-container hover:bg-tertiary text-white rounded-lg font-headline text-xs font-bold transition-all">
+                            <span class="material-symbols-outlined text-sm">gavel</span>
+                            Go to Price Negotiation
+                        </a>
+                    </div>`;
+        }
+        html += `
+                </div>
+            </div>
+            <span class="text-[10px] text-on-surface-variant">${formatTime(createdAt)}</span>
+        `;
+        return html;
+    }
+
+    // Build price quote HTML for JS rendering
+    function buildPriceQuoteHtml(quote, createdAt, isMine) {
+        const statusClass = quote.status === 'ACCEPTED' ? 'bg-emerald-50 text-emerald-600 ring-1 ring-emerald-200' :
+                           quote.status === 'COUNTERED' ? 'bg-blue-50 text-blue-600 ring-1 ring-blue-200' :
+                           quote.status === 'DECLINED' ? 'bg-red-50 text-red-600 ring-1 ring-red-200' :
+                           'bg-amber-50 text-amber-600 ring-1 ring-amber-200';
+        let html = `
+            <div class="bg-white rounded-2xl shadow-md overflow-hidden border border-outline-variant/10 max-w-sm" data-quote-id="${quote.quoteId}">
+                <div class="bg-primary px-5 py-3 flex items-center justify-between">
+                    <div class="flex items-center gap-2">
+                        <span class="material-symbols-outlined text-white/80 text-[18px]" style="font-variation-settings: 'FILL' 1;">request_quote</span>
+                        <h3 class="font-headline text-white font-bold text-sm tracking-tight">Price Quote<span class="text-white/50 font-normal text-xs ml-1">#${quote.quoteId}</span></h3>
+                    </div>
+                </div>
+                <div class="p-5">
+                    ${quote.orderId ? `<div class="flex items-center gap-1.5 text-xs text-on-surface-variant mb-3">
+                        <span class="material-symbols-outlined text-[16px]">orders</span>
+                        <span>Order #${quote.orderId}</span>
+                    </div>` : ''}
+                    <div class="flex items-center gap-2 text-xs text-on-surface-variant mb-3">
+                        <span class="material-symbols-outlined text-[16px]">person</span>
+                        <span>${escapeHtml(quote.proposedByName)}</span>
+                    </div>
+                    <div class="mb-1">
+                        <p class="text-[10px] font-headline font-bold text-on-surface-variant/60 uppercase tracking-widest">PROPOSED PRICE</p>
+                    </div>
+                    <p class="text-3xl font-extrabold text-on-surface font-headline tracking-tight">$${quote.proposedPrice}</p>`;
+        if (quote.note) {
+            html += `
+                    <div class="mt-4 bg-surface-container-low rounded-xl px-4 py-3">
+                        <p class="text-xs text-on-surface-variant leading-relaxed">${escapeHtml(quote.note)}</p>
+                    </div>`;
+        }
+        html += `
+                    <div class="mt-4" id="quote-status-${quote.quoteId}">
+                        <span class="text-[10px] font-bold px-3 py-1 rounded-full ${statusClass}">${quote.status}</span>
+                    </div>`;
+        // Show accept button only for quotes NOT from admin and PENDING
+        if (quote.status === 'PENDING' && quote.proposedByEmail !== currentUserEmail) {
+            html += `
+                    <div class="mt-4" id="quote-actions-${quote.quoteId}">
+                        <button class="w-full bg-tertiary-container hover:bg-tertiary text-white py-2.5 rounded-xl font-headline text-xs font-bold flex items-center justify-center gap-2 transition-all shadow-sm"
+                                data-quote-id="${quote.quoteId}"
+                                onclick="acceptQuote(this)">
+                            <span class="material-symbols-outlined text-sm">check_circle</span>
+                            Accept This Price
+                        </button>
+                    </div>`;
+        }
+        html += `
+                </div>
+            </div>
+            <span class="text-[10px] text-on-surface-variant">${formatTime(createdAt)}</span>
+        `;
+        return html;
     }
 
     // Send message
@@ -425,14 +888,13 @@
         if (stompClient && stompClient.connected) {
             stompClient.send('/app/chat.send', {}, JSON.stringify(chatMessageRequest));
             input.value = '';
-            input.style.height = 'auto'; // Reset height
+            input.style.height = 'auto';
         } else {
             console.error('WebSocket not connected');
             alert('Chat connection lost. Please refresh the page.');
         }
     }
 
-    // Helper: Escape HTML to prevent XSS
     function escapeHtml(text) {
         if (!text) return '';
         const div = document.createElement('div');
@@ -440,21 +902,40 @@
         return div.innerHTML;
     }
 
-    // Helper: Format timestamp
     function formatTime(isoString) {
         if (!isoString) return '';
         const date = new Date(isoString);
         return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
     }
 
-    // Event listeners
+    function openProposalModal() {
+        document.getElementById('proposalModal').classList.remove('hidden');
+        document.getElementById('proposalForm').reset();
+        document.getElementById('proposalError').classList.add('hidden');
+    }
+
+    function closeProposalModal() {
+        document.getElementById('proposalModal').classList.add('hidden');
+        document.getElementById('proposalForm').reset();
+        document.getElementById('proposalError').classList.add('hidden');
+    }
+
+    function showProposalError(message) {
+        const errorDiv = document.getElementById('proposalError');
+        errorDiv.textContent = message;
+        errorDiv.classList.remove('hidden');
+    }
+
+    function parsePhotoUrls(text) {
+        if (!text || text.trim() === '') return [];
+        return text.split(/[\n,]/).map(url => url.trim()).filter(url => url.length > 0);
+    }
+
     document.addEventListener('DOMContentLoaded', function() {
         connect();
 
-        // Send on button click
         document.getElementById('sendBtn').addEventListener('click', sendMessage);
 
-        // Send on Enter key (Shift+Enter for newline)
         document.getElementById('messageInput').addEventListener('keydown', function(e) {
             if (e.key === 'Enter' && !e.shiftKey) {
                 e.preventDefault();
@@ -462,19 +943,51 @@
             }
         });
 
-        // Auto-expand textarea
         const textarea = document.getElementById('messageInput');
         textarea.addEventListener('input', function() {
             this.style.height = 'auto';
             this.style.height = Math.min(this.scrollHeight, 120) + 'px';
         });
 
-        // Auto-scroll messages container
         const container = document.getElementById('messagesContainer');
         container.scrollTop = container.scrollHeight;
+
+        document.getElementById('proposalModalBtn').addEventListener('click', openProposalModal);
+        document.getElementById('closeProposalModal').addEventListener('click', closeProposalModal);
+        document.getElementById('cancelProposalModal').addEventListener('click', closeProposalModal);
+
+        document.getElementById('proposalModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeProposalModal();
+            }
+        });
+
+        document.getElementById('proposalForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const materials = document.getElementById('materials').value.trim();
+            const dimensions = document.getElementById('dimensions').value.trim();
+            const color = document.getElementById('color').value.trim();
+            const quantity = document.getElementById('quantity').value.trim();
+            const estimatePrice = document.getElementById('estimatePrice').value.trim();
+            const referencePhotoUrls = parsePhotoUrls(document.getElementById('referencePhotoUrls').value);
+
+            if (!materials) { showProposalError('Materials field is required'); return; }
+            if (!dimensions) { showProposalError('Dimensions field is required'); return; }
+            if (!color) { showProposalError('Color field is required'); return; }
+            if (!quantity || parseInt(quantity) < 1) { showProposalError('Quantity must be at least 1'); return; }
+            if (!estimatePrice || parseFloat(estimatePrice) <= 0) { showProposalError('Estimate price must be greater than 0'); return; }
+
+            const formData = new FormData(this);
+            formData.delete('referencePhotoUrls');
+            referencePhotoUrls.forEach(function(url) {
+                formData.append('referencePhotoUrls', url);
+            });
+
+            this.submit();
+        });
     });
 
-    // Reconnect WebSocket on page visibility change
     document.addEventListener('visibilitychange', function() {
         if (!document.hidden && (!stompClient || !stompClient.connected)) {
             console.log('Page became visible, reconnecting WebSocket...');
@@ -483,4 +996,3 @@
     });
 </script>
 </body></html>
-

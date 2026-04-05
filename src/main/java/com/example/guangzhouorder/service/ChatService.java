@@ -2,14 +2,13 @@ package com.example.guangzhouorder.service;
 
 import com.example.guangzhouorder.dto.chat.ConversationResponse;
 import com.example.guangzhouorder.dto.chat.MessageResponse;
+import com.example.guangzhouorder.dto.chat.PriceQuoteResponse;
+import com.example.guangzhouorder.dto.chat.SpecProposalCardResponse;
 import com.example.guangzhouorder.entity.Conversation;
 import com.example.guangzhouorder.entity.ConversationRead;
 import com.example.guangzhouorder.entity.Message;
 import com.example.guangzhouorder.entity.User;
-import com.example.guangzhouorder.repository.ConversationReadRepository;
-import com.example.guangzhouorder.repository.ConversationRepository;
-import com.example.guangzhouorder.repository.MessageRepository;
-import com.example.guangzhouorder.repository.UserRepository;
+import com.example.guangzhouorder.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -29,6 +28,8 @@ public class ChatService {
     private final MessageRepository messageRepository;
     private final ConversationReadRepository conversationReadRepository;
     private final UserRepository userRepository;
+    private final SpecProposalCardRepository specProposalCardRepository;
+    private final PriceQuoteRepository priceQuoteRepository;
 
     /**
      * Get or create the single conversation for a customer user.
@@ -186,5 +187,25 @@ public class ChatService {
     public User getUserByEmail(String email) {
         return userRepository.findByEmail(email)
                 .orElseThrow(() -> new IllegalArgumentException("User not found: " + email));
+    }
+
+    public List<MessageResponse> getMessagesEnriched(Long conversationId, User requestingUser) {
+        Conversation conversation = getConversationById(conversationId, requestingUser);
+        List<Message> messages = messageRepository.findByConversationOrderByCreatedAtAsc(conversation);
+
+        return messages.stream().map(msg -> {
+            MessageResponse response = MessageResponse.from(msg);
+            if ("SPEC_PROPOSAL_CARD".equals(msg.getMessageType())) {
+                specProposalCardRepository.findByMessage(msg).ifPresent(card ->
+                        response.setProposalCard(SpecProposalCardResponse.from(card))
+                );
+            }
+            if ("PRICE_QUOTE".equals(msg.getMessageType())) {
+                priceQuoteRepository.findByMessage(msg).ifPresent(quote ->
+                        response.setPriceQuote(PriceQuoteResponse.from(quote))
+                );
+            }
+            return response;
+        }).collect(Collectors.toList());
     }
 }
