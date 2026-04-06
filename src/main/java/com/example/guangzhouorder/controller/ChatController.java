@@ -69,7 +69,8 @@ public class ChatController {
         }
         
         // Load messages
-        List<MessageResponse> messages = chatService.getMessages(conversationId, currentUser);
+        //List<MessageResponse> messages = chatService.getMessages(conversationId, currentUser);
+        List<MessageResponse> messages = chatService.getMessagesEnriched(conversationId, currentUser);
         
         // Mark all as read
         chatService.markAllAsRead(conversationId, currentUser);
@@ -117,7 +118,8 @@ public class ChatController {
         
         // Load conversation and messages
         Conversation conversation = chatService.getConversationById(conversationId, currentUser);
-        List<MessageResponse> messages = chatService.getMessages(conversationId, currentUser);
+        //List<MessageResponse> messages = chatService.getMessages(conversationId, currentUser);
+        List<MessageResponse> messages = chatService.getMessagesEnriched(conversationId, currentUser);
         
         // Mark all as read from admin perspective
         chatService.markAllAsRead(conversationId, currentUser);

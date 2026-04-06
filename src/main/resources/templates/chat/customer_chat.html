@@ -1,3 +1,817 @@
+<!--<!DOCTYPE html>-->
+
+<!--<html class="light" lang="en"><head>-->
+<!--    <meta charset="utf-8"/>-->
+<!--    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>-->
+<!--    <title>Guangzhou Direct - System Chat</title>-->
+<!--    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>-->
+<!--    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>-->
+<!--    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>-->
+<!--    <script id="tailwind-config">-->
+<!--        tailwind.config = {-->
+<!--          darkMode: "class",-->
+<!--          theme: {-->
+<!--            extend: {-->
+<!--              colors: {-->
+<!--                "on-secondary-fixed-variant": "#304a55",-->
+<!--                "tertiary": "#003b34",-->
+<!--                "tertiary-container": "#00544b",-->
+<!--                "on-error-container": "#93000a",-->
+<!--                "inverse-on-surface": "#eff1f3",-->
+<!--                "surface-bright": "#f8f9fb",-->
+<!--                "secondary-container": "#cbe7f5",-->
+<!--                "background": "#f8f9fb",-->
+<!--                "primary": "#003461",-->
+<!--                "on-primary-container": "#8abcff",-->
+<!--                "secondary-fixed": "#cbe7f5",-->
+<!--                "surface-container-high": "#e6e8ea",-->
+<!--                "on-error": "#ffffff",-->
+<!--                "on-primary": "#ffffff",-->
+<!--                "on-secondary-container": "#4e6874",-->
+<!--                "inverse-primary": "#a3c9ff",-->
+<!--                "surface-variant": "#e0e3e5",-->
+<!--                "surface-container-highest": "#e0e3e5",-->
+<!--                "surface-tint": "#27609d",-->
+<!--                "on-tertiary": "#ffffff",-->
+<!--                "on-background": "#191c1e",-->
+<!--                "on-surface-variant": "#424750",-->
+<!--                "on-tertiary-container": "#63cbbb",-->
+<!--                "tertiary-fixed-dim": "#70d8c8",-->
+<!--                "secondary-fixed-dim": "#afcbd8",-->
+<!--                "tertiary-fixed": "#8df5e4",-->
+<!--                "on-primary-fixed-variant": "#004882",-->
+<!--                "on-tertiary-fixed": "#00201c",-->
+<!--                "on-tertiary-fixed-variant": "#005048",-->
+<!--                "surface-dim": "#d8dadc",-->
+<!--                "secondary": "#48626e",-->
+<!--                "surface": "#f8f9fb",-->
+<!--                "inverse-surface": "#2d3133",-->
+<!--                "surface-container": "#eceef0",-->
+<!--                "primary-fixed-dim": "#a3c9ff",-->
+<!--                "on-surface": "#191c1e",-->
+<!--                "surface-container-lowest": "#ffffff",-->
+<!--                "on-primary-fixed": "#001c38",-->
+<!--                "on-secondary-fixed": "#021f29",-->
+<!--                "primary-fixed": "#d3e4ff",-->
+<!--                "surface-container-low": "#f2f4f6",-->
+<!--                "error-container": "#ffdad6",-->
+<!--                "outline": "#727781",-->
+<!--                "error": "#ba1a1a",-->
+<!--                "on-secondary": "#ffffff",-->
+<!--                "primary-container": "#004b87",-->
+<!--                "outline-variant": "#c2c6d1"-->
+<!--              },-->
+<!--              fontFamily: {-->
+<!--                "headline": ["Manrope"],-->
+<!--                "body": ["Inter"],-->
+<!--                "label": ["Inter"]-->
+<!--              },-->
+<!--              borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},-->
+<!--            },-->
+<!--          },-->
+<!--        }-->
+<!--    </script>-->
+<!--    <style>-->
+<!--        .material-symbols-outlined {-->
+<!--            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;-->
+<!--        }-->
+<!--        .chat-height {-->
+<!--            height: calc(100vh - 72px);-->
+<!--        }-->
+<!--    </style>-->
+<!--</head>-->
+<!--<body class="bg-surface font-body text-on-surface">-->
+<!--&lt;!&ndash; TopNavBar &ndash;&gt;-->
+<!--<nav class="fixed top-0 w-full z-50 bg-[#f8f9fb]/80 dark:bg-slate-900/80 backdrop-blur-xl shadow-sm dark:shadow-none">-->
+<!--    <div class="flex justify-between items-center px-6 py-3 w-full max-w-screen-2xl mx-auto">-->
+<!--        <div class="flex items-center gap-8">-->
+<!--            <span class="text-xl font-black text-[#003461] dark:text-white tracking-tighter font-headline">Guangzhou Direct</span>-->
+<!--            <div class="hidden md:flex gap-6 items-center">-->
+<!--                <a class="font-headline font-bold tracking-tight text-[#424750] dark:text-slate-400 hover:text-[#004B87]" href="#">Trends</a>-->
+<!--                <a class="font-headline font-bold tracking-tight text-[#424750] dark:text-slate-400 hover:text-[#004B87]" href="#">Sourcing</a>-->
+<!--                <a class="font-headline font-bold tracking-tight text-[#424750] dark:text-slate-400 hover:text-[#004B87]" href="#">Orders</a>-->
+<!--                <a class="font-headline font-bold tracking-tight text-[#004B87] dark:text-[#cbe7f5] border-b-2 border-[#004B87] pb-1" href="#">Support</a>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <div class="flex items-center gap-4">-->
+<!--            <button class="p-2 rounded-full hover:bg-[#f2f4f6]/50 transition-colors">-->
+<!--                <span class="material-symbols-outlined text-on-surface-variant">notifications</span>-->
+<!--            </button>-->
+<!--            <button class="p-2 rounded-full hover:bg-[#f2f4f6]/50 transition-colors">-->
+<!--                <span class="material-symbols-outlined text-on-surface-variant">account_circle</span>-->
+<!--            </button>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</nav>-->
+<!--&lt;!&ndash; Main Layout Container &ndash;&gt;-->
+<!--<main class="pt-[72px] flex flex-row w-full max-w-screen-2xl mx-auto chat-height">-->
+<!--    &lt;!&ndash; SideNavBar (Hidden on Mobile) &ndash;&gt;-->
+<!--    <aside class="hidden lg:flex flex-col py-6 space-y-2 h-full w-64 bg-[#ffffff] dark:bg-slate-950 border-r border-outline-variant/15 shrink-0">-->
+<!--        <div class="px-6 mb-6">-->
+<!--            <div class="flex items-center gap-3 mb-4">-->
+<!--                <img class="w-10 h-10 rounded-full object-cover" data-alt="professional portrait of a manufacturing supervisor in a clean workspace environment" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAWzAlbccIL5YnpV4ie4IKCdIgJbFNq67CDKGsZrFO03q3RiHXSw8rmk3m9HhQcs9nmnQ2RQESIY8ZO_AZ-QJ1AJ0Pnunl-ZOjpx8m0jzzgircN8HEzk_M_0iJ9jCJLKLECw-2WjBkkxLuDv-OFlipvFH_evHCco9B5r49P_Z95gP6j2ZfCt9HgNkYOK4Vn6mYVzfpCPZMQD8mOXgncLCJ4FNaHFv6Yynfi90gKDHZjvqpAu6NWPsHdo99G5AERvTHfWWtzPNj7ThQ"/>-->
+<!--                <div>-->
+<!--                    <p class="font-headline text-sm font-bold text-[#003461] dark:text-white">My Support</p>-->
+<!--                    <p class="text-[10px] text-on-surface-variant opacity-70">Request <span th:text="${conversation.conversationId}"></span></p>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="space-y-2">-->
+<!--                <button class="w-full bg-primary-container text-white py-2 rounded-lg font-headline text-sm font-bold shadow-sm active:scale-95 duration-150" onclick="createNewRequest()">-->
+<!--                    <span class="material-symbols-outlined text-sm align-middle mr-1">add</span>-->
+<!--                    New Request-->
+<!--                </button>-->
+<!--                <a href="/dashboard/chat" class="block bg-surface-container text-primary py-2 rounded-lg font-headline text-sm font-bold shadow-sm active:scale-95 duration-150 text-center">-->
+<!--                    <span class="material-symbols-outlined text-sm align-middle mr-1">list</span>-->
+<!--                    All Conversations-->
+<!--                </a>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <nav class="flex-1 px-2 space-y-1">-->
+<!--            <a class="flex items-center gap-3 py-2 px-4 text-[#424750] hover:bg-[#f2f4f6] rounded-lg transition-all" href="#">-->
+<!--                <span class="material-symbols-outlined text-[20px]">dashboard</span>-->
+<!--                <span class="font-headline text-sm font-semibold">Dashboard</span>-->
+<!--            </a>-->
+<!--            <a class="flex items-center gap-3 py-2 px-4 text-[#424750] hover:bg-[#f2f4f6] rounded-lg transition-all" href="#">-->
+<!--                <span class="material-symbols-outlined text-[20px]">monitoring</span>-->
+<!--                <span class="font-headline text-sm font-semibold">Market</span>-->
+<!--            </a>-->
+<!--            <a class="flex items-center gap-3 py-2 px-4 text-[#424750] hover:bg-[#f2f4f6] rounded-lg transition-all" href="#">-->
+<!--                <span class="material-symbols-outlined text-[20px]">receipt_long</span>-->
+<!--                <span class="font-headline text-sm font-semibold">Transactions</span>-->
+<!--            </a>-->
+<!--            <a class="flex items-center gap-3 py-2 px-4 bg-[#cbe7f5] text-[#003461] rounded-lg transition-all" href="#">-->
+<!--                <span class="material-symbols-outlined text-[20px]">chat_bubble</span>-->
+<!--                <span class="font-headline text-sm font-semibold">Messages</span>-->
+<!--            </a>-->
+<!--            <a class="flex items-center gap-3 py-2 px-4 text-[#424750] hover:bg-[#f2f4f6] rounded-lg transition-all" href="#">-->
+<!--                <span class="material-symbols-outlined text-[20px]">settings</span>-->
+<!--                <span class="font-headline text-sm font-semibold">Settings</span>-->
+<!--            </a>-->
+<!--        </nav>-->
+<!--    </aside>-->
+<!--    &lt;!&ndash; Chat Stream Canvas &ndash;&gt;-->
+<!--    <section class="flex-1 flex flex-col bg-surface-container-low min-w-0">-->
+<!--        &lt;!&ndash; Chat Header &ndash;&gt;-->
+<!--        <div class="px-6 py-4 bg-surface-container-lowest flex items-center justify-between border-b border-outline-variant/10 shrink-0">-->
+<!--            <div class="flex items-center gap-4">-->
+<!--                <div class="relative">-->
+<!--                    <div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center text-white">-->
+<!--                        <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">support_agent</span>-->
+<!--                    </div>-->
+<!--                    <div class="absolute bottom-0 right-0 w-3 h-3 bg-tertiary-fixed border-2 border-white rounded-full"></div>-->
+<!--                </div>-->
+<!--                <div>-->
+<!--                    <h2 class="font-headline font-bold text-primary">-->
+<!--                        <span th:text="'Request #' + ${conversation.conversationId}"></span>-->
+<!--                    </h2>-->
+<!--                    <p class="text-xs text-on-surface-variant flex items-center gap-1">-->
+<!--                        <span class="w-2 h-2 rounded-full bg-tertiary-fixed"></span>-->
+<!--                        <span th:text="'Support Team'"></span>-->
+<!--                    </p>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="flex gap-2">-->
+<!--                <a href="/dashboard/chat" class="p-2 hover:bg-surface-container text-on-surface-variant rounded-full" title="Back to conversations">-->
+<!--                    <span class="material-symbols-outlined">arrow_back</span>-->
+<!--                </a>-->
+<!--                <button class="p-2 hover:bg-surface-container text-on-surface-variant rounded-full"><span class="material-symbols-outlined">search</span></button>-->
+<!--                <button class="p-2 hover:bg-surface-container text-on-surface-variant rounded-full"><span class="material-symbols-outlined">more_vert</span></button>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        &lt;!&ndash; Hidden Data for WebSocket &ndash;&gt;-->
+<!--        <input type="hidden" id="conversationId" th:value="${conversation.conversationId}">-->
+<!--        <input type="hidden" id="currentUserEmail" th:value="${currentUserEmail}">-->
+<!--        <input type="hidden" id="customerName" th:value="${conversation.customerName}">-->
+
+<!--        &lt;!&ndash; Messages Area &ndash;&gt;-->
+<!--        <div id="messagesContainer" class="flex-1 overflow-y-auto p-6 space-y-6 min-h-0">-->
+<!--            &lt;!&ndash; Empty State &ndash;&gt;-->
+<!--            <div th:if="${#lists.isEmpty(messages)}" class="flex flex-col items-center justify-center h-full">-->
+<!--                <span class="material-symbols-outlined text-6xl text-on-surface-variant opacity-20">mail</span>-->
+<!--                <p class="text-on-surface-variant text-sm mt-2">No messages yet. Start the conversation!</p>-->
+<!--            </div>-->
+
+<!--            &lt;!&ndash; Messages List &ndash;&gt;-->
+<!--            <th:block th:each="msg : ${messages}">-->
+<!--                &lt;!&ndash; Determine if message is from current user &ndash;&gt;-->
+<!--                <div th:classappend="${msg.senderEmail == currentUserEmail} ? 'items-end' : 'items-start'" class="flex flex-col gap-2">-->
+<!--                    &lt;!&ndash; Message: From Current User (Right aligned) &ndash;&gt;-->
+<!--                    <div th:if="${msg.senderEmail == currentUserEmail}" class="max-w-[80%] bg-primary text-white p-4 rounded-xl rounded-tr-none shadow-sm">-->
+<!--                        <p class="text-sm" th:text="${msg.content}"></p>-->
+<!--                    </div>-->
+
+<!--                    &lt;!&ndash; Message: From Other User (Left aligned) &ndash;&gt;-->
+<!--                    <div th:unless="${msg.senderEmail == currentUserEmail}" class="flex items-end gap-3 max-w-[85%]">-->
+<!--                        <div class="w-8 h-8 rounded-full bg-secondary-container flex items-center justify-center shrink-0">-->
+<!--                            <span class="material-symbols-outlined text-secondary text-sm">person</span>-->
+<!--                        </div>-->
+<!--                        <div th:if="${msg.messageType == 'TEXT'}" class="bg-surface-container-lowest p-4 rounded-xl rounded-bl-none shadow-sm border border-outline-variant/10">-->
+<!--                            <p class="text-xs font-semibold text-primary mb-1" th:text="${msg.senderName}"></p>-->
+<!--                            <p class="text-sm text-on-surface" th:text="${msg.content}"></p>-->
+<!--                        </div>-->
+
+<!--                        &lt;!&ndash; Spec Proposal Card &ndash;&gt;-->
+<!--                        <div th:if="${msg.messageType == 'SPEC_PROPOSAL_CARD' and msg.proposalCard != null}" class="bg-white rounded-xl shadow-lg overflow-hidden border border-outline-variant/20 max-w-md">-->
+<!--                            <div class="bg-primary px-4 py-3 flex justify-between items-center">-->
+<!--                                <h3 class="font-headline text-white font-bold text-sm">Specification Proposal</h3>-->
+<!--                                <span class="text-[10px] text-primary-fixed-dim font-bold tracking-tighter uppercase" th:text="'ID: ' + ${msg.proposalCard.proposalCardId}"></span>-->
+<!--                            </div>-->
+<!--                            <div class="p-5 space-y-4">-->
+<!--                                &lt;!&ndash; Materials &ndash;&gt;-->
+<!--                                <div class="border-b border-outline-variant/20 pb-3">-->
+<!--                                    <p class="text-[10px] font-headline font-bold text-on-surface-variant uppercase tracking-wide mb-1">Materials</p>-->
+<!--                                    <p class="text-sm font-semibold text-on-surface" th:text="${msg.proposalCard.materials ?: 'Not specified'}"></p>-->
+<!--                                </div>-->
+
+<!--                                &lt;!&ndash; Dimensions &ndash;&gt;-->
+<!--                                <div class="border-b border-outline-variant/20 pb-3">-->
+<!--                                    <p class="text-[10px] font-headline font-bold text-on-surface-variant uppercase tracking-wide mb-1">Dimensions</p>-->
+<!--                                    <p class="text-sm font-semibold text-on-surface" th:text="${msg.proposalCard.dimensions ?: 'Not specified'}"></p>-->
+<!--                                </div>-->
+
+<!--                                &lt;!&ndash; Technical Notes &ndash;&gt;-->
+<!--                                <div th:if="${msg.proposalCard.technicalNotes}" class="border-b border-outline-variant/20 pb-3">-->
+<!--                                    <p class="text-[10px] font-headline font-bold text-on-surface-variant uppercase tracking-wide mb-1">Technical Notes</p>-->
+<!--                                    <p class="text-xs text-on-surface-variant leading-relaxed" th:text="${msg.proposalCard.technicalNotes}"></p>-->
+<!--                                </div>-->
+
+<!--                                &lt;!&ndash; Reference Photos &ndash;&gt;-->
+<!--                                <div th:if="${msg.proposalCard.referencePhotoUrls != null and msg.proposalCard.referencePhotoUrls.size() > 0}" class="pb-3">-->
+<!--                                    <p class="text-[10px] font-headline font-bold text-on-surface-variant uppercase tracking-wide mb-2">Reference Photos</p>-->
+<!--                                    <div class="flex flex-wrap gap-2">-->
+<!--                                        <a th:each="photoUrl : ${msg.proposalCard.referencePhotoUrls}"-->
+<!--                                           th:href="${photoUrl}"-->
+<!--                                           target="_blank"-->
+<!--                                           class="inline-flex items-center gap-1 text-xs px-3 py-1.5 bg-primary/10 text-primary hover:bg-primary/20 rounded-lg transition-all">-->
+<!--                                            <span class="material-symbols-outlined text-sm">image</span>-->
+<!--                                            <span>View</span>-->
+<!--                                        </a>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+
+<!--                                &lt;!&ndash; Status Badge &ndash;&gt;-->
+<!--                                <div class="pt-2 pb-3">-->
+<!--                                    <span th:classappend="${msg.proposalCard.status == 'PENDING' ? 'bg-orange-100 text-orange-700' : msg.proposalCard.status == 'ACCEPTED' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}"-->
+<!--                                          class="text-[10px] font-bold px-2.5 py-1 rounded-full"-->
+<!--                                          th:text="${msg.proposalCard.status}"></span>-->
+<!--                                </div>-->
+
+<!--                                &lt;!&ndash; Action Buttons (Only show if PENDING) &ndash;&gt;-->
+<!--                                <div th:if="${msg.proposalCard.status == 'PENDING'}" class="flex flex-col gap-2 pt-2">-->
+<!--                                    <button class="w-full bg-tertiary-container hover:bg-tertiary text-white py-2.5 rounded-lg font-headline text-xs font-bold flex items-center justify-center gap-2 transition-all"-->
+<!--                                            th:attr="data-proposal-id=${msg.proposalCard.proposalCardId}"-->
+<!--                                            onclick="acceptProposal(this)">-->
+<!--                                        <span class="material-symbols-outlined text-sm">verified_user</span>-->
+<!--                                        Accept Proposal-->
+<!--                                    </button>-->
+<!--                                    <button class="w-full border-2 border-outline-variant text-on-surface-variant hover:bg-surface py-2 rounded-lg font-headline text-xs font-bold transition-all"-->
+<!--                                            th:attr="data-proposal-id=${msg.proposalCard.proposalCardId}"-->
+<!--                                            onclick="declineProposal(this)">-->
+<!--                                        <span class="material-symbols-outlined text-sm">cancel</span>-->
+<!--                                        Decline Proposal-->
+<!--                                    </button>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+
+<!--                        &lt;!&ndash; File Attachment &ndash;&gt;-->
+<!--                        <div th:if="${msg.messageType == 'FILE'}" class="bg-surface-container-highest/50 p-3 rounded-xl border border-outline-variant/10 flex items-center gap-4 max-w-sm">-->
+<!--                            <div class="w-10 h-10 bg-white rounded-lg flex items-center justify-center shadow-sm">-->
+<!--                                <span class="material-symbols-outlined text-error">description</span>-->
+<!--                            </div>-->
+<!--                            <div class="flex-1 min-w-0">-->
+<!--                                <p class="text-xs font-bold truncate" th:text="${msg.content}"></p>-->
+<!--                                <p class="text-[10px] text-on-surface-variant" th:text="${msg.mediaUrl}"></p>-->
+<!--                            </div>-->
+<!--                            <a th:if="${msg.mediaUrl}" th:href="${msg.mediaUrl}" target="_blank" class="p-1 hover:bg-white rounded-full transition-all">-->
+<!--                                <span class="material-symbols-outlined text-primary text-lg">download</span>-->
+<!--                            </a>-->
+<!--                        </div>-->
+
+<!--                        &lt;!&ndash; Image Attachment &ndash;&gt;-->
+<!--                        <div th:if="${msg.messageType == 'IMAGE'}" class="max-w-sm">-->
+<!--                            <img th:if="${msg.mediaUrl}" th:src="${msg.mediaUrl}" class="rounded-xl shadow-md max-h-64 object-cover" alt="Attached image">-->
+<!--                        </div>-->
+<!--                    </div>-->
+
+<!--                    &lt;!&ndash; Timestamp &ndash;&gt;-->
+<!--                    <span class="text-[10px] text-on-surface-variant" th:text="${msg.createdAt}"></span>-->
+<!--                </div>-->
+<!--            </th:block>-->
+<!--        </div>-->
+
+<!--        &lt;!&ndash; Chat Input Area - Fixed at Bottom &ndash;&gt;-->
+<!--        <div class="p-6 bg-surface-container-lowest border-t border-outline-variant/10 shrink-0">-->
+<!--            <div class="flex items-end gap-3">-->
+<!--                <div class="flex gap-1">-->
+<!--                    <button type="button" class="p-2 hover:bg-surface-container rounded-lg text-on-surface-variant transition-all"><span class="material-symbols-outlined">attach_file</span></button>-->
+<!--                    <button type="button" class="p-2 hover:bg-surface-container rounded-lg text-on-surface-variant transition-all"><span class="material-symbols-outlined">image</span></button>-->
+<!--                    <button type="button" class="p-2 hover:bg-surface-container rounded-lg text-on-surface-variant transition-all"><span class="material-symbols-outlined">mood</span></button>-->
+<!--                </div>-->
+<!--                <textarea id="messageInput" class="flex-1 bg-surface-container-low border border-outline-variant/20 rounded-lg text-sm resize-none px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary/30" placeholder="Type a message..." rows="2"></textarea>-->
+<!--                <button id="sendBtn" type="button" class="bg-primary text-white p-2 px-4 rounded-lg font-headline font-bold text-sm flex items-center gap-1 active:scale-95 transition-all shrink-0">-->
+<!--                    Send <span class="material-symbols-outlined text-sm">send</span>-->
+<!--                </button>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </section>-->
+<!--    &lt;!&ndash; Right Side Panel: Order DNA &ndash;&gt;-->
+<!--    <aside class="hidden xl:flex flex-col w-80 bg-surface border-l border-outline-variant/15 shrink-0">-->
+<!--        <div class="p-6 border-b border-outline-variant/10">-->
+<!--            <h3 class="font-headline font-bold text-primary mb-1">Order DNA</h3>-->
+<!--            <p class="text-xs text-on-surface-variant">Sourcing process summary information</p>-->
+<!--        </div>-->
+<!--        <div class="flex-1 overflow-y-auto p-6 space-y-8">-->
+<!--            &lt;!&ndash; Status Track &ndash;&gt;-->
+<!--            <div class="space-y-4">-->
+<!--                <div class="flex items-center gap-3">-->
+<!--                    <div class="w-8 h-8 rounded-full bg-tertiary-fixed flex items-center justify-center">-->
+<!--                        <span class="material-symbols-outlined text-tertiary text-sm" style="font-variation-settings: 'FILL' 1;">check</span>-->
+<!--                    </div>-->
+<!--                    <div>-->
+<!--                        <p class="text-xs font-bold text-primary">Sourcing Suppliers</p>-->
+<!--                        <p class="text-[10px] text-on-surface-variant">Completed</p>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div class="flex items-center gap-3">-->
+<!--                    <div class="w-8 h-8 rounded-full bg-secondary-container flex items-center justify-center">-->
+<!--                        <div class="w-2 h-2 rounded-full bg-primary animate-pulse"></div>-->
+<!--                    </div>-->
+<!--                    <div>-->
+<!--                        <p class="text-xs font-bold text-primary">Finalizing Specs (In Progress)</p>-->
+<!--                        <p class="text-[10px] text-on-surface-variant">Awaiting customer response</p>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div class="flex items-center gap-3 opacity-40">-->
+<!--                    <div class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center">-->
+<!--                        <span class="text-[10px] font-bold">3</span>-->
+<!--                    </div>-->
+<!--                    <div>-->
+<!--                        <p class="text-xs font-bold">Sample Production</p>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            &lt;!&ndash; Product Preview Card &ndash;&gt;-->
+<!--            <div class="bg-surface-container-low rounded-xl p-4 space-y-3">-->
+<!--                <p class="text-[10px] font-bold uppercase tracking-wider text-on-surface-variant">Reference Product</p>-->
+<!--                <img class="w-full h-40 object-cover rounded-lg shadow-sm" data-alt="high-quality durable canvas travel backpack in navy blue showing detail stitching and oxford fabric texture" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBzzByW52pS4I04RMo_sY3fB_BgV4yGweMORDBu_DwNZwDqf9X9Vk0HgwRDFeAu8cJtFzpql3VjUr0S0nIJUOo97-6wi7Gg_txLZQi0vRCA9OfYrIfqfEtbaF3hfH2mXgx7A4Qr8bBuljXgPqzKxq9maiJgcAh_3zY2W5A4omKT98KXk764wGWbu_USgZb6NW1nslgWiRAQxrcOnMb3aDNKsxNq-0EDc7womseGBWeLDrFghTHyiWdZv5gakFK7HzxPcVhFw15FbPw"/>-->
+<!--                <div>-->
+<!--                    <h4 class="text-sm font-bold text-primary">GZ-2024 Premium Travel Bag</h4>-->
+<!--                    <p class="text-xs text-on-surface-variant">SKU: SKU-B2B-998</p>-->
+<!--                </div>-->
+<!--                <div class="flex flex-wrap gap-2 pt-2">-->
+<!--                    <span class="px-2 py-1 bg-white text-[10px] font-bold rounded border border-outline-variant/10">• Waterproof</span>-->
+<!--                    <span class="px-2 py-1 bg-white text-[10px] font-bold rounded border border-outline-variant/10">• YKK Zippers</span>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            &lt;!&ndash; Logistics Meta &ndash;&gt;-->
+<!--            <div class="space-y-3">-->
+<!--                <p class="text-[10px] font-bold uppercase tracking-wider text-on-surface-variant">Shipping Information</p>-->
+<!--                <div class="flex items-center gap-3 text-sm">-->
+<!--                    <span class="material-symbols-outlined text-primary">local_shipping</span>-->
+<!--                    <div>-->
+<!--                        <p class="text-xs font-bold">Sea Freight (Hai Phong)</p>-->
+<!--                        <p class="text-[10px] text-on-surface-variant">Estimated: 12-15 days</p>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div class="flex items-center gap-3 text-sm">-->
+<!--                    <span class="material-symbols-outlined text-primary">location_on</span>-->
+<!--                    <div>-->
+<!--                        <p class="text-xs font-bold">Guangzhou Warehouse</p>-->
+<!--                        <p class="text-[10px] text-on-surface-variant">Logistics Center No. 4</p>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <div class="p-6">-->
+<!--            <button class="w-full py-3 bg-primary text-white font-headline font-bold text-sm rounded-xl shadow-md active:scale-95 transition-all">-->
+<!--                Export Detailed Quote-->
+<!--            </button>-->
+<!--        </div>-->
+<!--    </aside>-->
+<!--</main>-->
+<!--&lt;!&ndash; BottomNavBar (Mobile Only) &ndash;&gt;-->
+<!--<nav class="lg:hidden fixed bottom-0 left-0 w-full flex justify-around items-center px-4 pb-safe pt-2 bg-[#ffffff]/90 dark:bg-slate-950/90 backdrop-blur-lg border-t border-[#c2c6d1]/15 z-50 shadow-[0_-4px_12px_rgba(0,0,0,0.05)]">-->
+<!--    <div class="flex flex-col items-center justify-center text-[#424750] dark:text-slate-500 py-2">-->
+<!--        <span class="material-symbols-outlined">home</span>-->
+<!--        <span class="font-['Inter'] text-[10px] font-medium uppercase tracking-widest mt-1">Home</span>-->
+<!--    </div>-->
+<!--    <div class="flex flex-col items-center justify-center text-[#424750] dark:text-slate-500 py-2">-->
+<!--        <span class="material-symbols-outlined">show_chart</span>-->
+<!--        <span class="font-['Inter'] text-[10px] font-medium uppercase tracking-widest mt-1">Charts</span>-->
+<!--    </div>-->
+<!--    <div class="flex flex-col items-center justify-center text-[#424750] dark:text-slate-500 py-2">-->
+<!--        <span class="material-symbols-outlined">inventory_2</span>-->
+<!--        <span class="font-['Inter'] text-[10px] font-medium uppercase tracking-widest mt-1">Orders</span>-->
+<!--    </div>-->
+<!--    <div class="flex flex-col items-center justify-center text-[#003461] dark:text-white bg-[#cbe7f5]/50 dark:bg-[#004B87]/30 rounded-xl px-4 py-1">-->
+<!--        <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">forum</span>-->
+<!--        <span class="font-['Inter'] text-[10px] font-medium uppercase tracking-widest mt-1">Chat</span>-->
+<!--    </div>-->
+<!--</nav>-->
+<!--&lt;!&ndash; WebSocket Scripts &ndash;&gt;-->
+<!--<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>-->
+<!--<script src="https://cdn.jsdelivr.net/npm/stompjs@2.3.3/lib/stomp.min.js"></script>-->
+<!--<script th:inline="javascript">-->
+<!--    let stompClient = null;-->
+<!--    const currentUserEmail = [[${currentUserEmail}]];-->
+<!--    const conversationId = parseInt(document.getElementById('conversationId').value);-->
+
+<!--    // Create new request/conversation-->
+<!--    function createNewRequest() {-->
+<!--        fetch('/dashboard/chat/new', {-->
+<!--            method: 'POST',-->
+<!--            headers: {-->
+<!--                'Content-Type': 'application/json'-->
+<!--            }-->
+<!--        })-->
+<!--        .then(response => {-->
+<!--            if (response.redirected) {-->
+<!--                window.location.href = response.url;-->
+<!--            } else if (response.ok) {-->
+<!--                // Reload current page if no redirect-->
+<!--                location.reload();-->
+<!--            } else if (response.status === 403) {-->
+<!--                alert('You do not have permission to create a new request.');-->
+<!--            } else {-->
+<!--                alert('Error creating new request. Please try again.');-->
+<!--            }-->
+<!--        })-->
+<!--        .catch(error => {-->
+<!--            console.error('Error creating new request:', error);-->
+<!--            alert('Failed to create new request. Please try again.');-->
+<!--        });-->
+<!--    }-->
+
+<!--    // Connect to WebSocket-->
+<!--    function connect() {-->
+<!--        const socket = new SockJS('/ws');-->
+<!--        stompClient = Stomp.over(socket);-->
+
+<!--        // Extract JWT from cookies-->
+<!--        const jwtToken = getCookie('jwt');-->
+
+<!--        stompClient.connect(-->
+<!--            { jwt: jwtToken },  // ← Send JWT in STOMP headers-->
+<!--            function(frame) {-->
+<!--                console.log('Connected to WebSocket: ' + frame.headers['server']);-->
+
+<!--                // Subscribe to conversation topic-->
+<!--                stompClient.subscribe('/topic/conversation.' + conversationId, function(message) {-->
+<!--                    const messageResponse = JSON.parse(message.body);-->
+<!--                    displayReceivedMessage(messageResponse);-->
+<!--                });-->
+<!--            },-->
+<!--            function(error) {-->
+<!--                console.error('WebSocket connection error:', error);-->
+<!--                setTimeout(connect, 5000); // Retry after 5 seconds-->
+<!--            }-->
+<!--        );-->
+<!--    }-->
+
+<!--    // Helper: Extract cookie value by name-->
+<!--    function getCookie(name) {-->
+<!--        const nameEQ = name + "=";-->
+<!--        const cookies = document.cookie.split(';');-->
+<!--        for (let i = 0; i < cookies.length; i++) {-->
+<!--            const cookie = cookies[i].trim();-->
+<!--            if (cookie.indexOf(nameEQ) === 0) {-->
+<!--                return cookie.substring(nameEQ.length);-->
+<!--            }-->
+<!--        }-->
+<!--        return null;-->
+<!--    }-->
+
+<!--    // Display received message-->
+<!--    function displayReceivedMessage(messageResponse) {-->
+<!--        const container = document.getElementById('messagesContainer');-->
+
+<!--        // Remove empty state if exists-->
+<!--        const emptyState = container.querySelector('.flex.flex-col.items-center');-->
+<!--        if (emptyState) {-->
+<!--            emptyState.remove();-->
+<!--        }-->
+
+<!--        // Create message element-->
+<!--        const messageDiv = document.createElement('div');-->
+<!--        messageDiv.className = 'flex flex-col gap-2 ' +-->
+<!--            (messageResponse.senderEmail === currentUserEmail ? 'items-end' : 'items-start');-->
+
+<!--        let messageContent = '';-->
+
+<!--        if (messageResponse.senderEmail === currentUserEmail) {-->
+<!--            // Sent message (right aligned)-->
+<!--            messageContent = `-->
+<!--                <div class="max-w-[80%] bg-primary text-white p-4 rounded-xl rounded-tr-none shadow-sm">-->
+<!--                    <p class="text-sm">${escapeHtml(messageResponse.content)}</p>-->
+<!--                </div>-->
+<!--                <span class="text-[10px] text-on-surface-variant">${formatTime(messageResponse.createdAt)}</span>-->
+<!--            `;-->
+<!--        } else {-->
+<!--            // Received message (left aligned)-->
+<!--            let messageDisplay = '';-->
+
+<!--            if (messageResponse.messageType === 'TEXT') {-->
+<!--                messageDisplay = `-->
+<!--                    <div class="bg-surface-container-lowest p-4 rounded-xl rounded-bl-none shadow-sm border border-outline-variant/10">-->
+<!--                        <p class="text-xs font-semibold text-primary mb-1">${escapeHtml(messageResponse.senderName)}</p>-->
+<!--                        <p class="text-sm text-on-surface">${escapeHtml(messageResponse.content)}</p>-->
+<!--                    </div>-->
+<!--                `;-->
+<!--            } else if (messageResponse.messageType === 'SPEC_PROPOSAL_CARD' && messageResponse.proposalCard) {-->
+<!--                const card = messageResponse.proposalCard;-->
+<!--                const photoLinksHtml = card.referencePhotoUrls && card.referencePhotoUrls.length > 0-->
+<!--                    ? `<div class="pb-3">-->
+<!--                        <p class="text-[10px] font-bold text-on-surface-variant uppercase mb-2">Reference Photos</p>-->
+<!--                        <div class="flex flex-wrap gap-2">-->
+<!--                            ${card.referencePhotoUrls.map(url => `-->
+<!--                                <a href="${escapeHtml(url)}" target="_blank" class="inline-flex items-center gap-1 text-xs px-3 py-1.5 bg-primary/10 text-primary hover:bg-primary/20 rounded-lg transition-all">-->
+<!--                                    <span class="material-symbols-outlined text-sm">image</span>-->
+<!--                                    <span>View</span>-->
+<!--                                </a>-->
+<!--                            `).join('')}-->
+<!--                        </div>-->
+<!--                    </div>`-->
+<!--                    : '';-->
+
+<!--                const technicalNotesHtml = card.technicalNotes-->
+<!--                    ? `<div class="border-b border-outline-variant/20 pb-3">-->
+<!--                        <p class="text-[10px] font-bold text-on-surface-variant uppercase mb-1">Technical Notes</p>-->
+<!--                        <p class="text-xs text-on-surface-variant leading-relaxed">${escapeHtml(card.technicalNotes)}</p>-->
+<!--                    </div>`-->
+<!--                    : '';-->
+
+<!--                const actionButtonsHtml = card.status === 'PENDING'-->
+<!--                    ? `<div class="flex flex-col gap-2 pt-2">-->
+<!--                        <button class="w-full bg-tertiary-container hover:bg-tertiary text-white py-2.5 rounded-lg font-headline text-xs font-bold flex items-center justify-center gap-2 transition-all"-->
+<!--                                data-proposal-id="${card.proposalCardId}"-->
+<!--                                onclick="acceptProposal(this)">-->
+<!--                            <span class="material-symbols-outlined text-sm">verified_user</span>-->
+<!--                            Accept Proposal-->
+<!--                        </button>-->
+<!--                        <button class="w-full border-2 border-outline-variant text-on-surface-variant hover:bg-surface py-2 rounded-lg font-headline text-xs font-bold transition-all"-->
+<!--                                data-proposal-id="${card.proposalCardId}"-->
+<!--                                onclick="declineProposal(this)">-->
+<!--                            <span class="material-symbols-outlined text-sm">cancel</span>-->
+<!--                            Decline Proposal-->
+<!--                        </button>-->
+<!--                    </div>`-->
+<!--                    : '';-->
+
+<!--                messageDisplay = `-->
+<!--                    <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-outline-variant/20 max-w-md">-->
+<!--                        <div class="bg-primary px-4 py-3 flex justify-between items-center">-->
+<!--                            <h3 class="font-headline text-white font-bold text-sm">Specification Proposal</h3>-->
+<!--                            <span class="text-[10px] text-primary-fixed-dim font-bold tracking-tighter uppercase">ID: ${card.proposalCardId}</span>-->
+<!--                        </div>-->
+<!--                        <div class="p-5 space-y-4">-->
+<!--                            <div class="border-b border-outline-variant/20 pb-3">-->
+<!--                                <p class="text-[10px] font-bold text-on-surface-variant uppercase mb-1">Materials</p>-->
+<!--                                <p class="text-sm font-semibold text-on-surface">${escapeHtml(card.materials) || 'Not specified'}</p>-->
+<!--                            </div>-->
+<!--                            <div class="border-b border-outline-variant/20 pb-3">-->
+<!--                                <p class="text-[10px] font-bold text-on-surface-variant uppercase mb-1">Dimensions</p>-->
+<!--                                <p class="text-sm font-semibold text-on-surface">${escapeHtml(card.dimensions) || 'Not specified'}</p>-->
+<!--                            </div>-->
+<!--                            ${technicalNotesHtml}-->
+<!--                            ${photoLinksHtml}-->
+<!--                            <div class="pt-1">-->
+<!--                                <span class="text-[10px] font-bold px-2.5 py-1 rounded-full-->
+<!--                                    ${card.status === 'PENDING' ? 'bg-orange-100 text-orange-700' : card.status === 'ACCEPTED' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}">-->
+<!--                                    ${card.status}-->
+<!--                                </span>-->
+<!--                            </div>-->
+<!--                            ${actionButtonsHtml}-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                `;-->
+<!--            } else if (messageResponse.messageType === 'FILE') {-->
+<!--                messageDisplay = `-->
+<!--                    <div class="bg-surface-container-highest/50 p-3 rounded-xl border border-outline-variant/10 flex items-center gap-4 max-w-sm">-->
+<!--                        <div class="w-10 h-10 bg-white rounded-lg flex items-center justify-center shadow-sm">-->
+<!--                            <span class="material-symbols-outlined text-error">description</span>-->
+<!--                        </div>-->
+<!--                        <div class="flex-1 min-w-0">-->
+<!--                            <p class="text-xs font-bold truncate">${escapeHtml(messageResponse.content)}</p>-->
+<!--                            <p class="text-[10px] text-on-surface-variant">${escapeHtml(messageResponse.mediaUrl)}</p>-->
+<!--                        </div>-->
+<!--                        ${messageResponse.mediaUrl ? `-->
+<!--                            <a href="${escapeHtml(messageResponse.mediaUrl)}" target="_blank" class="p-1 hover:bg-white rounded-full transition-all">-->
+<!--                                <span class="material-symbols-outlined text-primary text-lg">download</span>-->
+<!--                            </a>-->
+<!--                        ` : ''}-->
+<!--                    </div>-->
+<!--                `;-->
+<!--            } else if (messageResponse.messageType === 'IMAGE' && messageResponse.mediaUrl) {-->
+<!--                messageDisplay = `-->
+<!--                    <div class="max-w-sm">-->
+<!--                        <img src="${escapeHtml(messageResponse.mediaUrl)}" class="rounded-xl shadow-md max-h-64 object-cover" alt="Attached image">-->
+<!--                    </div>-->
+<!--                `;-->
+<!--            }-->
+
+<!--            messageContent = `-->
+<!--                <div class="flex items-end gap-3 max-w-[85%]">-->
+<!--                    <div class="w-8 h-8 rounded-full bg-secondary-container flex items-center justify-center shrink-0">-->
+<!--                        <span class="material-symbols-outlined text-secondary text-sm">person</span>-->
+<!--                    </div>-->
+<!--                    <div>${messageDisplay}</div>-->
+<!--                </div>-->
+<!--                <span class="text-[10px] text-on-surface-variant">${formatTime(messageResponse.createdAt)}</span>-->
+<!--            `;-->
+<!--        }-->
+
+<!--        messageDiv.innerHTML = messageContent;-->
+<!--        container.appendChild(messageDiv);-->
+
+<!--        // Auto-scroll to bottom-->
+<!--        container.scrollTop = container.scrollHeight;-->
+<!--    }-->
+
+<!--    // Send message-->
+<!--    function sendMessage() {-->
+<!--        const input = document.getElementById('messageInput');-->
+<!--        const content = input.value.trim();-->
+
+<!--        if (!content) return;-->
+
+<!--        const chatMessageRequest = {-->
+<!--            conversationId: conversationId,-->
+<!--            messageType: 'TEXT',-->
+<!--            content: content,-->
+<!--            mediaUrl: null-->
+<!--        };-->
+
+<!--        if (stompClient && stompClient.connected) {-->
+<!--            stompClient.send('/app/chat.send', {}, JSON.stringify(chatMessageRequest));-->
+<!--            input.value = '';-->
+<!--            input.style.height = 'auto'; // Reset height-->
+<!--        } else {-->
+<!--            console.error('WebSocket not connected');-->
+<!--            alert('Chat connection lost. Please refresh the page.');-->
+<!--        }-->
+<!--    }-->
+
+<!--    // Helper: Escape HTML to prevent XSS-->
+<!--    function escapeHtml(text) {-->
+<!--        if (!text) return '';-->
+<!--        const div = document.createElement('div');-->
+<!--        div.textContent = text;-->
+<!--        return div.innerHTML;-->
+<!--    }-->
+
+<!--    // Helper: Format timestamp-->
+<!--    function formatTime(isoString) {-->
+<!--        if (!isoString) return '';-->
+<!--        const date = new Date(isoString);-->
+<!--        return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });-->
+<!--    }-->
+
+<!--    // Accept Proposal-->
+<!--    function acceptProposal(button) {-->
+<!--        const proposalId = button.getAttribute('data-proposal-id');-->
+<!--        if (!proposalId) {-->
+<!--            console.error('[v0] Proposal ID not found');-->
+<!--            return;-->
+<!--        }-->
+
+<!--        // Disable button to prevent multiple clicks-->
+<!--        button.disabled = true;-->
+<!--        const originalText = button.innerHTML;-->
+<!--        button.innerHTML = '<span class="material-symbols-outlined text-sm">hourglass_empty</span> Processing...';-->
+
+<!--        console.log('[v0] Accepting proposal:', proposalId);-->
+
+<!--        fetch(`/dashboard/chat/proposal/${proposalId}/accept`, {-->
+<!--            method: 'POST',-->
+<!--            headers: {-->
+<!--                'Content-Type': 'application/json'-->
+<!--            }-->
+<!--        })-->
+<!--        .then(response => {-->
+<!--            console.log('[v0] Accept response status:', response.status, 'Content-Type:', response.headers.get('content-type'));-->
+<!--            if (!response.ok) {-->
+<!--                throw new Error(`HTTP error! status: ${response.status}`);-->
+<!--            }-->
+<!--            // Check if response has content and is JSON-->
+<!--            const contentType = response.headers.get('content-type');-->
+<!--            if (contentType && contentType.includes('application/json')) {-->
+<!--                return response.json();-->
+<!--            } else {-->
+<!--                return response.text().then(() => ({})); // Return empty object if not JSON-->
+<!--            }-->
+<!--        })-->
+<!--        .then(data => {-->
+<!--            console.log('[v0] Proposal accepted successfully:', data);-->
+<!--            // Find the button container with action buttons-->
+<!--            const buttonContainer = button.parentElement;-->
+<!--            buttonContainer.style.display = 'none';-->
+<!--            buttonContainer.insertAdjacentHTML('afterend',-->
+<!--                '<div class="bg-green-100 border border-green-200 text-green-700 px-4 py-2 rounded-lg text-sm font-bold">✓ Proposal Accepted</div>'-->
+<!--            );-->
+<!--        })-->
+<!--        .catch(error => {-->
+<!--            console.error('[v0] Error accepting proposal:', error.message);-->
+<!--            button.disabled = false;-->
+<!--            button.innerHTML = originalText;-->
+<!--            alert('Failed to accept proposal. Please try again.');-->
+<!--        });-->
+<!--    }-->
+
+<!--    // Decline Proposal-->
+<!--    function declineProposal(button) {-->
+<!--        const proposalId = button.getAttribute('data-proposal-id');-->
+<!--        if (!proposalId) {-->
+<!--            console.error('[v0] Proposal ID not found');-->
+<!--            return;-->
+<!--        }-->
+
+<!--        const reason = prompt('Please provide a reason for declining this proposal:', '');-->
+<!--        if (reason === null) {-->
+<!--            return; // User cancelled-->
+<!--        }-->
+
+<!--        // Disable button to prevent multiple clicks-->
+<!--        button.disabled = true;-->
+<!--        const originalText = button.innerHTML;-->
+<!--        button.innerHTML = '<span class="material-symbols-outlined text-sm">hourglass_empty</span> Processing...';-->
+
+<!--        console.log('[v0] Declining proposal:', proposalId, 'Reason:', reason);-->
+
+<!--        fetch(`/dashboard/chat/proposal/${proposalId}/decline`, {-->
+<!--            method: 'POST',-->
+<!--            headers: {-->
+<!--                'Content-Type': 'application/json'-->
+<!--            },-->
+<!--            body: JSON.stringify({ reason: reason })-->
+<!--        })-->
+<!--        .then(response => {-->
+<!--            console.log('[v0] Decline response status:', response.status, 'Content-Type:', response.headers.get('content-type'));-->
+<!--            if (!response.ok) {-->
+<!--                throw new Error(`HTTP error! status: ${response.status}`);-->
+<!--            }-->
+<!--            // Check if response has content and is JSON-->
+<!--            const contentType = response.headers.get('content-type');-->
+<!--            if (contentType && contentType.includes('application/json')) {-->
+<!--                return response.json();-->
+<!--            } else {-->
+<!--                return response.text().then(() => ({})); // Return empty object if not JSON-->
+<!--            }-->
+<!--        })-->
+<!--        .then(data => {-->
+<!--            console.log('[v0] Proposal declined successfully:', data);-->
+<!--            // Find the button container with action buttons-->
+<!--            const buttonContainer = button.parentElement;-->
+<!--            buttonContainer.style.display = 'none';-->
+<!--            buttonContainer.insertAdjacentHTML('afterend',-->
+<!--                '<div class="bg-red-100 border border-red-200 text-red-700 px-4 py-2 rounded-lg text-sm font-bold">✗ Proposal Declined</div>'-->
+<!--            );-->
+<!--        })-->
+<!--        .catch(error => {-->
+<!--            console.error('[v0] Error declining proposal:', error.message);-->
+<!--            button.disabled = false;-->
+<!--            button.innerHTML = originalText;-->
+<!--            alert('Failed to decline proposal. Please try again.');-->
+<!--        });-->
+<!--    }-->
+
+<!--    // Event listeners-->
+<!--    document.addEventListener('DOMContentLoaded', function() {-->
+<!--        connect();-->
+
+<!--        // Send on button click-->
+<!--        document.getElementById('sendBtn').addEventListener('click', sendMessage);-->
+
+<!--        // Send on Enter key (Shift+Enter for newline)-->
+<!--        document.getElementById('messageInput').addEventListener('keydown', function(e) {-->
+<!--            if (e.key === 'Enter' && !e.shiftKey) {-->
+<!--                e.preventDefault();-->
+<!--                sendMessage();-->
+<!--            }-->
+<!--        });-->
+
+<!--        // Auto-expand textarea-->
+<!--        const textarea = document.getElementById('messageInput');-->
+<!--        textarea.addEventListener('input', function() {-->
+<!--            this.style.height = 'auto';-->
+<!--            this.style.height = Math.min(this.scrollHeight, 120) + 'px';-->
+<!--        });-->
+
+<!--        // Auto-scroll messages container-->
+<!--        const container = document.getElementById('messagesContainer');-->
+<!--        container.scrollTop = container.scrollHeight;-->
+<!--    });-->
+
+<!--    // Reconnect WebSocket on page visibility change-->
+<!--    document.addEventListener('visibilitychange', function() {-->
+<!--        if (!document.hidden && (!stompClient || !stompClient.connected)) {-->
+<!--            console.log('Page became visible, reconnecting WebSocket...');-->
+<!--            connect();-->
+<!--        }-->
+<!--    });-->
+<!--</script>-->
+<!--</body></html>-->
+
 <!DOCTYPE html>
 
 <html class="light" lang="en"><head>
@@ -196,9 +1010,44 @@
                 <!-- Determine if message is from current user -->
                 <div th:classappend="${msg.senderEmail == currentUserEmail} ? 'items-end' : 'items-start'" class="flex flex-col gap-2">
                     <!-- Message: From Current User (Right aligned) -->
-                    <div th:if="${msg.senderEmail == currentUserEmail}" class="max-w-[80%] bg-primary text-white p-4 rounded-xl rounded-tr-none shadow-sm">
-                        <p class="text-sm" th:text="${msg.content}"></p>
-                    </div>
+                    <th:block th:if="${msg.senderEmail == currentUserEmail}">
+                        <!-- Regular text message -->
+                        <div th:if="${msg.messageType == 'TEXT'}" class="max-w-[80%] bg-primary text-white p-4 rounded-xl rounded-tr-none shadow-sm">
+                            <p class="text-sm" th:text="${msg.content}"></p>
+                        </div>
+                        <!-- Price Quote Card (sent by current user, right aligned) -->
+                        <div th:if="${msg.messageType == 'PRICE_QUOTE' and msg.priceQuote != null}"
+                             class="bg-white rounded-2xl shadow-md overflow-hidden border border-outline-variant/10 max-w-sm" th:attr="data-quote-id=${msg.priceQuote.quoteId}">
+                            <div class="bg-primary px-5 py-3 flex items-center justify-between">
+                                <div class="flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-white/80 text-[18px]" style="font-variation-settings: 'FILL' 1;">request_quote</span>
+                                    <h3 class="font-headline text-white font-bold text-sm tracking-tight">Price Quote<span class="text-white/50 font-normal text-xs ml-1" th:text="'#' + ${msg.priceQuote.quoteId}"></span></h3>
+                                </div>
+                            </div>
+                            <div class="p-5">
+                                <div th:if="${msg.priceQuote.orderId != null}" class="flex items-center gap-1.5 text-xs text-on-surface-variant mb-3">
+                                    <span class="material-symbols-outlined text-[16px]">orders</span>
+                                    <span>Order #<span th:text="${msg.priceQuote.orderId}"></span></span>
+                                </div>
+                                <div class="flex items-center gap-2 text-xs text-on-surface-variant mb-3">
+                                    <span class="material-symbols-outlined text-[16px]">person</span>
+                                    <span th:text="${msg.priceQuote.proposedByName}"></span>
+                                </div>
+                                <div class="mb-1">
+                                    <p class="text-[10px] font-headline font-bold text-on-surface-variant/60 uppercase tracking-widest">PROPOSED PRICE</p>
+                                </div>
+                                <p class="text-3xl font-extrabold text-on-surface font-headline tracking-tight" th:text="'$' + ${msg.priceQuote.proposedPrice}"></p>
+                                <div th:if="${msg.priceQuote.note != null and !msg.priceQuote.note.isEmpty()}" class="mt-4 bg-surface-container-low rounded-xl px-4 py-3">
+                                    <p class="text-xs text-on-surface-variant leading-relaxed" th:text="${msg.priceQuote.note}"></p>
+                                </div>
+                                <div class="mt-4" th:attr="id='quote-status-' + ${msg.priceQuote.quoteId}">
+                                    <span th:classappend="${msg.priceQuote.status == 'PENDING' ? 'bg-amber-50 text-amber-600 ring-1 ring-amber-200' : msg.priceQuote.status == 'ACCEPTED' ? 'bg-emerald-50 text-emerald-600 ring-1 ring-emerald-200' : msg.priceQuote.status == 'COUNTERED' ? 'bg-blue-50 text-blue-600 ring-1 ring-blue-200' : 'bg-red-50 text-red-600 ring-1 ring-red-200'}"
+                                          class="text-[10px] font-bold px-3 py-1 rounded-full"
+                                          th:text="${msg.priceQuote.status}"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </th:block>
 
                     <!-- Message: From Other User (Left aligned) -->
                     <div th:unless="${msg.senderEmail == currentUserEmail}" class="flex items-end gap-3 max-w-[85%]">
@@ -211,20 +1060,137 @@
                         </div>
 
                         <!-- Spec Proposal Card -->
-                        <div th:if="${msg.messageType == 'SPEC_PROPOSAL_CARD'}" class="bg-white rounded-xl shadow-lg overflow-hidden border border-outline-variant/20 max-w-sm">
+                        <div th:if="${msg.messageType == 'SPEC_PROPOSAL_CARD' and msg.proposalCard != null}"
+                             class="bg-white rounded-xl shadow-lg overflow-hidden border border-outline-variant/20 max-w-md"
+                             th:attr="data-proposal-id=${msg.proposalCard.proposalCardId}">
                             <div class="bg-primary px-4 py-3 flex justify-between items-center">
                                 <h3 class="font-headline text-white font-bold text-sm">Specification Proposal</h3>
-                                <span class="text-[10px] text-primary-fixed-dim font-bold tracking-tighter uppercase" th:text="'ID: ' + ${msg.messageId}"></span>
+                                <span class="text-[10px] text-primary-fixed-dim font-bold tracking-tighter uppercase" th:text="'ID: ' + ${msg.proposalCard.proposalCardId}"></span>
                             </div>
                             <div class="p-5 space-y-4">
-                                <div class="text-sm text-on-surface" th:utext="${msg.content}"></div>
-                                <div class="flex flex-col gap-2 pt-2">
-                                    <button class="w-full bg-tertiary-container hover:bg-tertiary text-white py-2.5 rounded-lg font-headline text-xs font-bold flex items-center justify-center gap-2 transition-all">
+                                <!-- Materials -->
+                                <div class="border-b border-outline-variant/20 pb-3">
+                                    <p class="text-[10px] font-headline font-bold text-on-surface-variant uppercase tracking-wide mb-1">Materials</p>
+                                    <p class="text-sm font-semibold text-on-surface" th:text="${msg.proposalCard.materials ?: 'Not specified'}"></p>
+                                </div>
+
+                                <!-- Dimensions -->
+                                <div class="border-b border-outline-variant/20 pb-3">
+                                    <p class="text-[10px] font-headline font-bold text-on-surface-variant uppercase tracking-wide mb-1">Dimensions</p>
+                                    <p class="text-sm font-semibold text-on-surface" th:text="${msg.proposalCard.dimensions ?: 'Not specified'}"></p>
+                                </div>
+
+                                <!-- Color -->
+                                <div th:if="${msg.proposalCard.color}" class="border-b border-outline-variant/20 pb-3">
+                                    <p class="text-[10px] font-headline font-bold text-on-surface-variant uppercase tracking-wide mb-1">Color</p>
+                                    <p class="text-sm font-semibold text-on-surface" th:text="${msg.proposalCard.color}"></p>
+                                </div>
+
+                                <!-- Quantity -->
+                                <div th:if="${msg.proposalCard.quantity}" class="border-b border-outline-variant/20 pb-3">
+                                    <p class="text-[10px] font-headline font-bold text-on-surface-variant uppercase tracking-wide mb-1">Quantity</p>
+                                    <p class="text-sm font-semibold text-on-surface" th:text="${msg.proposalCard.quantity + ' units'}"></p>
+                                </div>
+
+                                <!-- Estimate Price -->
+                                <div th:if="${msg.proposalCard.estimatePrice}" class="border-b border-outline-variant/20 pb-3">
+                                    <p class="text-[10px] font-headline font-bold text-on-surface-variant uppercase tracking-wide mb-1">Estimate Price (Ceiling)</p>
+                                    <p class="text-lg font-bold text-primary" th:text="'$' + ${msg.proposalCard.estimatePrice}"></p>
+                                </div>
+
+                                <!-- Technical Notes -->
+                                <div th:if="${msg.proposalCard.technicalNotes}" class="border-b border-outline-variant/20 pb-3">
+                                    <p class="text-[10px] font-headline font-bold text-on-surface-variant uppercase tracking-wide mb-1">Technical Notes</p>
+                                    <p class="text-xs text-on-surface-variant leading-relaxed" th:text="${msg.proposalCard.technicalNotes}"></p>
+                                </div>
+
+                                <!-- Reference Photos -->
+                                <div th:if="${msg.proposalCard.referencePhotoUrls != null and msg.proposalCard.referencePhotoUrls.size() > 0}" class="pb-3">
+                                    <p class="text-[10px] font-headline font-bold text-on-surface-variant uppercase tracking-wide mb-2">Reference Photos</p>
+                                    <div class="flex flex-wrap gap-2">
+                                        <a th:each="photoUrl : ${msg.proposalCard.referencePhotoUrls}"
+                                           th:href="${photoUrl}"
+                                           target="_blank"
+                                           class="inline-flex items-center gap-1 text-xs px-3 py-1.5 bg-primary/10 text-primary hover:bg-primary/20 rounded-lg transition-all">
+                                            <span class="material-symbols-outlined text-sm">image</span>
+                                            <span>View</span>
+                                        </a>
+                                    </div>
+                                </div>
+
+                                <!-- Status Badge -->
+                                <div class="pt-2 pb-3" th:attr="id='proposal-status-' + ${msg.proposalCard.proposalCardId}">
+                                    <span th:classappend="${msg.proposalCard.status == 'PENDING' ? 'bg-orange-100 text-orange-700' : msg.proposalCard.status == 'ACCEPTED' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}"
+                                          class="text-[10px] font-bold px-2.5 py-1 rounded-full"
+                                          th:text="${msg.proposalCard.status}"></span>
+                                </div>
+
+                                <!-- Accepted → link to negotiation page -->
+                                <div th:if="${msg.proposalCard.status == 'ACCEPTED' and msg.proposalCard.resultOrderId != null}" class="pt-1">
+                                    <a th:href="'/dashboard/chat/order/' + ${msg.proposalCard.resultOrderId}"
+                                       class="w-full inline-flex items-center justify-center gap-2 bg-tertiary-fixed/20 text-tertiary hover:bg-tertiary-fixed/30 py-2 px-4 rounded-lg font-headline text-xs font-bold transition-all">
+                                        <span class="material-symbols-outlined text-sm">gavel</span>
+                                        Go to Price Negotiation
+                                    </a>
+                                </div>
+
+                                <!-- Action Buttons (Only show if PENDING) -->
+                                <div th:if="${msg.proposalCard.status == 'PENDING'}" class="flex flex-col gap-2 pt-2"
+                                     th:attr="id='proposal-actions-' + ${msg.proposalCard.proposalCardId}">
+                                    <button class="w-full bg-tertiary-container hover:bg-tertiary text-white py-2.5 rounded-lg font-headline text-xs font-bold flex items-center justify-center gap-2 transition-all"
+                                            th:attr="data-proposal-id=${msg.proposalCard.proposalCardId}"
+                                            onclick="acceptProposal(this)">
                                         <span class="material-symbols-outlined text-sm">verified_user</span>
                                         Accept Proposal
                                     </button>
-                                    <button class="w-full border-2 border-outline-variant text-on-surface-variant hover:bg-surface py-2 rounded-lg font-headline text-xs font-bold transition-all">
-                                        Request Revisions
+                                    <button class="w-full border-2 border-outline-variant text-on-surface-variant hover:bg-surface py-2 rounded-lg font-headline text-xs font-bold transition-all"
+                                            th:attr="data-proposal-id=${msg.proposalCard.proposalCardId}"
+                                            onclick="declineProposal(this)">
+                                        <span class="material-symbols-outlined text-sm">cancel</span>
+                                        Decline Proposal
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Price Quote Card (from admin in chat stream) -->
+                        <div th:if="${msg.messageType == 'PRICE_QUOTE' and msg.priceQuote != null}"
+                             class="bg-white rounded-2xl shadow-md overflow-hidden border border-outline-variant/10 max-w-sm" th:attr="data-quote-id=${msg.priceQuote.quoteId}">
+                            <div class="bg-primary px-5 py-3 flex items-center justify-between">
+                                <div class="flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-white/80 text-[18px]" style="font-variation-settings: 'FILL' 1;">request_quote</span>
+                                    <h3 class="font-headline text-white font-bold text-sm tracking-tight">Price Quote<span class="text-white/50 font-normal text-xs ml-1" th:text="'#' + ${msg.priceQuote.quoteId}"></span></h3>
+                                </div>
+                            </div>
+                            <div class="p-5">
+                                <div th:if="${msg.priceQuote.orderId != null}" class="flex items-center gap-1.5 text-xs text-on-surface-variant mb-3">
+                                    <span class="material-symbols-outlined text-[16px]">orders</span>
+                                    <span>Order #<span th:text="${msg.priceQuote.orderId}"></span></span>
+                                </div>
+                                <div class="flex items-center gap-2 text-xs text-on-surface-variant mb-3">
+                                    <span class="material-symbols-outlined text-[16px]">person</span>
+                                    <span th:text="${msg.priceQuote.proposedByName}"></span>
+                                </div>
+                                <div class="mb-1">
+                                    <p class="text-[10px] font-headline font-bold text-on-surface-variant/60 uppercase tracking-widest">PROPOSED PRICE</p>
+                                </div>
+                                <p class="text-3xl font-extrabold text-on-surface font-headline tracking-tight" th:text="'$' + ${msg.priceQuote.proposedPrice}"></p>
+                                <div th:if="${msg.priceQuote.note != null and !msg.priceQuote.note.isEmpty()}" class="mt-4 bg-surface-container-low rounded-xl px-4 py-3">
+                                    <p class="text-xs text-on-surface-variant leading-relaxed" th:text="${msg.priceQuote.note}"></p>
+                                </div>
+                                <div class="mt-4" th:attr="id='quote-status-' + ${msg.priceQuote.quoteId}">
+                                    <span th:classappend="${msg.priceQuote.status == 'PENDING' ? 'bg-amber-50 text-amber-600 ring-1 ring-amber-200' : msg.priceQuote.status == 'ACCEPTED' ? 'bg-emerald-50 text-emerald-600 ring-1 ring-emerald-200' : msg.priceQuote.status == 'COUNTERED' ? 'bg-blue-50 text-blue-600 ring-1 ring-blue-200' : 'bg-red-50 text-red-600 ring-1 ring-red-200'}"
+                                          class="text-[10px] font-bold px-3 py-1 rounded-full"
+                                          th:text="${msg.priceQuote.status}"></span>
+                                </div>
+                                <!-- Accept button for quotes from admin, only if PENDING -->
+                                <div th:if="${msg.priceQuote.status == 'PENDING' and msg.priceQuote.proposedByEmail != currentUserEmail}" class="mt-4"
+                                     th:attr="id='quote-actions-' + ${msg.priceQuote.quoteId}">
+                                    <button class="w-full bg-tertiary-container hover:bg-tertiary text-white py-2.5 rounded-xl font-headline text-xs font-bold flex items-center justify-center gap-2 transition-all shadow-sm"
+                                            th:attr="data-quote-id=${msg.priceQuote.quoteId}"
+                                            onclick="acceptQuote(this)">
+                                        <span class="material-symbols-outlined text-sm">check_circle</span>
+                                        Accept This Price
                                     </button>
                                 </div>
                             </div>
@@ -377,15 +1343,12 @@
     function createNewRequest() {
         fetch('/dashboard/chat/new', {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            }
+            headers: { 'Content-Type': 'application/json' }
         })
         .then(response => {
             if (response.redirected) {
                 window.location.href = response.url;
             } else if (response.ok) {
-                // Reload current page if no redirect
                 location.reload();
             } else if (response.status === 403) {
                 alert('You do not have permission to create a new request.');
@@ -403,52 +1366,79 @@
     function connect() {
         const socket = new SockJS('/ws');
         stompClient = Stomp.over(socket);
-
-        // Extract JWT from cookies
         const jwtToken = getCookie('jwt');
 
         stompClient.connect(
-            { jwt: jwtToken },  // ← Send JWT in STOMP headers
+            { jwt: jwtToken },
             function(frame) {
                 console.log('Connected to WebSocket: ' + frame.headers['server']);
 
-                // Subscribe to conversation topic
                 stompClient.subscribe('/topic/conversation.' + conversationId, function(message) {
-                    const messageResponse = JSON.parse(message.body);
-                    displayReceivedMessage(messageResponse);
+                    const data = JSON.parse(message.body);
+
+                    if (data.eventType === 'PROPOSAL_STATUS_UPDATE') {
+                        updateProposalStatusFromWS(data.proposalCardId, data.status, data.resultOrderId);
+                    } else if (data.eventType === 'PRICE_QUOTE_UPDATE') {
+                        updateQuoteStatusFromWS(data.quoteId, data.status);
+                    } else {
+                        displayReceivedMessage(data);
+                    }
                 });
             },
             function(error) {
                 console.error('WebSocket connection error:', error);
-                setTimeout(connect, 5000); // Retry after 5 seconds
+                setTimeout(connect, 5000);
             }
         );
     }
 
-    // Helper: Extract cookie value by name
     function getCookie(name) {
         const nameEQ = name + "=";
         const cookies = document.cookie.split(';');
         for (let i = 0; i < cookies.length; i++) {
             const cookie = cookies[i].trim();
-            if (cookie.indexOf(nameEQ) === 0) {
-                return cookie.substring(nameEQ.length);
-            }
+            if (cookie.indexOf(nameEQ) === 0) return cookie.substring(nameEQ.length);
         }
         return null;
+    }
+
+    // Update proposal status from WebSocket event
+    function updateProposalStatusFromWS(proposalCardId, newStatus, resultOrderId) {
+        const statusEl = document.getElementById('proposal-status-' + proposalCardId);
+        if (statusEl) {
+            const badge = statusEl.querySelector('span');
+            if (badge) {
+                badge.textContent = newStatus;
+                badge.className = 'text-[10px] font-bold px-2.5 py-1 rounded-full ' +
+                    (newStatus === 'ACCEPTED' ? 'bg-green-100 text-green-700' :
+                     newStatus === 'DECLINED' ? 'bg-red-100 text-red-700' :
+                     'bg-orange-100 text-orange-700');
+            }
+        }
+        // Remove action buttons
+        const actionsEl = document.getElementById('proposal-actions-' + proposalCardId);
+        if (actionsEl) {
+            if (newStatus === 'ACCEPTED' && resultOrderId) {
+                actionsEl.innerHTML = `
+                    <a href="/dashboard/chat/order/${resultOrderId}"
+                       class="w-full inline-flex items-center justify-center gap-2 bg-green-100 text-green-700 hover:bg-green-200 py-2 px-4 rounded-lg font-headline text-xs font-bold transition-all">
+                        <span class="material-symbols-outlined text-sm">gavel</span>
+                        Go to Price Negotiation
+                    </a>
+                `;
+            } else {
+                actionsEl.innerHTML = `<div class="bg-red-100 border border-red-200 text-red-700 px-4 py-2 rounded-lg text-sm font-bold text-center">✗ Proposal Declined</div>`;
+            }
+        }
     }
 
     // Display received message
     function displayReceivedMessage(messageResponse) {
         const container = document.getElementById('messagesContainer');
 
-        // Remove empty state if exists
         const emptyState = container.querySelector('.flex.flex-col.items-center');
-        if (emptyState) {
-            emptyState.remove();
-        }
+        if (emptyState) emptyState.remove();
 
-        // Create message element
         const messageDiv = document.createElement('div');
         messageDiv.className = 'flex flex-col gap-2 ' +
             (messageResponse.senderEmail === currentUserEmail ? 'items-end' : 'items-start');
@@ -456,15 +1446,56 @@
         let messageContent = '';
 
         if (messageResponse.senderEmail === currentUserEmail) {
-            // Sent message (right aligned)
-            messageContent = `
-                <div class="max-w-[80%] bg-primary text-white p-4 rounded-xl rounded-tr-none shadow-sm">
-                    <p class="text-sm">${escapeHtml(messageResponse.content)}</p>
-                </div>
-                <span class="text-[10px] text-on-surface-variant">${formatTime(messageResponse.createdAt)}</span>
-            `;
+            if (messageResponse.messageType === 'PRICE_QUOTE' && messageResponse.priceQuote) {
+                const quote = messageResponse.priceQuote;
+                const statusClass = quote.status === 'ACCEPTED' ? 'bg-emerald-50 text-emerald-600 ring-1 ring-emerald-200' :
+                                   quote.status === 'COUNTERED' ? 'bg-blue-50 text-blue-600 ring-1 ring-blue-200' :
+                                   quote.status === 'DECLINED' ? 'bg-red-50 text-red-600 ring-1 ring-red-200' :
+                                   'bg-amber-50 text-amber-600 ring-1 ring-amber-200';
+                const orderIdHtml = quote.orderId ? `
+                    <div class="flex items-center gap-1.5 text-xs text-on-surface-variant mb-3">
+                        <span class="material-symbols-outlined text-[16px]">orders</span>
+                        <span>Order #${quote.orderId}</span>
+                    </div>` : '';
+                const noteHtml = quote.note ? `
+                    <div class="mt-4 bg-surface-container-low rounded-xl px-4 py-3">
+                        <p class="text-xs text-on-surface-variant leading-relaxed">${escapeHtml(quote.note)}</p>
+                    </div>` : '';
+                messageContent = `
+                    <div class="bg-white rounded-2xl shadow-md overflow-hidden border border-outline-variant/10 max-w-sm" data-quote-id="${quote.quoteId}">
+                        <div class="bg-primary px-5 py-3 flex items-center justify-between">
+                            <div class="flex items-center gap-2">
+                                <span class="material-symbols-outlined text-white/80 text-[18px]" style="font-variation-settings: 'FILL' 1;">request_quote</span>
+                                <h3 class="font-headline text-white font-bold text-sm tracking-tight">Price Quote<span class="text-white/50 font-normal text-xs ml-1">#${quote.quoteId}</span></h3>
+                            </div>
+                        </div>
+                        <div class="p-5">
+                            ${orderIdHtml}
+                            <div class="flex items-center gap-2 text-xs text-on-surface-variant mb-3">
+                                <span class="material-symbols-outlined text-[16px]">person</span>
+                                <span>${escapeHtml(quote.proposedByName)}</span>
+                            </div>
+                            <div class="mb-1">
+                                <p class="text-[10px] font-headline font-bold text-on-surface-variant/60 uppercase tracking-widest">PROPOSED PRICE</p>
+                            </div>
+                            <p class="text-3xl font-extrabold text-on-surface font-headline tracking-tight">$${quote.proposedPrice}</p>
+                            ${noteHtml}
+                            <div class="mt-4" id="quote-status-${quote.quoteId}">
+                                <span class="text-[10px] font-bold px-3 py-1 rounded-full ${statusClass}">${quote.status}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <span class="text-[10px] text-on-surface-variant">${formatTime(messageResponse.createdAt)}</span>
+                `;
+            } else {
+                messageContent = `
+                    <div class="max-w-[80%] bg-primary text-white p-4 rounded-xl rounded-tr-none shadow-sm">
+                        <p class="text-sm">${escapeHtml(messageResponse.content)}</p>
+                    </div>
+                    <span class="text-[10px] text-on-surface-variant">${formatTime(messageResponse.createdAt)}</span>
+                `;
+            }
         } else {
-            // Received message (left aligned)
             let messageDisplay = '';
 
             if (messageResponse.messageType === 'TEXT') {
@@ -474,24 +1505,148 @@
                         <p class="text-sm text-on-surface">${escapeHtml(messageResponse.content)}</p>
                     </div>
                 `;
-            } else if (messageResponse.messageType === 'SPEC_PROPOSAL_CARD') {
+            } else if (messageResponse.messageType === 'SPEC_PROPOSAL_CARD' && messageResponse.proposalCard) {
+                const card = messageResponse.proposalCard;
+                const photoLinksHtml = card.referencePhotoUrls && card.referencePhotoUrls.length > 0
+                    ? `<div class="pb-3">
+                        <p class="text-[10px] font-bold text-on-surface-variant uppercase mb-2">Reference Photos</p>
+                        <div class="flex flex-wrap gap-2">
+                            ${card.referencePhotoUrls.map(url => `
+                                <a href="${escapeHtml(url)}" target="_blank" class="inline-flex items-center gap-1 text-xs px-3 py-1.5 bg-primary/10 text-primary hover:bg-primary/20 rounded-lg transition-all">
+                                    <span class="material-symbols-outlined text-sm">image</span>
+                                    <span>View</span>
+                                </a>
+                            `).join('')}
+                        </div>
+                    </div>` : '';
+
+                const technicalNotesHtml = card.technicalNotes
+                    ? `<div class="border-b border-outline-variant/20 pb-3">
+                        <p class="text-[10px] font-bold text-on-surface-variant uppercase mb-1">Technical Notes</p>
+                        <p class="text-xs text-on-surface-variant leading-relaxed">${escapeHtml(card.technicalNotes)}</p>
+                    </div>` : '';
+
+                const colorHtml = card.color
+                    ? `<div class="border-b border-outline-variant/20 pb-3">
+                        <p class="text-[10px] font-bold text-on-surface-variant uppercase mb-1">Color</p>
+                        <p class="text-sm font-semibold text-on-surface">${escapeHtml(card.color)}</p>
+                    </div>` : '';
+
+                const quantityHtml = card.quantity
+                    ? `<div class="border-b border-outline-variant/20 pb-3">
+                        <p class="text-[10px] font-bold text-on-surface-variant uppercase mb-1">Quantity</p>
+                        <p class="text-sm font-semibold text-on-surface">${card.quantity} units</p>
+                    </div>` : '';
+
+                const estimatePriceHtml = card.estimatePrice
+                    ? `<div class="border-b border-outline-variant/20 pb-3">
+                        <p class="text-[10px] font-bold text-on-surface-variant uppercase mb-1">Estimate Price (Ceiling)</p>
+                        <p class="text-lg font-bold text-primary">$${card.estimatePrice}</p>
+                    </div>` : '';
+
+                const actionButtonsHtml = card.status === 'PENDING'
+                    ? `<div class="flex flex-col gap-2 pt-2" id="proposal-actions-${card.proposalCardId}">
+                        <button class="w-full bg-tertiary-container hover:bg-tertiary text-white py-2.5 rounded-lg font-headline text-xs font-bold flex items-center justify-center gap-2 transition-all"
+                                data-proposal-id="${card.proposalCardId}"
+                                onclick="acceptProposal(this)">
+                            <span class="material-symbols-outlined text-sm">verified_user</span>
+                            Accept Proposal
+                        </button>
+                        <button class="w-full border-2 border-outline-variant text-on-surface-variant hover:bg-surface py-2 rounded-lg font-headline text-xs font-bold transition-all"
+                                data-proposal-id="${card.proposalCardId}"
+                                onclick="declineProposal(this)">
+                            <span class="material-symbols-outlined text-sm">cancel</span>
+                            Decline Proposal
+                        </button>
+                    </div>` : '';
+
+                const negotiationLinkHtml = card.status === 'ACCEPTED' && card.resultOrderId
+                    ? `<div class="pt-1">
+                        <a href="/dashboard/chat/order/${card.resultOrderId}"
+                           class="w-full inline-flex items-center justify-center gap-2 bg-tertiary-fixed/20 text-tertiary hover:bg-tertiary-fixed/30 py-2 px-4 rounded-lg font-headline text-xs font-bold transition-all">
+                            <span class="material-symbols-outlined text-sm">gavel</span>
+                            Go to Price Negotiation
+                        </a>
+                    </div>` : '';
+
                 messageDisplay = `
-                    <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-outline-variant/20 max-w-sm">
+                    <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-outline-variant/20 max-w-md" data-proposal-id="${card.proposalCardId}">
                         <div class="bg-primary px-4 py-3 flex justify-between items-center">
                             <h3 class="font-headline text-white font-bold text-sm">Specification Proposal</h3>
-                            <span class="text-[10px] text-primary-fixed-dim font-bold tracking-tighter uppercase">ID: ${escapeHtml(messageResponse.messageId)}</span>
+                            <span class="text-[10px] text-primary-fixed-dim font-bold tracking-tighter uppercase">ID: ${card.proposalCardId}</span>
                         </div>
                         <div class="p-5 space-y-4">
-                            <div class="text-sm text-on-surface">${messageResponse.content}</div>
-                            <div class="flex flex-col gap-2 pt-2">
-                                <button class="w-full bg-tertiary-container hover:bg-tertiary text-white py-2.5 rounded-lg font-headline text-xs font-bold flex items-center justify-center gap-2 transition-all">
-                                    <span class="material-symbols-outlined text-sm">verified_user</span>
-                                    Accept Proposal
-                                </button>
-                                <button class="w-full border-2 border-outline-variant text-on-surface-variant hover:bg-surface py-2 rounded-lg font-headline text-xs font-bold transition-all">
-                                    Request Revisions
-                                </button>
+                            <div class="border-b border-outline-variant/20 pb-3">
+                                <p class="text-[10px] font-bold text-on-surface-variant uppercase mb-1">Materials</p>
+                                <p class="text-sm font-semibold text-on-surface">${escapeHtml(card.materials) || 'Not specified'}</p>
                             </div>
+                            <div class="border-b border-outline-variant/20 pb-3">
+                                <p class="text-[10px] font-bold text-on-surface-variant uppercase mb-1">Dimensions</p>
+                                <p class="text-sm font-semibold text-on-surface">${escapeHtml(card.dimensions) || 'Not specified'}</p>
+                            </div>
+                            ${colorHtml}
+                            ${quantityHtml}
+                            ${estimatePriceHtml}
+                            ${technicalNotesHtml}
+                            ${photoLinksHtml}
+                            <div class="pt-1" id="proposal-status-${card.proposalCardId}">
+                                <span class="text-[10px] font-bold px-2.5 py-1 rounded-full
+                                    ${card.status === 'PENDING' ? 'bg-orange-100 text-orange-700' : card.status === 'ACCEPTED' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}">
+                                    ${card.status}
+                                </span>
+                            </div>
+                            ${negotiationLinkHtml}
+                            ${actionButtonsHtml}
+                        </div>
+                    </div>
+                `;
+            } else if (messageResponse.messageType === 'PRICE_QUOTE' && messageResponse.priceQuote) {
+                const quote = messageResponse.priceQuote;
+                const statusClass = quote.status === 'ACCEPTED' ? 'bg-emerald-50 text-emerald-600 ring-1 ring-emerald-200' :
+                                   quote.status === 'COUNTERED' ? 'bg-blue-50 text-blue-600 ring-1 ring-blue-200' :
+                                   quote.status === 'DECLINED' ? 'bg-red-50 text-red-600 ring-1 ring-red-200' :
+                                   'bg-amber-50 text-amber-600 ring-1 ring-amber-200';
+                const orderIdHtml = quote.orderId ? `
+                    <div class="flex items-center gap-1.5 text-xs text-on-surface-variant mb-3">
+                        <span class="material-symbols-outlined text-[16px]">orders</span>
+                        <span>Order #${quote.orderId}</span>
+                    </div>` : '';
+                const noteHtml = quote.note ? `
+                    <div class="mt-4 bg-surface-container-low rounded-xl px-4 py-3">
+                        <p class="text-xs text-on-surface-variant leading-relaxed">${escapeHtml(quote.note)}</p>
+                    </div>` : '';
+                const acceptBtnHtml = (quote.status === 'PENDING' && quote.proposedByEmail !== currentUserEmail) ? `
+                    <div class="mt-4" id="quote-actions-${quote.quoteId}">
+                        <button class="w-full bg-tertiary-container hover:bg-tertiary text-white py-2.5 rounded-xl font-headline text-xs font-bold flex items-center justify-center gap-2 transition-all shadow-sm"
+                                data-quote-id="${quote.quoteId}"
+                                onclick="acceptQuote(this)">
+                            <span class="material-symbols-outlined text-sm">check_circle</span>
+                            Accept This Price
+                        </button>
+                    </div>` : '';
+                messageDisplay = `
+                    <div class="bg-white rounded-2xl shadow-md overflow-hidden border border-outline-variant/10 max-w-sm" data-quote-id="${quote.quoteId}">
+                        <div class="bg-primary px-5 py-3 flex items-center justify-between">
+                            <div class="flex items-center gap-2">
+                                <span class="material-symbols-outlined text-white/80 text-[18px]" style="font-variation-settings: 'FILL' 1;">request_quote</span>
+                                <h3 class="font-headline text-white font-bold text-sm tracking-tight">Price Quote<span class="text-white/50 font-normal text-xs ml-1">#${quote.quoteId}</span></h3>
+                            </div>
+                        </div>
+                        <div class="p-5">
+                            ${orderIdHtml}
+                            <div class="flex items-center gap-2 text-xs text-on-surface-variant mb-3">
+                                <span class="material-symbols-outlined text-[16px]">person</span>
+                                <span>${escapeHtml(quote.proposedByName)}</span>
+                            </div>
+                            <div class="mb-1">
+                                <p class="text-[10px] font-headline font-bold text-on-surface-variant/60 uppercase tracking-widest">PROPOSED PRICE</p>
+                            </div>
+                            <p class="text-3xl font-extrabold text-on-surface font-headline tracking-tight">$${quote.proposedPrice}</p>
+                            ${noteHtml}
+                            <div class="mt-4" id="quote-status-${quote.quoteId}">
+                                <span class="text-[10px] font-bold px-3 py-1 rounded-full ${statusClass}">${quote.status}</span>
+                            </div>
+                            ${acceptBtnHtml}
                         </div>
                     </div>
                 `;
@@ -533,8 +1688,6 @@
 
         messageDiv.innerHTML = messageContent;
         container.appendChild(messageDiv);
-
-        // Auto-scroll to bottom
         container.scrollTop = container.scrollHeight;
     }
 
@@ -542,7 +1695,6 @@
     function sendMessage() {
         const input = document.getElementById('messageInput');
         const content = input.value.trim();
-
         if (!content) return;
 
         const chatMessageRequest = {
@@ -555,14 +1707,13 @@
         if (stompClient && stompClient.connected) {
             stompClient.send('/app/chat.send', {}, JSON.stringify(chatMessageRequest));
             input.value = '';
-            input.style.height = 'auto'; // Reset height
+            input.style.height = 'auto';
         } else {
             console.error('WebSocket not connected');
             alert('Chat connection lost. Please refresh the page.');
         }
     }
 
-    // Helper: Escape HTML to prevent XSS
     function escapeHtml(text) {
         if (!text) return '';
         const div = document.createElement('div');
@@ -570,41 +1721,171 @@
         return div.innerHTML;
     }
 
-    // Helper: Format timestamp
     function formatTime(isoString) {
         if (!isoString) return '';
         const date = new Date(isoString);
         return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
     }
 
+    // Update proposal card UI after accept/decline
+    function updateProposalCardUI(button, newStatus, resultOrderId) {
+        const proposalId = button.getAttribute('data-proposal-id');
+
+        // Update status badge
+        const statusEl = document.getElementById('proposal-status-' + proposalId);
+        if (statusEl) {
+            const badge = statusEl.querySelector('span');
+            if (badge) {
+                badge.textContent = newStatus;
+                badge.className = 'text-[10px] font-bold px-2.5 py-1 rounded-full ' +
+                    (newStatus === 'ACCEPTED' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700');
+            }
+        }
+
+        // Replace action buttons
+        const actionsEl = document.getElementById('proposal-actions-' + proposalId);
+        if (actionsEl) {
+            if (newStatus === 'ACCEPTED') {
+                actionsEl.innerHTML = `<div class="bg-green-100 border border-green-200 text-green-700 px-4 py-2 rounded-lg text-sm font-bold text-center">✓ Proposal Accepted — Redirecting to negotiation...</div>`;
+            } else {
+                actionsEl.innerHTML = `<div class="bg-red-100 border border-red-200 text-red-700 px-4 py-2 rounded-lg text-sm font-bold text-center">✗ Proposal Declined</div>`;
+            }
+        }
+    }
+
+    // Update quote status from WebSocket
+    function updateQuoteStatusFromWS(quoteId, newStatus) {
+        const statusEl = document.getElementById('quote-status-' + quoteId);
+        if (statusEl) {
+            const badge = statusEl.querySelector('.rounded-full');
+            if (badge) {
+                badge.textContent = newStatus;
+                const cls = newStatus === 'ACCEPTED' ? 'bg-emerald-50 text-emerald-600 ring-1 ring-emerald-200' :
+                           newStatus === 'COUNTERED' ? 'bg-blue-50 text-blue-600 ring-1 ring-blue-200' :
+                           newStatus === 'DECLINED' ? 'bg-red-50 text-red-600 ring-1 ring-red-200' :
+                           'bg-amber-50 text-amber-600 ring-1 ring-amber-200';
+                badge.className = 'text-[10px] font-bold px-3 py-1 rounded-full ' + cls;
+            }
+        }
+        const actionsEl = document.getElementById('quote-actions-' + quoteId);
+        if (actionsEl) actionsEl.remove();
+    }
+
+    // Accept quote (customer accepting admin's quote)
+    function acceptQuote(button) {
+        const quoteId = button.getAttribute('data-quote-id');
+        if (!confirm('Accept this price quote?')) return;
+
+        button.disabled = true;
+        button.textContent = 'Accepting...';
+
+        fetch('/dashboard/chat/quote/' + quoteId + '/accept', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            redirect: 'manual'
+        }).then(function(response) {
+            if (response.ok || response.type === 'opaqueredirect' || response.status === 0) {
+                updateQuoteStatusFromWS(quoteId, 'ACCEPTED');
+            } else {
+                throw new Error('Failed');
+            }
+        }).catch(function(err) {
+            console.error('Error accepting quote:', err);
+            alert('Failed to accept quote. Please try again.');
+            button.disabled = false;
+            button.textContent = 'Accept This Price';
+        });
+    }
+
+    // Accept Proposal — uses redirect: 'manual' to handle 302 from backend
+    function acceptProposal(button) {
+        const proposalId = button.getAttribute('data-proposal-id');
+        if (!proposalId) return;
+
+        button.disabled = true;
+        const originalText = button.innerHTML;
+        button.innerHTML = '<span class="material-symbols-outlined text-sm">hourglass_empty</span> Processing...';
+
+        fetch(`/dashboard/chat/proposal/${proposalId}/accept`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            redirect: 'manual'
+        })
+        .then(response => {
+            if (response.type === 'opaqueredirect' || response.status === 0 || response.ok) {
+                updateProposalCardUI(button, 'ACCEPTED', null);
+                // After a short delay, try to extract the result page URL from redirect
+                setTimeout(() => {
+                    fetch(`/dashboard/chat/proposal/${proposalId}/accept`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        redirect: 'follow'
+                    }).catch(() => {});
+                }, 500);
+            } else {
+                throw new Error('HTTP error: ' + response.status);
+            }
+        })
+        .catch(error => {
+            console.error('Error accepting proposal:', error);
+            button.disabled = false;
+            button.innerHTML = originalText;
+            alert('Failed to accept proposal. Please try again.');
+        });
+    }
+
+    // Decline Proposal
+    function declineProposal(button) {
+        const proposalId = button.getAttribute('data-proposal-id');
+        if (!proposalId) return;
+
+        const reason = prompt('Please provide a reason for declining this proposal:', '');
+        if (reason === null) return;
+
+        button.disabled = true;
+        const originalText = button.innerHTML;
+        button.innerHTML = '<span class="material-symbols-outlined text-sm">hourglass_empty</span> Processing...';
+
+        fetch(`/dashboard/chat/proposal/${proposalId}/decline`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ reason: reason }),
+            redirect: 'manual'
+        })
+        .then(response => {
+            if (response.type === 'opaqueredirect' || response.status === 0 || response.ok) {
+                updateProposalCardUI(button, 'DECLINED', null);
+            } else {
+                throw new Error('HTTP error: ' + response.status);
+            }
+        })
+        .catch(error => {
+            console.error('Error declining proposal:', error);
+            button.disabled = false;
+            button.innerHTML = originalText;
+            alert('Failed to decline proposal. Please try again.');
+        });
+    }
+
     // Event listeners
     document.addEventListener('DOMContentLoaded', function() {
         connect();
-
-        // Send on button click
         document.getElementById('sendBtn').addEventListener('click', sendMessage);
-
-        // Send on Enter key (Shift+Enter for newline)
         document.getElementById('messageInput').addEventListener('keydown', function(e) {
             if (e.key === 'Enter' && !e.shiftKey) {
                 e.preventDefault();
                 sendMessage();
             }
         });
-
-        // Auto-expand textarea
         const textarea = document.getElementById('messageInput');
         textarea.addEventListener('input', function() {
             this.style.height = 'auto';
             this.style.height = Math.min(this.scrollHeight, 120) + 'px';
         });
-
-        // Auto-scroll messages container
         const container = document.getElementById('messagesContainer');
         container.scrollTop = container.scrollHeight;
     });
 
-    // Reconnect WebSocket on page visibility change
     document.addEventListener('visibilitychange', function() {
         if (!document.hidden && (!stompClient || !stompClient.connected)) {
             console.log('Page became visible, reconnecting WebSocket...');

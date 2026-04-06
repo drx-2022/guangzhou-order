@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html class="light" lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Price Negotiation - Guangzhou Direct</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script>
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              colors: {
+                "on-secondary-fixed-variant": "#304a55",
+                "tertiary": "#003b34",
+                "tertiary-container": "#00544b",
+                "on-error-container": "#93000a",
+                "inverse-on-surface": "#eff1f3",
+                "surface-bright": "#f8f9fb",
+                "secondary-container": "#cbe7f5",
+                "background": "#f8f9fb",
+                "primary": "#003461",
+                "on-primary-container": "#8abcff",
+                "secondary-fixed": "#cbe7f5",
+                "surface-container-high": "#e6e8ea",
+                "on-error": "#ffffff",
+                "on-primary": "#ffffff",
+                "on-secondary-container": "#4e6874",
+                "inverse-primary": "#a3c9ff",
+                "surface-variant": "#e0e3e5",
+                "surface-container-highest": "#e0e3e5",
+                "surface-tint": "#27609d",
+                "on-tertiary": "#ffffff",
+                "on-background": "#191c1e",
+                "on-surface-variant": "#424750",
+                "on-tertiary-container": "#63cbbb",
+                "tertiary-fixed-dim": "#70d8c8",
+                "secondary-fixed-dim": "#afcbd8",
+                "tertiary-fixed": "#8df5e4",
+                "on-primary-fixed-variant": "#004882",
+                "on-tertiary-fixed": "#00201c",
+                "on-tertiary-fixed-variant": "#005048",
+                "surface-dim": "#d8dadc",
+                "secondary": "#48626e",
+                "surface": "#f8f9fb",
+                "inverse-surface": "#2d3133",
+                "surface-container": "#eceef0",
+                "primary-fixed-dim": "#a3c9ff",
+                "on-surface": "#191c1e",
+                "surface-container-lowest": "#ffffff",
+                "on-primary-fixed": "#001c38",
+                "on-secondary-fixed": "#021f29",
+                "primary-fixed": "#d3e4ff",
+                "surface-container-low": "#f2f4f6",
+                "error-container": "#ffdad6",
+                "outline": "#727781",
+                "error": "#ba1a1a",
+                "on-secondary": "#ffffff",
+                "primary-container": "#004b87",
+                "outline-variant": "#c2c6d1"
+              },
+              fontFamily: {
+                "headline": ["Manrope"],
+                "body": ["Inter"],
+                "label": ["Inter"]
+              },
+              borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+            },
+          },
+        }
+    </script>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .chat-height {
+            height: calc(100vh - 72px);
+        }
+    </style>
+</head>
+<body class="bg-surface font-body text-on-surface">
+
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-[#f8f9fb]/80 backdrop-blur-xl shadow-sm">
+    <div class="flex justify-between items-center px-6 py-3 w-full max-w-screen-2xl mx-auto">
+        <div class="flex items-center gap-8">
+            <span class="text-xl font-black text-primary tracking-tighter font-headline">Guangzhou Direct</span>
+            <div class="hidden md:flex gap-6 items-center">
+                <a class="font-headline font-bold tracking-tight text-on-surface-variant hover:text-primary-container" href="#">Trends</a>
+                <a class="font-headline font-bold tracking-tight text-on-surface-variant hover:text-primary-container" href="#">Sourcing</a>
+                <a class="font-headline font-bold tracking-tight text-on-surface-variant hover:text-primary-container" href="#">Orders</a>
+                <a class="font-headline font-bold tracking-tight text-primary-container border-b-2 border-primary-container pb-1" href="#">Support</a>
+            </div>
+        </div>
+        <div class="flex items-center gap-4">
+            <button class="p-2 rounded-full hover:bg-surface-container-low transition-colors">
+                <span class="material-symbols-outlined text-on-surface-variant">notifications</span>
+            </button>
+            <button class="p-2 rounded-full hover:bg-surface-container-low transition-colors">
+                <span class="material-symbols-outlined text-on-surface-variant">account_circle</span>
+            </button>
+        </div>
+    </div>
+</nav>
+
+<!-- Main Layout -->
+<main class="pt-[72px] flex flex-row w-full max-w-screen-2xl mx-auto chat-height">
+
+    <!-- Left Sidebar -->
+    <aside class="hidden lg:flex flex-col py-6 space-y-2 h-full w-64 bg-surface-container-lowest border-r border-outline-variant/15 shrink-0">
+        <div class="px-6 mb-6">
+            <h3 class="font-headline font-bold text-primary text-sm mb-2">Price Negotiation</h3>
+            <p class="text-[10px] text-on-surface-variant">Order #<span th:text="${order.orderId}"></span></p>
+        </div>
+
+        <!-- Order Summary -->
+        <div class="px-6 space-y-4">
+            <div class="bg-surface-container-low rounded-xl p-4 space-y-3">
+                <p class="text-[10px] font-bold uppercase tracking-wider text-on-surface-variant">Order Status</p>
+                <span class="inline-block text-[10px] font-bold px-2.5 py-1 rounded-full bg-blue-100 text-blue-700" th:text="${order.status}"></span>
+            </div>
+
+            <div class="bg-surface-container-low rounded-xl p-4 space-y-3">
+                <p class="text-[10px] font-bold uppercase tracking-wider text-on-surface-variant">Estimate Price (Ceiling)</p>
+                <p class="text-lg font-bold text-primary" th:text="${!#lists.isEmpty(quotes) ? quotes[0].estimatePrice : 'N/A'}"></p>
+            </div>
+
+            <div th:if="${order.finalPrice != null}" class="bg-tertiary-fixed/20 rounded-xl p-4 space-y-3">
+                <p class="text-[10px] font-bold uppercase tracking-wider text-tertiary">Final Agreed Price</p>
+                <p class="text-lg font-bold text-tertiary" th:text="'$' + ${order.finalPrice}"></p>
+            </div>
+        </div>
+
+        <nav class="flex-1 px-2 space-y-1 mt-6">
+            <a class="flex items-center gap-3 py-2 px-4 text-on-surface-variant hover:bg-surface-container-low rounded-lg transition-all" href="/dashboard">
+                <span class="material-symbols-outlined text-[20px]">dashboard</span>
+                <span class="font-headline text-sm font-semibold">Dashboard</span>
+            </a>
+            <a class="flex items-center gap-3 py-2 px-4 bg-secondary-container text-primary rounded-lg transition-all" href="/dashboard/chat">
+                <span class="material-symbols-outlined text-[20px]">chat_bubble</span>
+                <span class="font-headline text-sm font-semibold">Messages</span>
+            </a>
+        </nav>
+    </aside>
+
+    <!-- Negotiation Stream -->
+    <section class="flex-1 flex flex-col bg-surface-container-low min-w-0">
+
+        <!-- Header -->
+        <div class="px-6 py-4 bg-surface-container-lowest flex items-center justify-between border-b border-outline-variant/10 shrink-0">
+            <div class="flex items-center gap-4">
+                <div class="relative">
+                    <div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center text-white">
+                        <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">gavel</span>
+                    </div>
+                </div>
+                <div>
+                    <h2 class="font-headline font-bold text-primary">
+                        Price Negotiation — Order #<span th:text="${order.orderId}"></span>
+                    </h2>
+                    <p class="text-xs text-on-surface-variant flex items-center gap-1">
+                        <span class="w-2 h-2 rounded-full bg-tertiary-fixed"></span>
+                        Conversation #<span th:text="${conversationId}"></span>
+                    </p>
+                </div>
+            </div>
+            <div class="flex gap-2">
+                <a th:href="'/dashboard/chat/' + ${conversationId}" class="p-2 hover:bg-surface-container text-on-surface-variant rounded-full" title="Back to chat">
+                    <span class="material-symbols-outlined">arrow_back</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Hidden Data -->
+        <input type="hidden" id="conversationId" th:value="${conversationId}"/>
+        <input type="hidden" id="currentUserEmail" th:value="${currentUserEmail}"/>
+        <input type="hidden" id="orderId" th:value="${order.orderId}"/>
+
+        <!-- Price Quotes Area -->
+        <div id="messagesContainer" class="flex-1 overflow-y-auto p-6 space-y-5 min-h-0">
+
+            <div th:if="${#lists.isEmpty(quotes)}" class="flex flex-col items-center justify-center py-16 text-center">
+                <div class="w-16 h-16 rounded-full bg-surface-container flex items-center justify-center mb-4">
+                    <span class="material-symbols-outlined text-3xl text-on-surface-variant opacity-30">request_quote</span>
+                </div>
+                <p class="text-sm font-semibold text-on-surface-variant">No quotes yet</p>
+                <p class="text-xs text-on-surface-variant/60 mt-1">Submit a counter-offer below</p>
+            </div>
+
+            <th:block th:each="quote : ${quotes}">
+                <div th:classappend="${quote.proposedByEmail == currentUserEmail} ? 'items-end' : 'items-start'" class="flex flex-col gap-2"
+                     th:attr="data-quote-id=${quote.quoteId}">
+
+                    <div class="bg-white rounded-2xl shadow-md overflow-hidden border border-outline-variant/15 max-w-lg w-full">
+                        <!-- Quote Header -->
+                        <div class="bg-primary px-5 py-3 flex justify-between items-center">
+                            <div class="flex items-center gap-2">
+                                <span class="material-symbols-outlined text-white text-base">request_quote</span>
+                                <h3 class="font-headline text-white font-bold text-sm">Price Quote</h3>
+                            </div>
+                            <span class="text-[10px] text-white/70 font-bold tracking-tight" th:text="'#' + ${quote.quoteId}"></span>
+                        </div>
+
+                        <div class="p-5 space-y-4">
+                            <!-- Who proposed -->
+                            <div class="flex items-center gap-2 text-xs text-on-surface-variant">
+                                <span class="material-symbols-outlined text-sm">person</span>
+                                <span th:text="${quote.proposedByName}"></span>
+                                <span class="text-[10px] px-2 py-0.5 rounded-full bg-surface-container-high font-bold"
+                                      th:text="${quote.proposedByRole}"></span>
+                            </div>
+
+                            <!-- Order ID -->
+                            <div class="flex items-center gap-1.5 text-xs text-on-surface-variant">
+                                <span class="material-symbols-outlined text-sm">orders</span>
+                                <span>Order #<span th:text="${order.orderId}"></span></span>
+                            </div>
+
+                            <!-- Proposed Price -->
+                            <div class="bg-surface-container-low rounded-xl p-4">
+                                <p class="text-[10px] font-headline font-bold text-on-surface-variant uppercase tracking-wider mb-1">Proposed Price</p>
+                                <p class="text-3xl font-extrabold text-on-surface" th:text="'$' + ${quote.proposedPrice}"></p>
+                            </div>
+
+                            <!-- Estimate Price (ceiling) -->
+                            <div th:if="${quote.estimatePrice != null}">
+                                <p class="text-[10px] font-headline font-bold text-on-surface-variant uppercase tracking-wider mb-1">Estimate Ceiling</p>
+                                <p class="text-sm font-semibold text-on-surface" th:text="'$' + ${quote.estimatePrice}"></p>
+                            </div>
+
+                            <!-- Note -->
+                            <div th:if="${quote.note != null and !quote.note.isEmpty()}" class="bg-surface-container-low rounded-xl p-3">
+                                <p class="text-[10px] font-headline font-bold text-on-surface-variant uppercase tracking-wider mb-1">Note</p>
+                                <p class="text-xs text-on-surface-variant leading-relaxed" th:text="${quote.note}"></p>
+                            </div>
+
+                            <!-- Status + Timestamp -->
+                            <div class="flex items-center justify-between" th:attr="id='quote-status-' + ${quote.quoteId}">
+                                <span th:classappend="${quote.status == 'PENDING' ? 'bg-amber-50 text-amber-600 ring-1 ring-amber-200' : quote.status == 'ACCEPTED' ? 'bg-emerald-50 text-emerald-600 ring-1 ring-emerald-200' : quote.status == 'COUNTERED' ? 'bg-blue-50 text-blue-600 ring-1 ring-blue-200' : 'bg-red-50 text-red-600 ring-1 ring-red-200'}"
+                                      class="text-[10px] font-bold px-2.5 py-1 rounded-full"
+                                      th:text="${quote.status}"></span>
+                                <span class="text-[10px] text-on-surface-variant/60" th:text="${quote.createdAt}"></span>
+                            </div>
+
+                            <!-- Accept button (only for quotes NOT proposed by current user, and PENDING) -->
+                            <div th:if="${quote.status == 'PENDING' and quote.proposedByEmail != currentUserEmail}" class="pt-1"
+                                 th:attr="id='quote-actions-' + ${quote.quoteId}">
+                                <button class="w-full bg-tertiary-container hover:bg-tertiary text-white py-2.5 rounded-xl font-headline text-xs font-bold flex items-center justify-center gap-2 transition-all"
+                                        th:attr="data-quote-id=${quote.quoteId}"
+                                        onclick="acceptQuote(this)">
+                                    <span class="material-symbols-outlined text-sm">check_circle</span>
+                                    Accept This Price
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </th:block>
+        </div>
+
+        <!-- Customer Quote Submission (bottom, no chat) -->
+        <div class="p-5 bg-surface-container-lowest border-t border-outline-variant/10 shrink-0">
+            <!-- Error message -->
+            <div th:if="${quoteError}" class="bg-error-container text-on-error-container px-4 py-2 rounded-xl text-sm font-bold mb-3">
+                <span th:text="${quoteError}"></span>
+            </div>
+
+            <form id="quoteForm" th:action="'/dashboard/chat/quote/submit'" method="post" class="bg-surface-container rounded-2xl p-5 space-y-4">
+                <input type="hidden" name="orderId" th:value="${order.orderId}"/>
+                <p class="text-sm font-headline font-bold text-primary flex items-center gap-2">
+                    <span class="material-symbols-outlined text-base">request_quote</span>
+                    Submit a Counter-Offer
+                </p>
+                <div class="flex gap-3">
+                    <div class="flex-1">
+                        <label class="text-[10px] font-bold text-on-surface-variant uppercase tracking-wider">Your Proposed Price ($)</label>
+                        <input type="number" name="proposedPrice" step="0.01" min="0.01" required
+                               class="w-full mt-1.5 px-3 py-2.5 border border-outline-variant/30 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 bg-white"
+                               placeholder="e.g. 12.50"/>
+                    </div>
+                    <div class="flex-1">
+                        <label class="text-[10px] font-bold text-on-surface-variant uppercase tracking-wider">Note (optional)</label>
+                        <input type="text" name="note"
+                               class="w-full mt-1.5 px-3 py-2.5 border border-outline-variant/30 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 bg-white"
+                               placeholder="Reason or comment"/>
+                    </div>
+                </div>
+                <button type="submit" class="w-full bg-primary hover:bg-primary-container text-white py-3 rounded-xl font-headline text-sm font-bold flex items-center justify-center gap-2 active:scale-[0.98] transition-all">
+                    <span class="material-symbols-outlined text-base">send</span>
+                    Submit Price Quote
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Right Panel: Quote History Summary -->
+    <aside class="hidden xl:flex flex-col w-80 bg-surface border-l border-outline-variant/15 shrink-0">
+        <div class="p-6 border-b border-outline-variant/10">
+            <h3 class="font-headline font-bold text-primary mb-1">Quote History</h3>
+            <p class="text-xs text-on-surface-variant">All price quotes for Order #<span th:text="${order.orderId}"></span></p>
+        </div>
+        <div class="flex-1 overflow-y-auto p-6 space-y-4">
+            <div th:if="${#lists.isEmpty(quotes)}" class="text-center py-8">
+                <span class="material-symbols-outlined text-4xl text-on-surface-variant opacity-20">request_quote</span>
+                <p class="text-xs text-on-surface-variant mt-2">No quotes yet</p>
+            </div>
+            <th:block th:each="quote : ${quotes}">
+                <div class="bg-surface-container-low rounded-xl p-3 space-y-2">
+                    <div class="flex justify-between items-center">
+                        <span class="text-[10px] font-bold text-on-surface-variant" th:text="${quote.proposedByName}"></span>
+                        <span th:classappend="${quote.status == 'PENDING' ? 'bg-amber-50 text-amber-600 ring-1 ring-amber-200' : quote.status == 'ACCEPTED' ? 'bg-emerald-50 text-emerald-600 ring-1 ring-emerald-200' : 'bg-red-50 text-red-600 ring-1 ring-red-200'}"
+                              class="text-[10px] font-bold px-2 py-0.5 rounded-full"
+                              th:text="${quote.status}"></span>
+                    </div>
+                    <p class="text-lg font-bold text-primary" th:text="'$' + ${quote.proposedPrice}"></p>
+                    <p th:if="${quote.note}" class="text-[10px] text-on-surface-variant" th:text="${quote.note}"></p>
+                    <p class="text-[10px] text-on-surface-variant opacity-60" th:text="${quote.createdAt}"></p>
+                </div>
+            </th:block>
+        </div>
+    </aside>
+</main>
+
+<!-- WebSocket Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/stompjs@2.3.3/lib/stomp.min.js"></script>
+<script th:inline="javascript">
+    let stompClient = null;
+    const currentUserEmail = [[${currentUserEmail}]];
+    const conversationId = parseInt(document.getElementById('conversationId').value);
+    const orderId = parseInt(document.getElementById('orderId').value);
+
+    function connect() {
+        const socket = new SockJS('/ws');
+        stompClient = Stomp.over(socket);
+        const jwtToken = getCookie('jwt');
+
+        stompClient.connect(
+            { jwt: jwtToken },
+            function(frame) {
+                console.log('Connected to WebSocket');
+
+                stompClient.subscribe('/topic/conversation.' + conversationId, function(message) {
+                    const data = JSON.parse(message.body);
+
+                    if (data.eventType === 'PRICE_QUOTE_UPDATE') {
+                        updateQuoteStatusFromWS(data.quoteId, data.status);
+                    } else if (data.eventType === 'PRICE_QUOTE_NEW') {
+                        location.reload();
+                    }
+                });
+            },
+            function(error) {
+                console.error('WebSocket error:', error);
+                setTimeout(connect, 5000);
+            }
+        );
+    }
+
+    function getCookie(name) {
+        const nameEQ = name + "=";
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.indexOf(nameEQ) === 0) return cookie.substring(nameEQ.length);
+        }
+        return null;
+    }
+
+    function updateQuoteStatusFromWS(quoteId, newStatus) {
+        const statusEl = document.getElementById('quote-status-' + quoteId);
+        if (statusEl) {
+            const badge = statusEl.querySelector('span');
+            if (badge) {
+                badge.textContent = newStatus;
+                badge.className = 'text-[10px] font-bold px-2.5 py-1 rounded-full ' +
+                    (newStatus === 'ACCEPTED' ? 'bg-emerald-50 text-emerald-600 ring-1 ring-emerald-200' :
+                     newStatus === 'DECLINED' ? 'bg-red-50 text-red-600 ring-1 ring-red-200' :
+                     'bg-amber-50 text-amber-600 ring-1 ring-amber-200');
+            }
+        }
+        const actionsEl = document.getElementById('quote-actions-' + quoteId);
+        if (actionsEl) actionsEl.remove();
+    }
+
+    function acceptQuote(button) {
+        const quoteId = button.getAttribute('data-quote-id');
+        if (!quoteId) return;
+
+        button.disabled = true;
+        button.innerHTML = '<span class="material-symbols-outlined text-sm">hourglass_empty</span> Processing...';
+
+        fetch(`/dashboard/chat/quote/${quoteId}/accept`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            redirect: 'manual'
+        })
+        .then(response => {
+            if (response.type === 'opaqueredirect' || response.status === 0 || response.ok) {
+                updateQuoteStatusFromWS(quoteId, 'ACCEPTED');
+                const actionsEl = button.parentElement;
+                if (actionsEl) {
+                    actionsEl.innerHTML = '<div class="bg-emerald-50 border border-emerald-200 text-emerald-600 px-4 py-2 rounded-xl text-sm font-bold text-center">✓ Price Accepted</div>';
+                }
+            } else {
+                throw new Error('Unexpected response: ' + response.status);
+            }
+        })
+        .catch(error => {
+            console.error('Error accepting quote:', error);
+            button.disabled = false;
+            button.innerHTML = '<span class="material-symbols-outlined text-sm">check_circle</span> Accept This Price';
+            alert('Failed to accept quote. Please try again.');
+        });
+    }
+
+    function escapeHtml(text) {
+        if (!text) return '';
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        connect();
+        document.getElementById('messagesContainer').scrollTop = document.getElementById('messagesContainer').scrollHeight;
+    });
+
+    document.addEventListener('visibilitychange', function() {
+        if (!document.hidden && (!stompClient || !stompClient.connected)) connect();
+    });
+</script>
+</body>
+</html>
