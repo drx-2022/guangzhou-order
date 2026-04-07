@@ -31,7 +31,7 @@ public class OrdersController {
                 .toList();
         model.addAttribute("user", user);
         model.addAttribute("orders", orders);
-        return "my_orders";
+        return "customer/my_orders";
     }
 
     @GetMapping("/orders/{id}")
