@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html class="light" lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title th:text="${title} + ' - Guangzhou Direct'">Thanh toan - Guangzhou Direct</title>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#003461",
+                        "primary-container": "#004B87",
+                        "on-primary": "#ffffff",
+                        "secondary": "#48626e",
+                        "secondary-container": "#cbe7f5",
+                        "tertiary": "#003b34",
+                        "tertiary-container": "#00544b",
+                        "on-tertiary-container": "#63cbbb",
+                        "background": "#f8f9fb",
+                        "surface": "#f8f9fb",
+                        "surface-container": "#eceef0",
+                        "surface-container-low": "#f2f4f6",
+                        "surface-container-lowest": "#ffffff",
+                        "on-surface": "#191c1e",
+                        "on-surface-variant": "#424750",
+                        "outline-variant": "#c2c6d1",
+                        "outline": "#727781",
+                        "error": "#ba1a1a",
+                        "error-container": "#ffdad6",
+                        "on-error": "#ffffff",
+                        "success": "#00544b",
+                        "success-light": "#e6f5f0",
+                    },
+                    fontFamily: {
+                        "headline": ["Manrope"],
+                        "body": ["Manrope"],
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "1rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+    <style>
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        @keyframes pulse-border { 0%, 100% { border-color: #004B87; } 50% { border-color: #63cbbb; } }
+        .animate-pulse-border { animation: pulse-border 2s ease-in-out infinite; }
+        @keyframes spin-slow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        .animate-spin-slow { animation: spin-slow 3s linear infinite; }
+    </style>
+</head>
+<body class="bg-background font-body text-on-surface antialiased">
+
+<nav class="fixed top-0 w-full z-50 bg-[#f8f9fb]/80 backdrop-blur-xl shadow-sm">
+    <div class="flex justify-between items-center px-6 py-3 w-full max-w-screen-2xl mx-auto">
+        <a class="text-xl font-black text-[#003461] tracking-tighter font-headline no-underline" th:href="@{/}">Guangzhou Direct</a>
+        <div class="flex items-center gap-4">
+            <a class="text-sm font-bold text-on-surface-variant hover:text-primary transition-colors" th:href="@{/orders}">
+                <span class="material-symbols-outlined text-sm align-middle mr-1">arrow_back</span>
+                Ve Don hang
+            </a>
+        </div>
+    </div>
+</nav>
+
+<main class="pt-24 pb-12 px-4 md:px-8 max-w-5xl mx-auto">
+
+    <header class="mb-8">
+        <h1 class="text-2xl md:text-3xl font-extrabold font-headline text-primary tracking-tight" th:text="${title}">Thanh toan tien coc</h1>
+        <p class="text-on-surface-variant mt-1">Quet ma QR de thanh toan an toan qua PayOS</p>
+    </header>
+
+    <div th:if="${error}" class="mb-6 p-4 bg-error-container border border-error/20 rounded-xl flex items-start gap-3">
+        <span class="material-symbols-outlined text-error">error</span>
+        <div>
+            <p class="text-sm font-semibold text-error-container" th:if="${error == 'payment_cancelled'}">Ban da huy thanh toan. Vui long thu lai.</p>
+            <p class="text-sm font-semibold text-error-container" th:if="${error == 'payment_not_confirmed'}">Thanh toan chua duoc xac nhan. Dang cho giao dich...</p>
+            <p class="text-sm font-semibold text-error-container" th:unless="${error == 'payment_cancelled' || error == 'payment_not_confirmed'}">Co loi xay ra. Vui long thu lai.</p>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+
+        <div class="lg:col-span-7 space-y-6">
+
+            <section class="bg-surface-container-lowest rounded-xl border border-outline-variant/20 shadow-sm overflow-hidden">
+                <div class="p-6 border-b border-outline-variant/10">
+                    <h2 class="text-lg font-bold font-headline text-primary flex items-center gap-2">
+                        <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">qr_code_scanner</span>
+                        Ma QR Thanh Toan
+                    </h2>
+                </div>
+
+                <div class="p-8 flex flex-col items-center">
+                    <div class="bg-white p-4 rounded-2xl shadow-lg border-2 border-primary/10 animate-pulse-border">
+                        <img alt="QR Code" class="w-64 h-64 md:w-72 md:h-72 object-contain rounded-xl"
+                             th:if="${payment.payosQrCode != null}"
+                             th:src="'data:image/png;base64,' + ${payment.payosQrCode}"/>
+                        <div class="w-64 h-64 md:w-72 md:h-72 flex flex-col items-center justify-center bg-surface-container rounded-xl" th:unless="${payment.payosQrCode != null}">
+                            <span class="material-symbols-outlined text-6xl text-on-surface-variant/30 animate-spin-slow">qr_code_2</span>
+                            <p class="text-sm text-on-surface-variant mt-3">Dang tao ma QR...</p>
+                        </div>
+                    </div>
+
+                    <div class="mt-6 text-center">
+                        <p class="text-sm text-on-surface-variant mb-1">So tien can thanh toan</p>
+                        <p class="text-3xl font-extrabold font-headline text-primary"
+                           th:text="${#numbers.formatDecimal(amount, 0, 'COMMA', 0, 'POINT')} + ' d'">0 d</p>
+                    </div>
+
+                    <div class="mt-4 flex items-center gap-2 text-xs text-on-surface-variant">
+                        <span class="material-symbols-outlined text-sm text-success">info</span>
+                        <span>Quet ma QR bang ung dung ngan hang de thanh toan</span>
+                    </div>
+                </div>
+            </section>
+
+            <section class="bg-surface-container-lowest rounded-xl border border-outline-variant/20 shadow-sm p-6">
+                <h3 class="text-base font-bold font-headline text-primary mb-4">Hoac chuyen khoan truc tiep</h3>
+                <a class="inline-flex items-center gap-2 px-6 py-3 bg-primary-container text-on-primary font-bold rounded-lg hover:opacity-90 transition-all"
+                   target="_blank" th:href="${payment.payosCheckoutUrl}">
+                    <span class="material-symbols-outlined">open_in_new</span>
+                    Mo trang thanh toan PayOS
+                </a>
+            </section>
+        </div>
+
+        <div class="lg:col-span-5 space-y-6">
+
+            <section class="bg-surface-container-lowest rounded-xl border border-outline-variant/20 shadow-sm overflow-hidden">
+                <div class="p-4 border-b border-outline-variant/10 bg-surface-container-low">
+                    <h3 class="text-sm font-bold font-headline text-primary uppercase tracking-wider">Thong tin don hang</h3>
+                </div>
+                <div class="p-5 space-y-3">
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm text-on-surface-variant">Ma don hang</span>
+                        <span class="text-sm font-bold text-on-surface" th:text="'#' + ${order.orderId}">#0</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm text-on-surface-variant">Tong cong</span>
+                        <span class="text-sm font-bold text-on-surface"
+                              th:text="${#numbers.formatDecimal(finalPrice, 0, 'COMMA', 0, 'POINT')} + ' d'">0 d</span>
+                    </div>
+                    <div class="flex justify-between items-center pt-2 border-t border-outline-variant/10">
+                        <span class="text-sm text-on-surface-variant">Tien coc (30%)</span>
+                        <span class="text-sm font-semibold text-on-tertiary-container"
+                              th:if="${paymentType == 'DEPOSIT'}"
+                              th:text="${#numbers.formatDecimal(depositAmount, 0, 'COMMA', 0, 'POINT')} + ' d'">0 d</span>
+                        <span class="text-sm font-semibold text-success"
+                              th:if="${paymentType == 'BALANCE'}"
+                              th:text="${#numbers.formatDecimal(depositAmount, 0, 'COMMA', 0, 'POINT')} + ' d (Da thanh toan)'">0 d</span>
+                    </div>
+                    <div class="flex justify-between items-center py-3 bg-surface-container-low rounded-lg px-3">
+                        <span class="text-sm font-bold text-primary">So tien phai tra</span>
+                        <span class="text-lg font-extrabold text-primary"
+                              th:text="${#numbers.formatDecimal(balanceAmount, 0, 'COMMA', 0, 'POINT')} + ' d'">0 d</span>
+                    </div>
+                </div>
+            </section>
+
+            <section class="bg-surface-container-lowest rounded-xl border border-outline-variant/20 shadow-sm overflow-hidden">
+                <div class="p-4 border-b border-outline-variant/10 bg-surface-container-low">
+                    <h3 class="text-sm font-bold font-headline text-primary uppercase tracking-wider">Tien trinh thanh toan</h3>
+                </div>
+                <div class="p-5 space-y-4">
+                    <div class="flex items-start gap-3" th:classappend="${paymentType == 'DEPOSIT'} ? ' opacity-100' : ' opacity-50'">
+                        <div class="flex-shrink-0 w-7 h-7 rounded-full flex items-center justify-center"
+                             th:class="${paymentType == 'DEPOSIT'} ? 'bg-primary' : 'bg-success'">
+                            <span class="material-symbols-outlined text-white text-sm" style="font-variation-settings: 'FILL' 1;"
+                                  th:text="${paymentType == 'DEPOSIT'} ? 'payments' : 'check'">payments</span>
+                        </div>
+                        <div>
+                            <p class="text-sm font-bold text-on-surface">Buoc 1: Tien coc (30%)</p>
+                            <p class="text-xs text-on-surface-variant"
+                               th:if="${paymentType == 'DEPOSIT'}">Dang thanh toan...</p>
+                            <p class="text-xs text-success font-semibold" th:if="${paymentType == 'BALANCE'}">Da hoan thanh</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-3" th:classappend="${paymentType == 'BALANCE'} ? ' opacity-100' : ' opacity-40'">
+                        <div class="flex-shrink-0 w-7 h-7 rounded-full flex items-center justify-center"
+                             th:class="${paymentType == 'BALANCE'} ? 'bg-primary' : 'bg-outline-variant'">
+                            <span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;"
+                                  th:class="${paymentType == 'BALANCE'} ? 'text-white' : 'text-white/50'"
+                                  th:text="${paymentType == 'BALANCE'} ? 'payments' : 'lock'">lock</span>
+                        </div>
+                        <div>
+                            <p class="text-sm font-bold text-on-surface">Buoc 2: Thanh toan cuoi (70%)</p>
+                            <p class="text-xs text-on-surface-variant"
+                               th:if="${paymentType == 'BALANCE'}">Dang thanh toan...</p>
+                            <p class="text-xs text-on-surface-variant/50" th:if="${paymentType == 'DEPOSIT'}">Kich hoat sau khi coc</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <div class="p-4 bg-secondary-container/30 rounded-xl flex items-start gap-3 border border-secondary-container/50">
+                <span class="material-symbols-outlined text-primary">support_agent</span>
+                <div>
+                    <h4 class="font-bold text-primary text-sm">Ho tro thanh toan</h4>
+                    <p class="text-xs text-on-surface-variant mt-1">Neu gap van de voi QR code, lien he chung toi de duoc ho tro.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<script th:inline="javascript">
+    const orderId = [[${order.orderId}]];
+    const paymentType = [[${paymentType}]];
+
+    setInterval(async () => {
+        try {
+            const res = await fetch(`/payment/${orderId}/status`);
+            const data = await res.json();
+            if (data.paymentStatus === 'DEPOSITED' && paymentType === 'DEPOSIT') {
+                window.location.href = `/payment/${orderId}/return?type=DEPOSIT`;
+            } else if (data.paymentStatus === 'DONE' && paymentType === 'BALANCE') {
+                window.location.href = `/payment/${orderId}/return?type=BALANCE`;
+            }
+        } catch (e) {}
+    }, 5000);
+</script>
+
+</body>
+</html>

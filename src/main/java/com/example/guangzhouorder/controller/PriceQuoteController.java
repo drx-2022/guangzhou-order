@@ -79,7 +79,7 @@ public class PriceQuoteController {
         User customer = chatService.getCurrentUser();
         try {
             PriceQuoteResponse quote = priceQuoteService.acceptQuote(quoteId, customer);
-            return "redirect:/dashboard/chat/order/" + quote.getOrderId();
+            return "redirect:/payment/" + quote.getOrderId() + "/deposit";
         } catch (Exception e) {
             ra.addFlashAttribute("quoteError", e.getMessage());
             return "redirect:/dashboard/chat";

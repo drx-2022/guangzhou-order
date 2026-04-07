@@ -131,6 +131,15 @@
                 <p class="text-[10px] font-bold uppercase tracking-wider text-tertiary">Final Agreed Price</p>
                 <p class="text-lg font-bold text-tertiary" th:text="'$' + ${order.finalPrice}"></p>
             </div>
+
+            <div th:if="${order.status == 'Pending Deposit'}" class="bg-primary-container rounded-xl p-4 space-y-3">
+                <p class="text-[10px] font-bold uppercase tracking-wider text-white">Next Step: Payment</p>
+                <p class="text-xs text-white/80">Pay 30% deposit to start production</p>
+                <a class="block w-full text-center bg-white text-primary py-2 rounded-lg font-bold text-sm hover:bg-white/90 transition-all"
+                   th:href="'/payment/' + ${order.orderId} + '/deposit'">
+                    Pay Deposit Now
+                </a>
+            </div>
         </div>
 
         <nav class="flex-1 px-2 space-y-1 mt-6">
@@ -349,6 +358,14 @@
                         updateQuoteStatusFromWS(data.quoteId, data.status);
                     } else if (data.eventType === 'PRICE_QUOTE_NEW') {
                         location.reload();
+                    } else if (data.eventType === 'QUOTE_STATUS_UPDATE' && data.status === 'ACCEPTED') {
+                        const actionsEl = document.getElementById('quote-actions-' + data.quoteId);
+                        if (actionsEl) {
+                            actionsEl.innerHTML = '<div class="bg-emerald-50 border border-emerald-200 text-emerald-600 px-4 py-2 rounded-xl text-sm font-bold text-center">✓ Price Accepted</div>';
+                        }
+                        setTimeout(function() {
+                            window.location.href = '/payment/' + data.orderId + '/deposit';
+                        }, 1500);
                     }
                 });
             },
@@ -414,6 +431,10 @@
             button.innerHTML = '<span class="material-symbols-outlined text-sm">check_circle</span> Accept This Price';
             alert('Failed to accept quote. Please try again.');
         });
+    }
+
+    function redirectToPayment(orderId) {
+        window.location.href = '/payment/' + orderId + '/deposit';
     }
 
     function escapeHtml(text) {

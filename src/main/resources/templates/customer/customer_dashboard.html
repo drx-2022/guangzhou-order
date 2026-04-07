@@ -276,6 +276,14 @@ View Order
 <span class="material-symbols-outlined text-sm">camera_enhance</span>
 Approve Visual Proof
 </a>
+<a th:if="${o.status == 'Pending Deposit'}" th:href="@{/payment/{id}/deposit(id=${o.orderId})}" class="flex items-center gap-1 text-[10px] font-bold text-tertiary-container hover:underline">
+<span class="material-symbols-outlined text-sm">payments</span>
+Pay Deposit
+</a>
+<a th:if="${o.paymentStatus == 'DEPOSITED'}" th:href="@{/payment/{id}/balance(id=${o.orderId})}" class="flex items-center gap-1 text-[10px] font-bold text-tertiary-container hover:underline">
+<span class="material-symbols-outlined text-sm">payments</span>
+Pay Balance
+</a>
 </div>
 </div>
 </div>
