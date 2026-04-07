@@ -139,6 +139,25 @@
         <p class="text-[10px] font-bold uppercase tracking-wider text-tertiary">Final Agreed Price</p>
         <p class="text-xl font-bold text-tertiary" th:text="'$' + ${order.finalPrice}"></p>
       </div>
+
+       <!-- Payment Status -->
+       <div class="bg-surface-container-low rounded-xl p-4 space-y-2">
+         <p class="text-[10px] font-bold uppercase tracking-wider text-on-surface-variant">Payment Status</p>
+         <span th:if="${order.paymentStatus == null}" class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-gray-100 text-gray-700">
+             <span class="w-1.5 h-1.5 rounded-full bg-gray-400"></span>
+             Unpaid
+         </span>
+         <span th:unless="${order.paymentStatus == null}" th:switch="${order.paymentStatus}">
+             <!-- Unpaid Status -->
+             <span th:case="'UNPAID'" th:classappend="'inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-red-100 text-red-700'" class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-red-600"></span>Unpaid</span>
+             
+             <!-- Deposited Status -->
+             <span th:case="'DEPOSITED'" th:classappend="'inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-yellow-100 text-yellow-700'" class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-yellow-600"></span>Deposit Paid</span>
+             
+             <!-- Fully Paid Status -->
+             <span th:case="'DONE'" th:classappend="'inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-green-100 text-green-700'" class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-green-600"></span>Fully Paid</span>
+         </span>
+       </div>
     </div>
 
     <nav class="flex-1 px-2 space-y-1 mt-6">

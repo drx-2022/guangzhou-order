@@ -7,6 +7,7 @@ import com.example.guangzhouorder.repository.OrderRepository;
 import com.example.guangzhouorder.service.PaymentService;
 import com.example.guangzhouorder.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -35,28 +36,34 @@ public class PaymentController {
                                   @AuthenticationPrincipal UserDetails userDetails,
                                   @RequestParam(required = false) String error,
                                   Model model) {
-        User user = userService.findByEmail(userDetails.getUsername());
-        Order order = orderRepository.findById(orderId)
-                .orElseThrow(() -> new RuntimeException("Order not found"));
+        try {
+            User user = userService.findByEmail(userDetails.getUsername());
+            Order order = orderRepository.findById(orderId)
+                    .orElseThrow(() -> new RuntimeException("Order not found"));
 
-        if (!order.getCustomer().getUserId().equals(user.getUserId())) {
-            throw new IllegalArgumentException("Access denied");
+            if (!order.getCustomer().getUserId().equals(user.getUserId())) {
+                throw new IllegalArgumentException("Access denied");
+            }
+
+            Payment payment = paymentService.createDepositPayment(orderId, user);
+
+            model.addAttribute("user", user);
+            model.addAttribute("order", order);
+            model.addAttribute("payment", payment);
+            model.addAttribute("paymentType", "DEPOSIT");
+            model.addAttribute("title", "Thanh toan tien coc (30%)");
+            model.addAttribute("amount", payment.getAmount());
+            model.addAttribute("finalPrice", order.getFinalPrice());
+            model.addAttribute("depositAmount", payment.getAmount());
+            model.addAttribute("balanceAmount", order.getFinalPrice().subtract(payment.getAmount()));
+            model.addAttribute("error", error);
+
+            return "payment_page";
+        } catch (IllegalStateException e) {
+            return "redirect:/payment/" + orderId + "/deposit?error=" + encodeError(e.getMessage());
+        } catch (AccessDeniedException e) {
+            return "redirect:/orders?error=access_denied";
         }
-
-        Payment payment = paymentService.createDepositPayment(orderId, user);
-
-        model.addAttribute("user", user);
-        model.addAttribute("order", order);
-        model.addAttribute("payment", payment);
-        model.addAttribute("paymentType", "DEPOSIT");
-        model.addAttribute("title", "Thanh toan tien coc (30%)");
-        model.addAttribute("amount", payment.getAmount());
-        model.addAttribute("finalPrice", order.getFinalPrice());
-        model.addAttribute("depositAmount", payment.getAmount());
-        model.addAttribute("balanceAmount", order.getFinalPrice().subtract(payment.getAmount()));
-        model.addAttribute("error", error);
-
-        return "payment_page";
     }
 
     @GetMapping("/payment/{orderId}/balance")
@@ -64,28 +71,34 @@ public class PaymentController {
                                   @AuthenticationPrincipal UserDetails userDetails,
                                   @RequestParam(required = false) String error,
                                   Model model) {
-        User user = userService.findByEmail(userDetails.getUsername());
-        Order order = orderRepository.findById(orderId)
-                .orElseThrow(() -> new RuntimeException("Order not found"));
+        try {
+            User user = userService.findByEmail(userDetails.getUsername());
+            Order order = orderRepository.findById(orderId)
+                    .orElseThrow(() -> new RuntimeException("Order not found"));
 
-        if (!order.getCustomer().getUserId().equals(user.getUserId())) {
-            throw new IllegalArgumentException("Access denied");
+            if (!order.getCustomer().getUserId().equals(user.getUserId())) {
+                throw new IllegalArgumentException("Access denied");
+            }
+
+            Payment payment = paymentService.createBalancePayment(orderId, user);
+
+            model.addAttribute("user", user);
+            model.addAttribute("order", order);
+            model.addAttribute("payment", payment);
+            model.addAttribute("paymentType", "BALANCE");
+            model.addAttribute("title", "Thanh toan so tien con lai (70%)");
+            model.addAttribute("amount", payment.getAmount());
+            model.addAttribute("finalPrice", order.getFinalPrice());
+            model.addAttribute("depositAmount", order.getDepositAmount());
+            model.addAttribute("balanceAmount", payment.getAmount());
+            model.addAttribute("error", error);
+
+            return "payment_page";
+        } catch (IllegalStateException e) {
+            return "redirect:/payment/" + orderId + "/balance?error=" + encodeError(e.getMessage());
+        } catch (AccessDeniedException e) {
+            return "redirect:/orders?error=access_denied";
         }
-
-        Payment payment = paymentService.createBalancePayment(orderId, user);
-
-        model.addAttribute("user", user);
-        model.addAttribute("order", order);
-        model.addAttribute("payment", payment);
-        model.addAttribute("paymentType", "BALANCE");
-        model.addAttribute("title", "Thanh toan so tien con lai (70%)");
-        model.addAttribute("amount", payment.getAmount());
-        model.addAttribute("finalPrice", order.getFinalPrice());
-        model.addAttribute("depositAmount", order.getDepositAmount());
-        model.addAttribute("balanceAmount", payment.getAmount());
-        model.addAttribute("error", error);
-
-        return "payment_page";
     }
 
     @GetMapping("/payment/{orderId}/return")
@@ -161,5 +174,35 @@ public class PaymentController {
         }
 
         return "{\"paymentStatus\":\"" + order.getPaymentStatus() + "\",\"orderStatus\":\"" + order.getStatus() + "\"}";
+    }
+
+    @ExceptionHandler(IllegalStateException.class)
+    public String handleIllegalStateException(IllegalStateException e, Model model) {
+        model.addAttribute("error", true);
+        model.addAttribute("errorMessage", e.getMessage());
+        return "payment_error";
+    }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    public String handleAccessDeniedException(AccessDeniedException e, Model model) {
+        model.addAttribute("error", true);
+        model.addAttribute("errorMessage", "Ban khong co quyen truy cap don hang nay");
+        return "payment_error";
+    }
+
+    @ExceptionHandler(RuntimeException.class)
+    public String handleRuntimeException(RuntimeException e, Model model) {
+        model.addAttribute("error", true);
+        model.addAttribute("errorMessage", "Co loi xay ra. Vui long thu lai sau.");
+        return "payment_error";
+    }
+
+    private String encodeError(String message) {
+        // Encode common error messages to short codes
+        if (message.contains("not in Pending Deposit status")) return "invalid_order_status";
+        if (message.contains("Deposit already paid")) return "deposit_already_paid";
+        if (message.contains("deposit not yet completed")) return "deposit_not_completed";
+        if (message.contains("Balance already paid")) return "balance_already_paid";
+        return "error";
     }
 }

@@ -101,20 +101,20 @@
 </header>
 <!-- Sidebar Navigation -->
 <aside class="hidden md:flex h-screen w-64 fixed left-0 top-0 bg-[#f2f4f6] flex flex-col p-4 gap-2 pt-20">
-    <div class="mb-6 px-2">
-        <div class="flex items-center gap-3 mb-4">
-            <div class="w-10 h-10 rounded-full bg-primary-fixed flex items-center justify-center overflow-hidden">
-                <img class="w-full h-full object-cover" data-alt="Professional portrait of a business procurement manager in a clean studio setting with neutral lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBlaH1_BkuhnM2Z1GrXwxQ32OZZwngClmyVivFya3KuTBCObFp5AURz2vK2doybU7_pZlcjH4KIL-4aYxKuBuKNonB4fcHuakYsiw-6VpQwEk-cT0tWwPECGuOS7H5RSUd6GGo502dMBG7kW9iIMhdlydTaUtQdDDmxGmz3qWFdO5hSyRykAlTjgsprD9tAXCS6E1L0BlzttEPspO_43EwK5rDbQhTKNq-RY2S6OHHC5HsCYCfzG08Qni39kuUcyq8FPFxsW985YdM"/>
-            </div>
-            <div>
-                <p class="font-inter text-sm font-bold text-[#003461]">Purchasing Agent</p>
-                <p class="text-[10px] text-on-surface-variant">ID: GZ-9982</p>
-            </div>
-        </div>
-        <button class="w-full py-2.5 px-4 bg-gradient-to-br from-primary to-primary-container text-white text-xs font-bold uppercase rounded-md shadow-sm active:opacity-80 transition-all">
-            Create New Order
-        </button>
-    </div>
+     <div class="mb-6 px-2">
+         <div class="flex items-center gap-3 mb-4">
+             <div class="w-10 h-10 rounded-full bg-primary-fixed flex items-center justify-center overflow-hidden">
+                 <span class="material-symbols-outlined text-primary">person</span>
+             </div>
+             <div>
+                 <p class="font-inter text-sm font-bold text-[#003461]" th:text="${user.name != null ? user.name : user.email}">Purchasing Agent</p>
+                 <p class="text-[10px] text-on-surface-variant" th:text="'ID: ' + ${user.userId}">ID: GZ-9982</p>
+             </div>
+         </div>
+         <a href="#" class="w-full py-2.5 px-4 bg-gradient-to-br from-primary to-primary-container text-white text-xs font-bold uppercase rounded-md shadow-sm active:opacity-80 transition-all inline-block text-center">
+             Create New Order
+         </a>
+     </div>
     <nav class="space-y-1">
         <a class="flex items-center gap-3 px-3 py-2.5 text-[#424750] hover:bg-white/50 hover:translate-x-1 transition-transform font-inter text-sm font-medium" href="#">
             <span class="material-symbols-outlined text-lg">grid_view</span>
@@ -159,153 +159,151 @@
                 </button>
             </div>
         </div>
-        <!-- Dashboard Stats Overlay -->
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-            <div class="bg-surface-container-lowest p-5 rounded-xl shadow-sm border border-outline-variant/10">
-                <p class="text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-1">Total Orders</p>
-                <p class="text-2xl font-extrabold text-primary">124</p>
-            </div>
-            <div class="bg-surface-container-lowest p-5 rounded-xl shadow-sm border border-outline-variant/10">
-                <p class="text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-1">Processing</p>
-                <p class="text-2xl font-extrabold text-[#004b87]">08</p>
-            </div>
-            <div class="bg-surface-container-lowest p-5 rounded-xl shadow-sm border border-outline-variant/10">
-                <p class="text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-1">In Transit</p>
-                <p class="text-2xl font-extrabold text-[#00544b]">12</p>
-            </div>
-            <div class="bg-surface-container-lowest p-5 rounded-xl shadow-sm border border-outline-variant/10">
-                <p class="text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-1">Completed</p>
-                <p class="text-2xl font-extrabold text-secondary">104</p>
-            </div>
-        </div>
+         <!-- Dashboard Stats Overlay -->
+         <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+             <div class="bg-surface-container-lowest p-5 rounded-xl shadow-sm border border-outline-variant/10">
+                 <p class="text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-1">Total Orders</p>
+                 <p class="text-2xl font-extrabold text-primary" th:text="${totalOrders}">0</p>
+             </div>
+             <div class="bg-surface-container-lowest p-5 rounded-xl shadow-sm border border-outline-variant/10">
+                 <p class="text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-1">Processing</p>
+                 <p class="text-2xl font-extrabold text-[#004b87]" th:text="${processingOrders}">0</p>
+             </div>
+             <div class="bg-surface-container-lowest p-5 rounded-xl shadow-sm border border-outline-variant/10">
+                 <p class="text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-1">Negotiating</p>
+                 <p class="text-2xl font-extrabold text-[#00544b]" th:text="${negotiatingOrders}">0</p>
+             </div>
+             <div class="bg-surface-container-lowest p-5 rounded-xl shadow-sm border border-outline-variant/10">
+                 <p class="text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-1">Completed</p>
+                 <p class="text-2xl font-extrabold text-secondary" th:text="${completedOrders}">0</p>
+             </div>
+         </div>
         <!-- Order Table / High-end List -->
         <div class="bg-surface-container-lowest rounded-2xl shadow-sm overflow-hidden border border-outline-variant/10">
             <div class="overflow-x-auto">
                 <table class="w-full text-left border-collapse">
                     <thead>
                     <tr class="bg-surface-container-low">
-                        <th class="px-6 py-4 text-xs font-bold text-on-surface-variant uppercase tracking-widest">Order Details</th>
-                        <th class="px-6 py-4 text-xs font-bold text-on-surface-variant uppercase tracking-widest">Date Created</th>
-                        <th class="px-6 py-4 text-xs font-bold text-on-surface-variant uppercase tracking-widest">Status</th>
-                        <th class="px-6 py-4 text-xs font-bold text-on-surface-variant uppercase tracking-widest text-right">Est. Value</th>
-                        <th class="px-6 py-4 text-xs font-bold text-on-surface-variant uppercase tracking-widest"></th>
-                    </tr>
+                         <th class="px-6 py-4 text-xs font-bold text-on-surface-variant uppercase tracking-widest">Order Details</th>
+                         <th class="px-6 py-4 text-xs font-bold text-on-surface-variant uppercase tracking-widest">Date Created</th>
+                         <th class="px-6 py-4 text-xs font-bold text-on-surface-variant uppercase tracking-widest">Status</th>
+                         <th class="px-6 py-4 text-xs font-bold text-on-surface-variant uppercase tracking-widest">Payment</th>
+                         <th class="px-6 py-4 text-xs font-bold text-on-surface-variant uppercase tracking-widest text-right">Est. Value</th>
+                         <th class="px-6 py-4 text-xs font-bold text-on-surface-variant uppercase tracking-widest"></th>
+                     </tr>
                     </thead>
                     <tbody class="divide-y divide-outline-variant/10">
-                    <!-- Order Row 1 -->
-                    <tr class="group hover:bg-surface-container-low/30 transition-colors">
-                        <td class="px-6 py-5">
-                            <div class="flex items-center gap-4">
-                                <div class="w-12 h-12 rounded-lg bg-surface-container overflow-hidden flex-shrink-0">
-                                    <img class="w-full h-full object-cover" data-alt="High-end red athletic sneakers with dynamic studio lighting and clean minimalist background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA0UGpBHIL5SVndQGt0aBqsvBJ8rVzAGuDfiUDt2FTbbRO-u_6IlAKEwQjV3pz4yP_BXmW1frOfMeI5RW1EJ1VgvI0XnZGKFOVLqM6kZHXu_F8KQEB1JLCyhNsmtGwp-WX3Fxlg5C-60ayVuBFf-rU8xSMR7m3drmbAcjzZfQQFYO7RH1quF-sfZqSZZbM70eMdfj9OAqC9nQ6-sg8FEYgWc-dT5WMk7LAk3CN9VQEmXjdEQpQRLU2JkZnvrCJC-g11hAf1UN_c1zI"/>
-                                </div>
-                                <div>
-                                    <p class="font-bold text-primary text-sm leading-tight">GZ-ORD-8829</p>
-                                    <p class="text-xs text-on-surface-variant">Sport-X Men's Sneakers (200 units)</p>
-                                </div>
+                    <!-- Empty State -->
+                    <tr th:if="${orders.isEmpty()}">
+                         <td colspan="6" class="px-6 py-12 text-center">
+                            <div class="flex flex-col items-center gap-3">
+                                 <span class="material-symbols-outlined text-5xl text-on-surface-variant/30">inbox</span>
+                                 <p class="text-on-surface-variant font-medium">No orders yet</p>
+                                 <p class="text-sm text-on-surface-variant/70">Create your first order to get started</p>
                             </div>
-                        </td>
-                        <td class="px-6 py-5">
-                            <p class="text-sm font-medium">10/12/2023</p>
-                            <p class="text-[10px] text-on-surface-variant uppercase">14:20 PM</p>
-                        </td>
-                        <td class="px-6 py-5">
-<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-secondary-container text-primary">
-<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
-                                        Negotiating
-                                    </span>
-                        </td>
-                        <td class="px-6 py-5 text-right">
-                            <p class="text-sm font-bold text-primary">45,200,000 ₫</p>
-                        </td>
-                        <td class="px-6 py-5 text-right">
-                            <button class="px-4 py-1.5 bg-surface-container-high hover:bg-primary hover:text-white text-primary text-[11px] font-bold uppercase rounded transition-all active:scale-95">
-                                View Details
-                            </button>
-                        </td>
+                         </td>
                     </tr>
-                    <!-- Order Row 2 -->
-                    <tr class="group hover:bg-surface-container-low/30 transition-colors">
+                    
+                    <!-- Order Rows (Dynamic) -->
+                    <tr class="group hover:bg-surface-container-low/30 transition-colors" th:each="order : ${orders}">
                         <td class="px-6 py-5">
                             <div class="flex items-center gap-4">
-                                <div class="w-12 h-12 rounded-lg bg-surface-container overflow-hidden flex-shrink-0">
-                                    <img class="w-full h-full object-cover" data-alt="Modern minimalist white smartwatch on soft grey background with soft cinematic lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAgslZWASM1-jGjGNjjyN2A7kwz4hn-KXSRH5hFF-b8i6WAQ19fIuTV6-uk08aQLKkq-brmZEjADB0DY2kt3TYenA89McNYHfy_mfWPK3SZ1Hx96ZhCvRvZWzzxMoVVW0-BDub_oeeYQ8nCL0V4-cjAjMBHfYvoWzaRiKUOq8eqHUESZp5MU1lXg_jufjnlmPYLs0WL4lcQmcVRX43VwmynR-XRRuzwGyd06Bp_7bIgZEKi8INCwSmCFDvsyFlDkCy6tUTLnXEXMU8"/>
+                                <div class="w-12 h-12 rounded-lg bg-gradient-to-br from-primary-container to-primary/20 flex-shrink-0 flex items-center justify-center">
+                                    <span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">package_2</span>
                                 </div>
                                 <div>
-                                    <p class="font-bold text-primary text-sm leading-tight">GZ-ORD-8711</p>
-                                    <p class="text-xs text-on-surface-variant">Series 7 Smartwatch (50 units)</p>
+                                    <p class="font-bold text-primary text-sm leading-tight" th:text="${order.displayId}">GZ-ORD-0000</p>
+                                    <p class="text-xs text-on-surface-variant" th:text="${order.name}">Product Name</p>
                                 </div>
                             </div>
                         </td>
                         <td class="px-6 py-5">
-                            <p class="text-sm font-medium">10/08/2023</p>
-                            <p class="text-[10px] text-on-surface-variant uppercase">09:15 AM</p>
+                            <p class="text-sm font-medium" th:text="${#temporals.format(order.createdAt, 'dd/MM/yyyy')}">00/00/0000</p>
+                            <p class="text-[10px] text-on-surface-variant uppercase" th:text="${#temporals.format(order.createdAt, 'HH:mm')} + ' ' + (${order.createdAt.hour} >= 12 ? 'PM' : 'AM')">00:00 AM</p>
                         </td>
                         <td class="px-6 py-5">
-<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-tertiary-fixed text-on-tertiary-fixed-variant">
-<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span>
-                                        In Production
-                                    </span>
+                            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider" 
+                                  th:classappend="${order.status == 'NEGOTIATING' ? 'bg-secondary-container text-primary' : 
+                                                     order.status == 'PENDING_DEPOSIT' ? 'bg-yellow-100 text-yellow-700' :
+                                                     order.status == 'IN_PRODUCTION' ? 'bg-tertiary-fixed text-on-tertiary-fixed-variant' :
+                                                     order.status == 'PENDING_CUSTOMER_APPROVAL' ? 'bg-blue-100 text-blue-700' :
+                                                     order.status == 'READY_FOR_SHIPPING' ? 'bg-green-100 text-green-700' :
+                                                     order.status == 'DONE' ? 'bg-surface-container-high text-on-surface-variant' :
+                                                     order.status == 'DRAFT' ? 'bg-gray-100 text-gray-700' : 'bg-gray-100 text-gray-700'}">
+                                <span class="w-1.5 h-1.5 rounded-full inline-block" 
+                                      th:classappend="${order.status == 'NEGOTIATING' ? 'bg-secondary' :
+                                                       order.status == 'PENDING_DEPOSIT' ? 'bg-yellow-600' :
+                                                       order.status == 'IN_PRODUCTION' ? 'bg-tertiary' :
+                                                       order.status == 'PENDING_CUSTOMER_APPROVAL' ? 'bg-blue-600' :
+                                                       order.status == 'READY_FOR_SHIPPING' ? 'bg-green-600' :
+                                                       order.status == 'DONE' ? 'bg-outline' :
+                                                       order.status == 'DRAFT' ? 'bg-gray-400' : 'bg-gray-400'}"></span>
+                                <span th:text="${order.status == 'NEGOTIATING' ? 'Negotiating' :
+                                               order.status == 'PENDING_DEPOSIT' ? 'Pending Deposit' :
+                                               order.status == 'IN_PRODUCTION' ? 'In Production' :
+                                               order.status == 'PENDING_CUSTOMER_APPROVAL' ? 'Pending Approval' :
+                                               order.status == 'READY_FOR_SHIPPING' ? 'Ready to Ship' :
+                                               order.status == 'DONE' ? 'Completed' :
+                                               order.status == 'DRAFT' ? 'Draft' : order.status}"></span>
+                            </span>
                         </td>
-                        <td class="px-6 py-5 text-right">
-                            <p class="text-sm font-bold text-primary">112,500,000 ₫</p>
-                        </td>
-                        <td class="px-6 py-5 text-right">
-                            <button class="px-4 py-1.5 bg-surface-container-high hover:bg-primary hover:text-white text-primary text-[11px] font-bold uppercase rounded transition-all active:scale-95">
-                                View Details
-                            </button>
-                        </td>
-                    </tr>
-                    <!-- Order Row 3 -->
-                    <tr class="group hover:bg-surface-container-low/30 transition-colors">
                         <td class="px-6 py-5">
-                            <div class="flex items-center gap-4">
-                                <div class="w-12 h-12 rounded-lg bg-surface-container overflow-hidden flex-shrink-0">
-                                    <img class="w-full h-full object-cover" data-alt="Premium wireless headphones on dark elegant background with subtle metallic reflections" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB8owHRQwOpjXJntk9dZ8xudw7VQlsMK0zym5Moj0d6KHbXjUM_wZzA8ZlZ9Cr-iJT2a3cNAS-NyoNZ9aznlUWbQqKgFN3ocymUXkxJTWfUlcHZNY2pdjLFOoU0EQFStr8pSWiEcoBbWsBWaYZsYqbTZ50sb_IFXXmHtat5-_L5AAibzf6TAYxnR23hYKozZTJmwJFF44DRosod9hPrgjePIULrVzWOYSybCkBmZXj-TBiSpvwFqvYiS6KcldDSGXri-0NuZxLmXQg"/>
-                                </div>
-                                <div>
-                                    <p class="font-bold text-primary text-sm leading-tight">GZ-ORD-8650</p>
-                                    <p class="text-xs text-on-surface-variant">Noise Cancelling Bluetooth Headphones</p>
-                                </div>
+                            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider"
+                                  th:classappend="${order.paymentStatus == null ? 'bg-gray-100 text-gray-700' :
+                                                     order.paymentStatus == 'UNPAID' ? 'bg-red-100 text-red-700' :
+                                                     order.paymentStatus == 'DEPOSITED' ? 'bg-yellow-100 text-yellow-700' :
+                                                     order.paymentStatus == 'DONE' ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-700'}">
+                                <span class="w-1.5 h-1.5 rounded-full inline-block"
+                                      th:classappend="${order.paymentStatus == null ? 'bg-gray-400' :
+                                                       order.paymentStatus == 'UNPAID' ? 'bg-red-600' :
+                                                       order.paymentStatus == 'DEPOSITED' ? 'bg-yellow-600' :
+                                                       order.paymentStatus == 'DONE' ? 'bg-green-600' : 'bg-gray-400'}"></span>
+                                <span th:text="${order.paymentStatus == null ? 'Unpaid' :
+                                               order.paymentStatus == 'UNPAID' ? 'Unpaid' :
+                                               order.paymentStatus == 'DEPOSITED' ? 'Deposit Paid' :
+                                               order.paymentStatus == 'DONE' ? 'Fully Paid' : order.paymentStatus}"></span>
+                            </span>
+                        </td>
+                        <td class="px-6 py-5 text-right">
+                            <p class="text-sm font-bold text-primary" th:if="${order.finalPrice != null}" th:text="${#numbers.formatDecimal(order.finalPrice, 0, 'COMMA', 0, 'POINT')} + ' ₫'">0 ₫</p>
+                            <p class="text-sm font-bold text-on-surface-variant" th:unless="${order.finalPrice != null}">TBD</p>
+                        </td>
+                        <td class="px-6 py-5 text-right">
+                            <div class="flex items-center gap-2 justify-end">
+                                <!-- Payment Buttons -->
+                                <a th:if="${order.status == 'PENDING_DEPOSIT' && (order.paymentStatus == null || order.paymentStatus == 'UNPAID')}" 
+                                   th:href="@{/payment/{id}/deposit(id=${order.orderId})}" 
+                                   class="px-3 py-1.5 bg-yellow-600 hover:bg-yellow-700 text-white text-[10px] font-bold uppercase rounded transition-all active:scale-95 whitespace-nowrap">
+                                    Pay Deposit
+                                </a>
+                                <a th:if="${order.paymentStatus == 'DEPOSITED' && order.status == 'IN_PRODUCTION'}" 
+                                   th:href="@{/payment/{id}/balance(id=${order.orderId})}" 
+                                   class="px-3 py-1.5 bg-green-600 hover:bg-green-700 text-white text-[10px] font-bold uppercase rounded transition-all active:scale-95 whitespace-nowrap">
+                                    Pay Balance
+                                </a>
+                                <!-- View Details Button -->
+                                <a th:href="@{/dashboard/chat/order/{id}(id=${order.orderId})}" class="px-4 py-1.5 bg-surface-container-high hover:bg-primary hover:text-white text-primary text-[11px] font-bold uppercase rounded transition-all active:scale-95">
+                                    View
+                                </a>
                             </div>
-                        </td>
-                        <td class="px-6 py-5">
-                            <p class="text-sm font-medium">10/01/2023</p>
-                            <p class="text-[10px] text-on-surface-variant uppercase">16:45 PM</p>
-                        </td>
-                        <td class="px-6 py-5">
-<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-surface-container-high text-on-surface-variant">
-<span class="w-1.5 h-1.5 rounded-full bg-outline"></span>
-                                        Completed
-                                    </span>
-                        </td>
-                        <td class="px-6 py-5 text-right">
-                            <p class="text-sm font-bold text-primary">28,900,000 ₫</p>
-                        </td>
-                        <td class="px-6 py-5 text-right">
-                            <button class="px-4 py-1.5 bg-surface-container-high hover:bg-primary hover:text-white text-primary text-[11px] font-bold uppercase rounded transition-all active:scale-95">
-                                View Details
-                            </button>
                         </td>
                     </tr>
                     </tbody>
                 </table>
             </div>
-            <!-- Pagination -->
-            <div class="px-6 py-4 bg-surface-container-low/50 flex items-center justify-between border-t border-outline-variant/10">
-                <p class="text-[11px] text-on-surface-variant font-medium">Showing 1 - 10 of 124 orders</p>
-                <div class="flex items-center gap-2">
-                    <button class="p-1 rounded hover:bg-surface-container-high transition-colors disabled:opacity-30" disabled="">
-                        <span class="material-symbols-outlined text-lg">chevron_left</span>
-                    </button>
-                    <button class="w-8 h-8 rounded bg-primary text-white text-xs font-bold">1</button>
-                    <button class="w-8 h-8 rounded hover:bg-surface-container-high text-xs font-bold transition-colors">2</button>
-                    <button class="w-8 h-8 rounded hover:bg-surface-container-high text-xs font-bold transition-colors">3</button>
-                    <button class="p-1 rounded hover:bg-surface-container-high transition-colors">
-                        <span class="material-symbols-outlined text-lg">chevron_right</span>
-                    </button>
-                </div>
-            </div>
+             <!-- Pagination -->
+             <div class="px-6 py-4 bg-surface-container-low/50 flex items-center justify-between border-t border-outline-variant/10">
+                 <p class="text-[11px] text-on-surface-variant font-medium" th:text="'Showing ' + ${orders.isEmpty() ? 0 : 1} + ' - ' + ${orders.size()} + ' of ' + ${orders.size()} + ' orders'">Showing 1 - 10 of 124 orders</p>
+                 <div class="flex items-center gap-2" th:if="${orders.size() > 0}">
+                     <button class="p-1 rounded hover:bg-surface-container-high transition-colors disabled:opacity-30" disabled="">
+                         <span class="material-symbols-outlined text-lg">chevron_left</span>
+                     </button>
+                     <button class="w-8 h-8 rounded bg-primary text-white text-xs font-bold">1</button>
+                     <button class="p-1 rounded hover:bg-surface-container-high transition-colors">
+                         <span class="material-symbols-outlined text-lg">chevron_right</span>
+                     </button>
+                 </div>
+             </div>
         </div>
         <!-- Promotion / Help Bento -->
         <div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6">

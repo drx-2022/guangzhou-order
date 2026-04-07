@@ -122,6 +122,25 @@
                 <span class="inline-block text-[10px] font-bold px-2.5 py-1 rounded-full bg-blue-100 text-blue-700" th:text="${order.status}"></span>
             </div>
 
+            <!-- Payment Status -->
+            <div class="bg-surface-container-low rounded-xl p-4 space-y-3">
+                <p class="text-[10px] font-bold uppercase tracking-wider text-on-surface-variant">Payment Status</p>
+                <span th:if="${order.paymentStatus == null}" class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-gray-100 text-gray-700">
+                    <span class="w-1.5 h-1.5 rounded-full bg-gray-400"></span>
+                    Unpaid
+                </span>
+                <span th:unless="${order.paymentStatus == null}" th:switch="${order.paymentStatus}" class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider">
+                    <!-- Unpaid Status -->
+                    <span th:case="'UNPAID'" th:classappend="'bg-red-100 text-red-700'" class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-red-600"></span>Unpaid</span>
+                    
+                    <!-- Deposited Status -->
+                    <span th:case="'DEPOSITED'" th:classappend="'bg-yellow-100 text-yellow-700'" class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-yellow-600"></span>Deposit Paid</span>
+                    
+                    <!-- Fully Paid Status -->
+                    <span th:case="'DONE'" th:classappend="'bg-green-100 text-green-700'" class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-green-600"></span>Fully Paid</span>
+                </span>
+            </div>
+
             <div class="bg-surface-container-low rounded-xl p-4 space-y-3">
                 <p class="text-[10px] font-bold uppercase tracking-wider text-on-surface-variant">Estimate Price (Ceiling)</p>
                 <p class="text-lg font-bold text-primary" th:text="${!#lists.isEmpty(quotes) ? quotes[0].estimatePrice : 'N/A'}"></p>
