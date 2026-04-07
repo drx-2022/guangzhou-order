@@ -326,43 +326,155 @@
 <script src="https://cdn.jsdelivr.net/npm/stompjs@2.3.3/lib/stomp.min.js"></script>
 <script th:inline="javascript">
   let stompClient = null;
+  let reconnectTimer = null;
+  let syncTimer = null;
+  let isConnecting = false;
+  let isSyncing = false;
+
   const currentUserEmail = [[${currentUserEmail}]];
-  const conversationId = parseInt(document.getElementById('conversationId').value);
-  const orderId = parseInt(document.getElementById('orderId').value);
+  const conversationId = parseInt(document.getElementById('conversationId').value, 10);
+  const orderId = parseInt(document.getElementById('orderId').value, 10);
+
+  function getStatusClass(status) {
+      return status === 'PENDING' ? 'bg-amber-50 text-amber-600 ring-1 ring-amber-200'
+          : status === 'ACCEPTED' ? 'bg-emerald-50 text-emerald-600 ring-1 ring-emerald-200'
+          : status === 'COUNTERED' ? 'bg-blue-50 text-blue-600 ring-1 ring-blue-200'
+          : 'bg-red-50 text-red-600 ring-1 ring-red-200';
+  }
+
+  function getMessagesContainer(root = document) {
+      return root.getElementById('messagesContainer');
+  }
+
+  function getSidebarHistoryContainer(root = document) {
+      return root.querySelector('aside.hidden.xl\\:flex .flex-1.overflow-y-auto');
+  }
+
+  function hasQuote(quoteId) {
+      return !!document.querySelector('[data-quote-id="' + quoteId + '"]');
+  }
+
+  function isRenderableQuotePayload(data) {
+      return !!(data && data.quoteId != null && data.proposedPrice != null && data.proposedByName && data.proposedByRole);
+  }
+
+  function scheduleReconnect(delay = 5000) {
+      if (reconnectTimer) return;
+      reconnectTimer = window.setTimeout(function() {
+          reconnectTimer = null;
+          connect();
+      }, delay);
+  }
+
+  async function syncQuotesFromServer(forceScrollToBottom = false) {
+      if (isSyncing) return;
+      isSyncing = true;
+
+      try {
+          const currentMessages = getMessagesContainer();
+          const shouldStickToBottom = currentMessages
+              ? forceScrollToBottom || (currentMessages.scrollHeight - currentMessages.scrollTop - currentMessages.clientHeight < 120)
+              : forceScrollToBottom;
+
+          const response = await fetch(window.location.pathname + window.location.search, {
+              method: 'GET',
+              headers: {
+                  'X-Requested-With': 'XMLHttpRequest',
+                  'Cache-Control': 'no-cache'
+              },
+              credentials: 'same-origin',
+              cache: 'no-store'
+          });
+
+          if (!response.ok) {
+              throw new Error('Failed to refresh quotes: ' + response.status);
+          }
+
+          const html = await response.text();
+          const nextDocument = new DOMParser().parseFromString(html, 'text/html');
+          const nextMessages = getMessagesContainer(nextDocument);
+          const nextSidebar = getSidebarHistoryContainer(nextDocument);
+          const currentSidebar = getSidebarHistoryContainer();
+
+          if (currentMessages && nextMessages) {
+              currentMessages.innerHTML = nextMessages.innerHTML;
+              if (shouldStickToBottom) {
+                  currentMessages.scrollTop = currentMessages.scrollHeight;
+              }
+          }
+
+          if (currentSidebar && nextSidebar) {
+              currentSidebar.innerHTML = nextSidebar.innerHTML;
+          }
+      } catch (error) {
+          console.error('Quote sync failed:', error);
+      } finally {
+          isSyncing = false;
+      }
+  }
+
+  function startBackgroundSync() {
+      if (syncTimer) clearInterval(syncTimer);
+      syncTimer = window.setInterval(function() {
+          if (document.hidden) return;
+          syncQuotesFromServer(false);
+          if (!stompClient || !stompClient.connected) {
+              connect();
+          }
+      }, 5000);
+  }
 
   function connect() {
+      if (isConnecting || (stompClient && stompClient.connected)) return;
+
+      isConnecting = true;
+      if (reconnectTimer) {
+          clearTimeout(reconnectTimer);
+          reconnectTimer = null;
+      }
+
       const socket = new SockJS('/ws');
       stompClient = Stomp.over(socket);
+      stompClient.debug = null;
       const jwtToken = getCookie('jwt');
 
       stompClient.connect(
-          { jwt: jwtToken },
-          function(frame) {
+          jwtToken ? { jwt: jwtToken } : {},
+          function() {
+              isConnecting = false;
               console.log('Connected to WebSocket');
 
               stompClient.subscribe('/topic/conversation.' + conversationId, function(message) {
-                  const data = JSON.parse(message.body);
+                  let data = null;
 
-                  if (data.eventType === 'PRICE_QUOTE_UPDATE') {
-                      updateQuoteStatusFromWS(data.quoteId, data.status);
-                  } else if (data.eventType === 'PRICE_QUOTE_NEW') {
-                      location.reload();
-                  } else if (data.eventType === 'PROPOSAL_STATUS_UPDATE') {
-                      // not relevant here
-                  } else {
-                      displayReceivedMessage(data);
+                  try {
+                      data = JSON.parse(message.body);
+                  } catch (error) {
+                      console.error('Failed to parse event:', error);
                   }
+
+                  if (data && data.eventType === 'PRICE_QUOTE_UPDATE' && data.quoteId && data.status) {
+                      updateQuoteStatusFromWS(data.quoteId, data.status);
+                  } else if (data && data.eventType === 'PRICE_QUOTE_NEW' && isRenderableQuotePayload(data) && !hasQuote(data.quoteId)) {
+                      appendNewQuote(data);
+                  }
+
+                  syncQuotesFromServer(true);
               });
+
+              syncQuotesFromServer(false);
           },
           function(error) {
+              isConnecting = false;
+              stompClient = null;
               console.error('WebSocket error:', error);
-              setTimeout(connect, 5000);
+              scheduleReconnect();
           }
       );
   }
 
   function getCookie(name) {
-      const nameEQ = name + "=";
+      const nameEQ = name + '=';
       const cookies = document.cookie.split(';');
       for (let i = 0; i < cookies.length; i++) {
           const cookie = cookies[i].trim();
@@ -371,24 +483,109 @@
       return null;
   }
 
-  function displayReceivedMessage(msg) {
-      // Chat removed — negotiation-only view
-  }
-
   function updateQuoteStatusFromWS(quoteId, newStatus) {
       const statusEl = document.getElementById('quote-status-' + quoteId);
       if (statusEl) {
           const badge = statusEl.querySelector('span');
           if (badge) {
               badge.textContent = newStatus;
-              badge.className = 'text-[10px] font-bold px-2.5 py-1 rounded-full ' +
-                  (newStatus === 'ACCEPTED' ? 'bg-green-100 text-green-700' :
-                   newStatus === 'DECLINED' ? 'bg-red-100 text-red-700' :
-                   'bg-orange-100 text-orange-700');
+              badge.className = 'text-[10px] font-bold px-2.5 py-1 rounded-full ' + getStatusClass(newStatus);
           }
       }
       const actionsEl = document.getElementById('quote-actions-' + quoteId);
       if (actionsEl) actionsEl.remove();
+  }
+
+  function appendNewQuote(data) {
+      const container = document.getElementById('messagesContainer');
+      const placeholder = container.querySelector('.flex.flex-col.items-center.justify-center');
+      if (placeholder) placeholder.remove();
+
+      const isMyQuote = data.proposedByEmail === currentUserEmail;
+      const alignment = isMyQuote ? 'items-end' : 'items-start';
+      const statusClass = getStatusClass(data.status);
+
+      const noteHtml = data.note ? `
+          <div class="bg-surface-container-low rounded-xl p-3">
+              <p class="text-[10px] font-headline font-bold text-on-surface-variant uppercase tracking-wider mb-1">Note</p>
+              <p class="text-xs text-on-surface-variant leading-relaxed">${escapeHtml(data.note)}</p>
+          </div>` : '';
+
+      const estimateHtml = data.estimatePrice ? `
+          <div>
+              <p class="text-[10px] font-headline font-bold text-on-surface-variant uppercase tracking-wider mb-1">Estimate Ceiling</p>
+              <p class="text-sm font-semibold text-on-surface">$${escapeHtml(String(data.estimatePrice))}</p>
+          </div>` : '';
+
+      const acceptBtnHtml = (!isMyQuote && data.status === 'PENDING') ? `
+          <div class="pt-1" id="quote-actions-${data.quoteId}">
+              <button class="w-full bg-tertiary-container hover:bg-tertiary text-white py-2.5 rounded-xl font-headline text-xs font-bold flex items-center justify-center gap-2 transition-all"
+                      data-quote-id="${data.quoteId}"
+                      onclick="acceptQuote(this)">
+                  <span class="material-symbols-outlined text-sm">check_circle</span>
+                  Accept This Price
+              </button>
+          </div>` : '';
+
+      const quoteHtml = `
+      <div class="flex flex-col gap-2 ${alignment}" data-quote-id="${data.quoteId}">
+          <div class="bg-white rounded-2xl shadow-md overflow-hidden border border-outline-variant/15 max-w-lg w-full">
+              <div class="bg-primary px-5 py-3 flex justify-between items-center">
+                  <div class="flex items-center gap-2">
+                      <span class="material-symbols-outlined text-white text-base">request_quote</span>
+                      <h3 class="font-headline text-white font-bold text-sm">Price Quote</h3>
+                  </div>
+                  <span class="text-[10px] text-white/70 font-bold tracking-tight">#${data.quoteId}</span>
+              </div>
+              <div class="p-5 space-y-4">
+                  <div class="flex items-center gap-2 text-xs text-on-surface-variant">
+                      <span class="material-symbols-outlined text-sm">person</span>
+                      <span>${escapeHtml(data.proposedByName)}</span>
+                      <span class="text-[10px] px-2 py-0.5 rounded-full bg-surface-container-high font-bold">${escapeHtml(data.proposedByRole)}</span>
+                  </div>
+                  <div class="flex items-center gap-1.5 text-xs text-on-surface-variant">
+                      <span class="material-symbols-outlined text-sm">orders</span>
+                      <span>Order #${orderId}</span>
+                  </div>
+                  <div class="bg-surface-container-low rounded-xl p-4">
+                      <p class="text-[10px] font-headline font-bold text-on-surface-variant uppercase tracking-wider mb-1">Proposed Price</p>
+                      <p class="text-3xl font-extrabold text-on-surface">$${escapeHtml(String(data.proposedPrice))}</p>
+                  </div>
+                  ${estimateHtml}
+                  ${noteHtml}
+                  <div class="flex items-center justify-between" id="quote-status-${data.quoteId}">
+                      <span class="text-[10px] font-bold px-2.5 py-1 rounded-full ${statusClass}">${escapeHtml(data.status)}</span>
+                      <span class="text-[10px] text-on-surface-variant/60">${escapeHtml(data.createdAt || 'Just now')}</span>
+                  </div>
+                  ${acceptBtnHtml}
+              </div>
+          </div>
+      </div>`;
+
+      container.insertAdjacentHTML('beforeend', quoteHtml);
+      container.scrollTop = container.scrollHeight;
+
+      const sidebar = getSidebarHistoryContainer();
+      if (sidebar) {
+          const sidebarPlaceholder = sidebar.querySelector('.text-center.py-8');
+          if (sidebarPlaceholder) sidebarPlaceholder.remove();
+
+          const sidebarStatusClass = data.status === 'PENDING' ? 'bg-orange-100 text-orange-700'
+              : data.status === 'ACCEPTED' ? 'bg-green-100 text-green-700'
+              : 'bg-red-100 text-red-700';
+
+          const sidebarHtml = `
+          <div class="bg-surface-container-low rounded-xl p-3 space-y-2">
+              <div class="flex justify-between items-center">
+                  <span class="text-[10px] font-bold text-on-surface-variant">${escapeHtml(data.proposedByName)}</span>
+                  <span class="text-[10px] font-bold px-2 py-0.5 rounded-full ${sidebarStatusClass}">${escapeHtml(data.status)}</span>
+              </div>
+              <p class="text-lg font-bold text-primary">$${escapeHtml(String(data.proposedPrice))}</p>
+              ${data.note ? '<p class="text-[10px] text-on-surface-variant">' + escapeHtml(data.note) + '</p>' : ''}
+              <p class="text-[10px] text-on-surface-variant opacity-60">${escapeHtml(data.createdAt || 'Just now')}</p>
+          </div>`;
+          sidebar.insertAdjacentHTML('beforeend', sidebarHtml);
+      }
   }
 
   function acceptQuote(button) {
@@ -408,8 +605,9 @@
               updateQuoteStatusFromWS(quoteId, 'ACCEPTED');
               const actionsEl = button.parentElement;
               if (actionsEl) {
-                  actionsEl.innerHTML = '<div class="bg-green-100 border border-green-200 text-green-700 px-4 py-2 rounded-lg text-sm font-bold text-center">✓ Price Accepted</div>';
+                  actionsEl.innerHTML = '<div class="bg-emerald-50 border border-emerald-200 text-emerald-600 px-4 py-2 rounded-xl text-sm font-bold text-center">✓ Price Accepted</div>';
               }
+              syncQuotesFromServer(false);
           } else {
               throw new Error('Unexpected response: ' + response.status);
           }
@@ -422,9 +620,6 @@
       });
   }
 
-
-
-
   function escapeHtml(text) {
       if (!text) return '';
       const div = document.createElement('div');
@@ -432,18 +627,23 @@
       return div.innerHTML;
   }
 
-  function formatTime(isoString) {
-      if (!isoString) return '';
-      return new Date(isoString).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-  }
-
   document.addEventListener('DOMContentLoaded', function() {
       connect();
-      document.getElementById('messagesContainer').scrollTop = document.getElementById('messagesContainer').scrollHeight;
+      startBackgroundSync();
+      const messagesContainer = document.getElementById('messagesContainer');
+      messagesContainer.scrollTop = messagesContainer.scrollHeight;
   });
 
   document.addEventListener('visibilitychange', function() {
-      if (!document.hidden && (!stompClient || !stompClient.connected)) connect();
+      if (!document.hidden) {
+          syncQuotesFromServer(false);
+          connect();
+      }
+  });
+
+  window.addEventListener('beforeunload', function() {
+      if (syncTimer) clearInterval(syncTimer);
+      if (reconnectTimer) clearTimeout(reconnectTimer);
   });
 </script>
 </body>
