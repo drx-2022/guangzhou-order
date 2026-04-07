@@ -29,9 +29,26 @@ public class OrdersController {
                 .stream()
                 .map(OrderSummaryDto::new)
                 .toList();
+
+        // Calculate dashboard statistics
+        long totalOrders = orders.size();
+        long processingOrders = orders.stream()
+                .filter(o -> "IN_PRODUCTION".equals(o.getStatus()) || "PENDING_CUSTOMER_APPROVAL".equals(o.getStatus()))
+                .count();
+        long negotiatingOrders = orders.stream()
+                .filter(o -> "NEGOTIATING".equals(o.getStatus()))
+                .count();
+        long completedOrders = orders.stream()
+                .filter(o -> "DONE".equals(o.getStatus()))
+                .count();
+
         model.addAttribute("user", user);
         model.addAttribute("orders", orders);
-        return "my_orders";
+        model.addAttribute("totalOrders", totalOrders);
+        model.addAttribute("processingOrders", processingOrders);
+        model.addAttribute("negotiatingOrders", negotiatingOrders);
+        model.addAttribute("completedOrders", completedOrders);
+        return "customer/my_orders";
     }
 
     @GetMapping("/orders/{id}")

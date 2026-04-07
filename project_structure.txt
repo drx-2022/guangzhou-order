@@ -8,6 +8,7 @@ guangzhou-order/
 │   │   │               ├── DataSeeder.java
 │   │   │               ├── GuangzhouOrderApplication.java
 │   │   │               ├── config/
+│   │   │               │   ├── RestClientConfig.java
 │   │   │               │   ├── SecurityConfig.java
 │   │   │               │   ├── WebSocketAuthChannelInterceptor.java
 │   │   │               │   └── WebSocketConfig.java
@@ -18,7 +19,11 @@ guangzhou-order/
 │   │   │               │   ├── DashboardController.java
 │   │   │               │   ├── HomeController.java
 │   │   │               │   ├── OrdersController.java
+│   │   │               │   ├── PaymentController.java
+│   │   │               │   ├── PriceChartController.java
+│   │   │               │   ├── PriceQuoteController.java
 │   │   │               │   ├── ProductDetailsController.java
+│   │   │               │   ├── ProposalCardController.java
 │   │   │               │   └── UserSettingsController.java
 │   │   │               ├── dto/
 │   │   │               │   ├── ChangePasswordDTO.java
@@ -31,7 +36,11 @@ guangzhou-order/
 │   │   │               │   └── chat/
 │   │   │               │       ├── ChatMessageRequest.java
 │   │   │               │       ├── ConversationResponse.java
-│   │   │               │       └── MessageResponse.java
+│   │   │               │       ├── MessageResponse.java
+│   │   │               │       ├── PriceQuoteRequest.java
+│   │   │               │       ├── PriceQuoteResponse.java
+│   │   │               │       ├── SpecProposalCardRequest.java
+│   │   │               │       └── SpecProposalCardResponse.java
 │   │   │               ├── entity/
 │   │   │               │   ├── Category.java
 │   │   │               │   ├── Commission.java
@@ -43,7 +52,10 @@ guangzhou-order/
 │   │   │               │   ├── Order.java
 │   │   │               │   ├── OrderItem.java
 │   │   │               │   ├── OtpToken.java
+│   │   │               │   ├── Payment.java
+│   │   │               │   ├── PriceQuote.java
 │   │   │               │   ├── ProductCard.java
+│   │   │               │   ├── SpecProposalCard.java
 │   │   │               │   └── User.java
 │   │   │               ├── repository/
 │   │   │               │   ├── CategoryRepository.java
@@ -56,7 +68,10 @@ guangzhou-order/
 │   │   │               │   ├── OrderItemRepository.java
 │   │   │               │   ├── OrderRepository.java
 │   │   │               │   ├── OtpTokenRepository.java
+│   │   │               │   ├── PaymentRepository.java
+│   │   │               │   ├── PriceQuoteRepository.java
 │   │   │               │   ├── ProductCardRepository.java
+│   │   │               │   ├── SpecProposalCardRepository.java
 │   │   │               │   └── UserRepository.java
 │   │   │               ├── security/
 │   │   │               │   ├── CustomUserDetailsService.java
@@ -65,22 +80,17 @@ guangzhou-order/
 │   │   │               └── service/
 │   │   │                   ├── ChatService.java
 │   │   │                   ├── EmailService.java
+│   │   │                   ├── PaymentService.java
+│   │   │                   ├── PriceChartService.java
+│   │   │                   ├── PriceQuoteService.java
+│   │   │                   ├── ProposalService.java
 │   │   │                   └── UserService.java
 │   │   └── resources/
 │   │       ├── application.properties
-│   │       ├── application-local.properties
-│   │       ├── application-prod.properties
 │   │       ├── db/
 │   │       │   └── migration/
 │   │       │       └── V2__add_email_verification_to_users.sql
 │   │       └── templates/
-│   │           ├── chat_with_customizer.html
-│   │           ├── checkout.html
-│   │           ├── interactive_price_chart.html
-│   │           ├── product_details.html
-│   │           ├── production_roadmap.html
-│   │           ├── verify_pending.html
-│   │           ├── visual_proof_review.html
 │   │           ├── affiliate/
 │   │           │   └── affiliate_dashboard.html
 │   │           ├── auth/
@@ -89,22 +99,33 @@ guangzhou-order/
 │   │           ├── chat/
 │   │           │   ├── admin_chat_list.html
 │   │           │   ├── admin_chat_room.html
+│   │           │   ├── admin_order_negotiation.html
+│   │           │   ├── customer_chat.html
 │   │           │   ├── customer_chat_list.html
-│   │           │   └── customer_chat.html
+│   │           │   └── customer_order_negotiation.html
+│   │           ├── chat_with_customizer.html
+│   │           ├── checkout.html
 │   │           ├── customer/
 │   │           │   ├── customer_dashboard.html
 │   │           │   └── my_orders.html
 │   │           ├── fragments/
 │   │           │   └── settings_modal.html
-│   │           └── public/
-│   │               ├── api_integration.html
-│   │               ├── community_catalog.html
-│   │               ├── home.html
-│   │               ├── logistics_hub.html
-│   │               ├── privacy.html
-│   │               ├── sourcing_guide.html
-│   │               ├── sourcing_service.html
-│   │               └── terms.html
+│   │           ├── interactive_price_chart.html
+│   │           ├── payment_page.html
+│   │           ├── payment_return.html
+│   │           ├── product_details.html
+│   │           ├── production_roadmap.html
+│   │           ├── public/
+│   │           │   ├── api_integration.html
+│   │           │   ├── community_catalog.html
+│   │           │   ├── home.html
+│   │           │   ├── logistics_hub.html
+│   │           │   ├── privacy.html
+│   │           │   ├── sourcing_guide.html
+│   │           │   ├── sourcing_service.html
+│   │           │   └── terms.html
+│   │           ├── verify_pending.html
+│   │           └── visual_proof_review.html
 │   └── test/
 │       └── java/
 │           └── com/
@@ -116,11 +137,11 @@ guangzhou-order/
 ├── .mvn/
 │   └── wrapper/
 │       └── maven-wrapper.properties
+├── NEW_PAGES_IMPLEMENTATION.md
 ├── README.md
+├── TEMPLATES_SUMMARY.md
 ├── git_branch.txt
 ├── mvnw
 ├── mvnw.cmd
 ├── pom.xml
-├── project_structure.txt
-├── NEW_PAGES_IMPLEMENTATION.md
-└── TEMPLATES_SUMMARY.md
+└── project_structure.txt
