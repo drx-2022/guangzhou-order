@@ -189,10 +189,14 @@
                 <div th:classappend="${msg.senderEmail == currentUserEmail} ? 'items-end' : 'items-start'" class="flex flex-col gap-2">
                     <!-- Message from Current User (Right aligned) -->
                     <th:block th:if="${msg.senderEmail == currentUserEmail}">
-                        <!-- Regular text/file/image message -->
-                        <div th:if="${msg.messageType != 'SPEC_PROPOSAL_CARD' and msg.messageType != 'PRICE_QUOTE'}"
+                        <!-- Regular text message -->
+                        <div th:if="${msg.messageType == 'TEXT'}"
                              class="max-w-[80%] bg-primary text-white p-4 rounded-xl rounded-tr-none shadow-sm">
                             <p class="text-sm" th:text="${msg.content}"></p>
+                        </div>
+                        <!-- Image Message (sent by current user) -->
+                        <div th:if="${msg.messageType == 'IMAGE' and msg.mediaUrl != null}" class="max-w-sm bg-primary text-white p-2 rounded-xl rounded-tr-none shadow-sm">
+                            <img th:src="${msg.mediaUrl}" alt="Shared image" class="w-full h-auto rounded-lg object-cover max-h-96">
                         </div>
 
                         <!-- Proposal card sent by admin (right aligned) -->
@@ -439,14 +443,25 @@
                 <div class="flex items-center justify-between px-2 pb-1">
                     <div class="flex gap-1">
                         <button type="button" class="p-2 hover:bg-white rounded-xl text-on-surface-variant transition-all"><span class="material-symbols-outlined">attach_file</span></button>
-                        <button type="button" class="p-2 hover:bg-white rounded-xl text-on-surface-variant transition-all"><span class="material-symbols-outlined">image</span></button>
+                        <button id="imageBtn" type="button" class="p-2 hover:bg-white rounded-xl text-on-surface-variant transition-all"><span class="material-symbols-outlined">image</span></button>
                     </div>
                     <button id="sendBtn" type="button" class="bg-primary text-white p-2 px-6 rounded-xl font-headline font-bold text-sm flex items-center gap-2 active:scale-95 transition-all">
                         Send <span class="material-symbols-outlined text-sm">send</span>
                     </button>
                 </div>
             </div>
+            <!-- Upload indicator -->
+            <span id="uploadIndicator" class="hidden text-xs text-on-surface-variant px-2 italic mt-2 block">
+                Uploading image...
+            </span>
         </div>
+
+        <!-- Hidden file input for image upload -->
+        <input type="file"
+               id="imageInput"
+               accept="image/*"
+               class="hidden"
+               onchange="handleImageUpload(this.files[0])">
     </section>
 
     <!-- Proposal Modal -->
@@ -931,6 +946,70 @@
         return text.split(/[\n,]/).map(url => url.trim()).filter(url => url.length > 0);
     }
 
+    /**
+     * Handles the image upload process:
+     * 1. Validates the file client-side.
+     * 2. Uploads the file to the REST API.
+     * 3. Sends the returned Cloudinary URL via WebSocket (STOMP).
+     */
+    async function handleImageUpload(file) {
+        if (!file) return;
+
+        // Client-side validation
+        if (!file.type.startsWith('image/')) {
+            alert('Only image files are allowed.');
+            return;
+        }
+        if (file.size > 5 * 1024 * 1024) {
+            alert('Image must be smaller than 5MB.');
+            return;
+        }
+
+        const uploadIndicator = document.getElementById('uploadIndicator');
+        if (uploadIndicator) uploadIndicator.classList.remove('hidden');
+
+        try {
+            const formData = new FormData();
+            formData.append('file', file);
+            formData.append('conversationId', conversationId);
+
+            // Step 1: Upload to Cloudinary via REST API
+            const response = await fetch('/api/chat/upload-image', {
+                method: 'POST',
+                body: formData
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                alert('Upload failed: ' + (data.error || 'Unknown error'));
+                return;
+            }
+
+            // Step 2: Send URL as an IMAGE message via WebSocket
+            const chatMessageRequest = {
+                conversationId: conversationId,
+                messageType: 'IMAGE',
+                content: null,
+                mediaUrl: data.url
+            };
+
+            if (stompClient && stompClient.connected) {
+                stompClient.send('/app/chat.send', {}, JSON.stringify(chatMessageRequest));
+            } else {
+                alert('Chat connection lost. Please refresh the page.');
+            }
+
+        } catch (err) {
+            console.error('Image upload error:', err);
+            alert('Upload failed. Please try again.');
+        } finally {
+            if (uploadIndicator) uploadIndicator.classList.add('hidden');
+            const imageInput = document.getElementById('imageInput');
+            if (imageInput) imageInput.value = '';
+        }
+    }
+
     document.addEventListener('DOMContentLoaded', function() {
         connect();
 
@@ -951,6 +1030,14 @@
 
         const container = document.getElementById('messagesContainer');
         container.scrollTop = container.scrollHeight;
+
+        // Wire the image button to trigger the hidden file input
+        const imageBtn = document.getElementById('imageBtn');
+        if (imageBtn) {
+            imageBtn.addEventListener('click', function() {
+                document.getElementById('imageInput').click();
+            });
+        }
 
         document.getElementById('proposalModalBtn').addEventListener('click', openProposalModal);
         document.getElementById('closeProposalModal').addEventListener('click', closeProposalModal);

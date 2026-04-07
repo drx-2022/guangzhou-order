@@ -37,6 +37,7 @@ public class SecurityConfig {
             .csrf(csrf -> csrf.disable())  // Disable CSRF for stateless JWT
             .authorizeHttpRequests(auth -> auth
                     .requestMatchers("/", "/signup", "/login", "/catalog", "/logout", "/error").permitAll()
+                    .requestMatchers("/api/chat/upload-image").authenticated()
 
                 .requestMatchers("/ws", "/ws/**").permitAll()  // WebSocket must be accessible
                 .requestMatchers("/dashboard").authenticated()

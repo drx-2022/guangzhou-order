@@ -195,10 +195,18 @@
 <!--            <th:block th:each="msg : ${messages}">-->
 <!--                &lt;!&ndash; Determine if message is from current user &ndash;&gt;-->
 <!--                <div th:classappend="${msg.senderEmail == currentUserEmail} ? 'items-end' : 'items-start'" class="flex flex-col gap-2">-->
-<!--                    &lt;!&ndash; Message: From Current User (Right aligned) &ndash;&gt;-->
-<!--                    <div th:if="${msg.senderEmail == currentUserEmail}" class="max-w-[80%] bg-primary text-white p-4 rounded-xl rounded-tr-none shadow-sm">-->
-<!--                        <p class="text-sm" th:text="${msg.content}"></p>-->
-<!--                    </div>-->
+<!--                    &lt;!&ndash; Current User Messages &ndash;&gt;-->
+<!--                    <th:block th:if="${msg.senderEmail == currentUserEmail}">-->
+<!--                        &lt;!&ndash; Text Message &ndash;&gt;-->
+<!--                        <div th:if="${msg.messageType == 'TEXT'}" class="max-w-[80%] bg-primary text-white p-4 rounded-xl rounded-tr-none shadow-sm">-->
+<!--                            <p class="text-sm" th:text="${msg.content}"></p>-->
+<!--                        </div>-->
+
+<!--                        &lt;!&ndash; Image Message &ndash;&gt;-->
+<!--                        <div th:if="${msg.messageType == 'IMAGE' and msg.mediaUrl != null}" class="max-w-sm bg-primary text-white p-2 rounded-xl rounded-tr-none shadow-sm">-->
+<!--                            <img th:src="${msg.mediaUrl}" alt="Shared image" class="w-full h-auto rounded-lg object-cover max-h-96">-->
+<!--                        </div>-->
+<!--                    </th:block>-->
 
 <!--                    &lt;!&ndash; Message: From Other User (Left aligned) &ndash;&gt;-->
 <!--                    <div th:unless="${msg.senderEmail == currentUserEmail}" class="flex items-end gap-3 max-w-[85%]">-->
@@ -208,6 +216,12 @@
 <!--                        <div th:if="${msg.messageType == 'TEXT'}" class="bg-surface-container-lowest p-4 rounded-xl rounded-bl-none shadow-sm border border-outline-variant/10">-->
 <!--                            <p class="text-xs font-semibold text-primary mb-1" th:text="${msg.senderName}"></p>-->
 <!--                            <p class="text-sm text-on-surface" th:text="${msg.content}"></p>-->
+<!--                        </div>-->
+
+<!--                        &lt;!&ndash; Image Message &ndash;&gt;-->
+<!--                        <div th:if="${msg.messageType == 'IMAGE' and msg.mediaUrl != null}" class="bg-surface-container-lowest p-2 rounded-xl rounded-bl-none shadow-sm border border-outline-variant/10 max-w-sm">-->
+<!--                            <p class="text-xs font-semibold text-primary mb-2 px-2 pt-2" th:text="${msg.senderName}"></p>-->
+<!--                            <img th:src="${msg.mediaUrl}" alt="Shared image" class="w-full h-auto rounded-lg object-cover max-h-96">-->
 <!--                        </div>-->
 
 <!--                        &lt;!&ndash; Spec Proposal Card &ndash;&gt;-->
@@ -288,10 +302,6 @@
 <!--                            </a>-->
 <!--                        </div>-->
 
-<!--                        &lt;!&ndash; Image Attachment &ndash;&gt;-->
-<!--                        <div th:if="${msg.messageType == 'IMAGE'}" class="max-w-sm">-->
-<!--                            <img th:if="${msg.mediaUrl}" th:src="${msg.mediaUrl}" class="rounded-xl shadow-md max-h-64 object-cover" alt="Attached image">-->
-<!--                        </div>-->
 <!--                    </div>-->
 
 <!--                    &lt;!&ndash; Timestamp &ndash;&gt;-->
@@ -1015,6 +1025,10 @@
                         <div th:if="${msg.messageType == 'TEXT'}" class="max-w-[80%] bg-primary text-white p-4 rounded-xl rounded-tr-none shadow-sm">
                             <p class="text-sm" th:text="${msg.content}"></p>
                         </div>
+                        <!-- Image Message (sent by current user) -->
+                        <div th:if="${msg.messageType == 'IMAGE' and msg.mediaUrl != null}" class="max-w-sm bg-primary text-white p-2 rounded-xl rounded-tr-none shadow-sm">
+                            <img th:src="${msg.mediaUrl}" alt="Shared image" class="w-full h-auto rounded-lg object-cover max-h-96">
+                        </div>
                         <!-- Price Quote Card (sent by current user, right aligned) -->
                         <div th:if="${msg.messageType == 'PRICE_QUOTE' and msg.priceQuote != null}"
                              class="bg-white rounded-2xl shadow-md overflow-hidden border border-outline-variant/10 max-w-sm" th:attr="data-quote-id=${msg.priceQuote.quoteId}">
@@ -1227,7 +1241,7 @@
             <div class="flex items-end gap-3">
                 <div class="flex gap-1">
                     <button type="button" class="p-2 hover:bg-surface-container rounded-lg text-on-surface-variant transition-all"><span class="material-symbols-outlined">attach_file</span></button>
-                    <button type="button" class="p-2 hover:bg-surface-container rounded-lg text-on-surface-variant transition-all"><span class="material-symbols-outlined">image</span></button>
+                    <button id="imageBtn" type="button" class="p-2 hover:bg-surface-container rounded-lg text-on-surface-variant transition-all"><span class="material-symbols-outlined">image</span></button>
                     <button type="button" class="p-2 hover:bg-surface-container rounded-lg text-on-surface-variant transition-all"><span class="material-symbols-outlined">mood</span></button>
                 </div>
                 <textarea id="messageInput" class="flex-1 bg-surface-container-low border border-outline-variant/20 rounded-lg text-sm resize-none px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary/30" placeholder="Type a message..." rows="2"></textarea>
@@ -1235,7 +1249,18 @@
                     Send <span class="material-symbols-outlined text-sm">send</span>
                 </button>
             </div>
+            <!-- Upload indicator -->
+            <span id="uploadIndicator" class="hidden text-xs text-on-surface-variant px-2 italic mt-2 block">
+                Uploading image...
+            </span>
         </div>
+
+        <!-- Hidden file input for image upload -->
+        <input type="file"
+               id="imageInput"
+               accept="image/*"
+               class="hidden"
+               onchange="handleImageUpload(this.files[0])">
     </section>
     <!-- Right Side Panel: Order DNA -->
     <aside class="hidden xl:flex flex-col w-80 bg-surface border-l border-outline-variant/15 shrink-0">
@@ -1487,6 +1512,13 @@
                     </div>
                     <span class="text-[10px] text-on-surface-variant">${formatTime(messageResponse.createdAt)}</span>
                 `;
+            } else if (messageResponse.messageType === 'IMAGE' && messageResponse.mediaUrl) {
+                messageContent = `
+                    <div class="max-w-sm bg-primary text-white p-2 rounded-xl rounded-tr-none shadow-sm">
+                        <img src="${escapeHtml(messageResponse.mediaUrl)}" alt="Shared image" class="w-full h-auto rounded-lg object-cover max-h-96">
+                    </div>
+                    <span class="text-[10px] text-on-surface-variant">${formatTime(messageResponse.createdAt)}</span>
+                `;
             } else {
                 messageContent = `
                     <div class="max-w-[80%] bg-primary text-white p-4 rounded-xl rounded-tr-none shadow-sm">
@@ -1503,6 +1535,13 @@
                     <div class="bg-surface-container-lowest p-4 rounded-xl rounded-bl-none shadow-sm border border-outline-variant/10">
                         <p class="text-xs font-semibold text-primary mb-1">${escapeHtml(messageResponse.senderName)}</p>
                         <p class="text-sm text-on-surface">${escapeHtml(messageResponse.content)}</p>
+                    </div>
+                `;
+            } else if (messageResponse.messageType === 'IMAGE' && messageResponse.mediaUrl) {
+                messageDisplay = `
+                    <div class="bg-surface-container-lowest p-2 rounded-xl rounded-bl-none shadow-sm border border-outline-variant/10 max-w-sm">
+                        <p class="text-xs font-semibold text-primary mb-2 px-2 pt-2">${escapeHtml(messageResponse.senderName)}</p>
+                        <img src="${escapeHtml(messageResponse.mediaUrl)}" alt="Shared image" class="w-full h-auto rounded-lg object-cover max-h-96">
                     </div>
                 `;
             } else if (messageResponse.messageType === 'SPEC_PROPOSAL_CARD' && messageResponse.proposalCard) {
@@ -1867,6 +1906,70 @@
         });
     }
 
+    /**
+     * Handles the image upload process:
+     * 1. Validates the file client-side.
+     * 2. Uploads the file to the REST API.
+     * 3. Sends the returned Cloudinary URL via WebSocket (STOMP).
+     */
+    async function handleImageUpload(file) {
+        if (!file) return;
+
+        // Client-side validation
+        if (!file.type.startsWith('image/')) {
+            alert('Only image files are allowed.');
+            return;
+        }
+        if (file.size > 5 * 1024 * 1024) {
+            alert('Image must be smaller than 5MB.');
+            return;
+        }
+
+        const uploadIndicator = document.getElementById('uploadIndicator');
+        if (uploadIndicator) uploadIndicator.classList.remove('hidden');
+
+        try {
+            const formData = new FormData();
+            formData.append('file', file);
+            formData.append('conversationId', conversationId);
+
+            // Step 1: Upload to Cloudinary via REST API
+            const response = await fetch('/api/chat/upload-image', {
+                method: 'POST',
+                body: formData
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                alert('Upload failed: ' + (data.error || 'Unknown error'));
+                return;
+            }
+
+            // Step 2: Send URL as an IMAGE message via WebSocket
+            const chatMessageRequest = {
+                conversationId: conversationId,
+                messageType: 'IMAGE',
+                content: null,
+                mediaUrl: data.url
+            };
+
+            if (stompClient && stompClient.connected) {
+                stompClient.send('/app/chat.send', {}, JSON.stringify(chatMessageRequest));
+            } else {
+                alert('Chat connection lost. Please refresh the page.');
+            }
+
+        } catch (err) {
+            console.error('Image upload error:', err);
+            alert('Upload failed. Please try again.');
+        } finally {
+            if (uploadIndicator) uploadIndicator.classList.add('hidden');
+            const imageInput = document.getElementById('imageInput');
+            if (imageInput) imageInput.value = '';
+        }
+    }
+
     // Event listeners
     document.addEventListener('DOMContentLoaded', function() {
         connect();
@@ -1884,6 +1987,14 @@
         });
         const container = document.getElementById('messagesContainer');
         container.scrollTop = container.scrollHeight;
+
+        // Wire the image button to trigger the hidden file input
+        const imageBtn = document.getElementById('imageBtn');
+        if (imageBtn) {
+            imageBtn.addEventListener('click', function() {
+                document.getElementById('imageInput').click();
+            });
+        }
     });
 
     document.addEventListener('visibilitychange', function() {
