@@ -222,34 +222,27 @@
                             <p class="text-[10px] text-on-surface-variant uppercase" th:text="${#temporals.format(order.createdAt, 'HH:mm')} + ' ' + (${order.createdAt.hour} >= 12 ? 'PM' : 'AM')">00:00 AM</p>
                         </td>
                         <td class="px-6 py-5">
-                            <span th:switch="${order.status}" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider">
+                            <span th:switch="${order.status}">
                                 <!-- Negotiating Status -->
-                                <span th:case="'NEGOTIATING'" class="w-1.5 h-1.5 rounded-full bg-secondary inline-block"></span>
-                                <span th:case="'NEGOTIATING'" class="inline-block bg-secondary-container text-primary">Negotiating</span>
+                                <span th:case="'NEGOTIATING'" th:classappend="'inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-secondary-container text-primary'" class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-secondary inline-block"></span>Negotiating</span>
                                 
                                 <!-- Pending Deposit Status -->
-                                <span th:case="'PENDING_DEPOSIT'" class="w-1.5 h-1.5 rounded-full bg-yellow-600 inline-block"></span>
-                                <span th:case="'PENDING_DEPOSIT'" class="inline-block bg-yellow-100 text-yellow-700">Pending Deposit</span>
+                                <span th:case="'PENDING_DEPOSIT'" th:classappend="'inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-yellow-100 text-yellow-700'" class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-yellow-600 inline-block"></span>Pending Deposit</span>
                                 
                                 <!-- In Production Status -->
-                                <span th:case="'IN_PRODUCTION'" class="w-1.5 h-1.5 rounded-full bg-tertiary inline-block"></span>
-                                <span th:case="'IN_PRODUCTION'" class="inline-block bg-tertiary-fixed text-on-tertiary-fixed-variant">In Production</span>
+                                <span th:case="'IN_PRODUCTION'" th:classappend="'inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-tertiary-fixed text-on-tertiary-fixed-variant'" class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-tertiary inline-block"></span>In Production</span>
                                 
                                 <!-- Pending Approval Status -->
-                                <span th:case="'PENDING_CUSTOMER_APPROVAL'" class="w-1.5 h-1.5 rounded-full bg-blue-600 inline-block"></span>
-                                <span th:case="'PENDING_CUSTOMER_APPROVAL'" class="inline-block bg-blue-100 text-blue-700">Pending Approval</span>
+                                <span th:case="'PENDING_CUSTOMER_APPROVAL'" th:classappend="'inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-blue-100 text-blue-700'" class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-blue-600 inline-block"></span>Pending Approval</span>
                                 
                                 <!-- Ready for Shipping Status -->
-                                <span th:case="'READY_FOR_SHIPPING'" class="w-1.5 h-1.5 rounded-full bg-green-600 inline-block"></span>
-                                <span th:case="'READY_FOR_SHIPPING'" class="inline-block bg-green-100 text-green-700">Ready to Ship</span>
+                                <span th:case="'READY_FOR_SHIPPING'" th:classappend="'inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-green-100 text-green-700'" class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-green-600 inline-block"></span>Ready to Ship</span>
                                 
                                 <!-- Completed Status -->
-                                <span th:case="'DONE'" class="w-1.5 h-1.5 rounded-full bg-outline inline-block"></span>
-                                <span th:case="'DONE'" class="inline-block bg-surface-container-high text-on-surface-variant">Completed</span>
+                                <span th:case="'DONE'" th:classappend="'inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-surface-container-high text-on-surface-variant'" class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-outline inline-block"></span>Completed</span>
                                 
                                 <!-- Draft Status -->
-                                <span th:case="'DRAFT'" class="w-1.5 h-1.5 rounded-full bg-gray-400 inline-block"></span>
-                                <span th:case="'DRAFT'" class="inline-block bg-gray-100 text-gray-700">Draft</span>
+                                <span th:case="'DRAFT'" th:classappend="'inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-gray-100 text-gray-700'" class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-gray-400 inline-block"></span>Draft</span>
                             </span>
                         </td>
                         <td class="px-6 py-5">
@@ -257,18 +250,15 @@
                                 <span class="w-1.5 h-1.5 rounded-full bg-gray-400"></span>
                                 Unpaid
                             </span>
-                            <span th:unless="${order.paymentStatus == null}" th:switch="${order.paymentStatus}" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider">
+                            <span th:unless="${order.paymentStatus == null}" th:switch="${order.paymentStatus}">
                                 <!-- Unpaid Status -->
-                                <span th:case="'UNPAID'" class="w-1.5 h-1.5 rounded-full bg-red-600 inline-block"></span>
-                                <span th:case="'UNPAID'" class="inline-block bg-red-100 text-red-700">Unpaid</span>
+                                <span th:case="'UNPAID'" th:classappend="'inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-red-100 text-red-700'" class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-red-600 inline-block"></span>Unpaid</span>
                                 
                                 <!-- Deposited Status -->
-                                <span th:case="'DEPOSITED'" class="w-1.5 h-1.5 rounded-full bg-yellow-600 inline-block"></span>
-                                <span th:case="'DEPOSITED'" class="inline-block bg-yellow-100 text-yellow-700">Deposit Paid</span>
+                                <span th:case="'DEPOSITED'" th:classappend="'inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-yellow-100 text-yellow-700'" class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-yellow-600 inline-block"></span>Deposit Paid</span>
                                 
                                 <!-- Fully Paid Status -->
-                                <span th:case="'DONE'" class="w-1.5 h-1.5 rounded-full bg-green-600 inline-block"></span>
-                                <span th:case="'DONE'" class="inline-block bg-green-100 text-green-700">Fully Paid</span>
+                                <span th:case="'DONE'" th:classappend="'inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-green-100 text-green-700'" class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-green-600 inline-block"></span>Fully Paid</span>
                             </span>
                         </td>
                         <td class="px-6 py-5 text-right">
@@ -289,7 +279,7 @@
                                     Pay Balance
                                 </a>
                                 <!-- View Details Button -->
-                                <a th:href="@{/orders/{id}(id=${order.orderId})}" class="px-4 py-1.5 bg-surface-container-high hover:bg-primary hover:text-white text-primary text-[11px] font-bold uppercase rounded transition-all active:scale-95">
+                                <a th:href="@{/dashboard/chat/order/{id}(id=${order.orderId})}" class="px-4 py-1.5 bg-surface-container-high hover:bg-primary hover:text-white text-primary text-[11px] font-bold uppercase rounded transition-all active:scale-95">
                                     View
                                 </a>
                             </div>
