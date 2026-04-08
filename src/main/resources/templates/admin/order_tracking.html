@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html class="light" lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Order Tracking - Admin Panel</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              colors: {
+                "surface-bright": "#f8f9fb",
+                "on-tertiary-fixed": "#00201c",
+                "on-tertiary": "#ffffff",
+                "tertiary-container": "#00544b",
+                "on-surface-variant": "#424750",
+                "secondary": "#48626e",
+                "surface-container-low": "#f2f4f6",
+                "on-error-container": "#93000a",
+                "inverse-on-surface": "#eff1f3",
+                "primary-container": "#004b87",
+                "tertiary-fixed": "#8df5e4",
+                "primary": "#003461",
+                "surface": "#f8f9fb",
+                "on-secondary": "#ffffff",
+                "on-tertiary-container": "#63cbbb",
+                "error": "#ba1a1a",
+                "surface-tint": "#27609d",
+                "surface-container": "#eceef0",
+                "outline-variant": "#c2c6d1",
+                "on-background": "#191c1e",
+                "outline": "#727781",
+                "on-primary-fixed-variant": "#004882",
+                "on-surface": "#191c1e",
+                "primary-fixed": "#d3e4ff",
+                "secondary-fixed": "#cbe7f5",
+                "on-primary-fixed": "#001c38",
+                "on-error": "#ffffff",
+                "surface-dim": "#d8dadc",
+                "surface-variant": "#e0e3e5",
+                "primary-fixed-dim": "#a3c9ff",
+                "inverse-surface": "#2d3133",
+                "inverse-primary": "#a3c9ff",
+                "surface-container-lowest": "#ffffff",
+                "on-secondary-fixed": "#021f29",
+                "surface-container-high": "#e6e8ea",
+                "on-primary-container": "#8abcff",
+                "tertiary-fixed-dim": "#70d8c8",
+                "on-tertiary-fixed-variant": "#005048",
+                "on-secondary-fixed-variant": "#304a55",
+                "secondary-fixed-dim": "#afcbd8",
+                "secondary-container": "#cbe7f5",
+                "error-container": "#ffdad6",
+                "background": "#f8f9fb",
+                "surface-container-highest": "#e0e3e5",
+                "on-primary": "#ffffff",
+                "on-secondary-container": "#4e6874",
+                "tertiary": "#003b34"
+              },
+              fontFamily: {
+                "headline": ["Manrope"],
+                "body": ["Inter"],
+                "label": ["Inter"]
+              },
+              borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+            },
+          },
+        }
+    </script>
+    <style>
+        .material-symbols-outlined {
+          font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body { font-family: 'Inter', sans-serif; }
+        h1, h2, h3 { font-family: 'Manrope', sans-serif; }
+        
+        .tracking-step {
+            position: relative;
+            padding-left: 30px;
+        }
+        
+        .tracking-step::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #004b87;
+            border: 2px solid #f8f9fb;
+        }
+        
+        .tracking-step.active::before {
+            background: #003461;
+            box-shadow: 0 0 0 3px #d3e4ff;
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface min-h-screen">
+    <!-- Top Navigation -->
+    <header class="fixed top-0 w-full z-50 bg-[#f8f9fb]/60 backdrop-blur-xl shadow-sm flex items-center justify-between px-6 py-3">
+        <div class="flex items-center gap-8">
+            <span class="text-xl font-extrabold tracking-tighter text-[#003461]">Guangzhou Direct - Admin</span>
+            <nav class="hidden md:flex items-center gap-6 font-manrope text-sm font-semibold tracking-tight">
+                <a class="text-[#424750] hover:text-[#003461] transition-colors" href="/admin/dashboard">Dashboard</a>
+                <a class="text-[#003461] border-b-2 border-[#004b87] pb-1" href="/admin/orders">Orders</a>
+            </nav>
+        </div>
+        <div class="flex items-center gap-4">
+            <button class="p-2 hover:bg-black/5 transition-colors rounded-full">
+                <span class="material-symbols-outlined text-[#003461]">account_circle</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="pt-24 pb-12">
+        <div class="max-w-4xl mx-auto px-6">
+            <!-- Header -->
+            <div class="mb-8">
+                <div class="flex items-center gap-4 mb-4">
+                    <a href="/admin/orders" class="text-[#003461] hover:text-[#004b87]">
+                        <span class="material-symbols-outlined">arrow_back</span>
+                    </a>
+                    <div>
+                        <h1 class="text-3xl font-extrabold tracking-tight text-primary">Order Tracking</h1>
+                        <p class="text-on-surface-variant font-body text-sm" th:text="'Order #' + ${order.orderId}">Order #12345</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-3 gap-6">
+                <!-- Order Info Card -->
+                <div class="col-span-2">
+                    <div class="bg-white rounded-xl shadow-sm border border-outline-variant/15 p-6 mb-6">
+                        <h2 class="text-lg font-bold mb-4 flex items-center gap-2">
+                            <span class="material-symbols-outlined text-primary">info</span>
+                            Order Information
+                        </h2>
+                        <div class="space-y-3">
+                            <div class="flex justify-between">
+                                <span class="text-on-surface-variant">Order ID:</span>
+                                <span class="font-semibold" th:text="'GZ-ORD-' + ${order.orderId}">GZ-ORD-12345</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-on-surface-variant">Status:</span>
+                                <span class="font-semibold" th:text="${order.status}">IN_PRODUCTION</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-on-surface-variant">Payment Status:</span>
+                                <span class="font-semibold" th:text="${order.paymentStatus}">DEPOSITED</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-on-surface-variant">Created:</span>
+                                <span class="font-semibold" th:text="${#dates.format(order.createdAt, 'dd MMM yyyy')}">15 Dec 2024</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tracking History -->
+                    <div class="bg-white rounded-xl shadow-sm border border-outline-variant/15 p-6">
+                        <h2 class="text-lg font-bold mb-6 flex items-center gap-2">
+                            <span class="material-symbols-outlined text-primary">history</span>
+                            Tracking History
+                        </h2>
+
+                        <div th:if="${trackingHistory.isEmpty()}" class="text-center py-8 text-on-surface-variant">
+                            <span class="material-symbols-outlined text-4xl block mb-2">package</span>
+                            <p>No tracking updates yet</p>
+                        </div>
+
+                        <div th:unless="${trackingHistory.isEmpty()}" class="space-y-4">
+                            <div th:each="tracking : ${trackingHistory}" 
+                                 class="tracking-step pb-4 border-b border-outline-variant/15 last:border-b-0">
+                                <div class="flex justify-between items-start mb-2">
+                                    <div>
+                                        <p class="font-semibold text-primary" th:text="${tracking.status}">IN_TRANSIT</p>
+                                        <p class="text-xs text-on-surface-variant" th:text="${#dates.format(tracking.createdAt, 'dd MMM yyyy HH:mm')}">15 Dec 2024 14:30</p>
+                                    </div>
+                                    <span th:if="${tracking.isCurrent}" class="bg-primary-container text-on-primary-container text-xs px-2 py-1 rounded-full">Current</span>
+                                </div>
+                                <p class="text-on-surface-variant text-sm mb-1" th:if="${tracking.location}" th:text="'📍 ' + ${tracking.location}">📍 Guangzhou Warehouse</p>
+                                <p class="text-on-surface text-sm" th:if="${tracking.description}" th:text="${tracking.description}">Package is being processed at warehouse</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Update Form -->
+                <div class="col-span-1">
+                    <div class="bg-white rounded-xl shadow-sm border border-outline-variant/15 p-6 sticky top-24">
+                        <h2 class="text-lg font-bold mb-6 flex items-center gap-2">
+                            <span class="material-symbols-outlined text-primary">edit</span>
+                            Update Tracking
+                        </h2>
+
+                        <form id="trackingForm" class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-semibold mb-2">Status</label>
+                                <select id="statusSelect" class="w-full px-3 py-2 border border-outline-variant rounded-lg focus:outline-none focus:ring-2 focus:ring-primary" required>
+                                    <option value="">Select Status</option>
+                                    <option value="WAITING_FOR_PROCESSING">Waiting for Processing</option>
+                                    <option value="PROCESSING">Processing</option>
+                                    <option value="READY_TO_SHIP">Ready to Ship</option>
+                                    <option value="IN_TRANSIT">In Transit</option>
+                                    <option value="OUT_FOR_DELIVERY">Out for Delivery</option>
+                                    <option value="DELIVERED">Delivered</option>
+                                </select>
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-semibold mb-2">Location</label>
+                                <input type="text" id="locationInput" placeholder="e.g., Guangzhou Warehouse" 
+                                       class="w-full px-3 py-2 border border-outline-variant rounded-lg focus:outline-none focus:ring-2 focus:ring-primary" />
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-semibold mb-2">Description</label>
+                                <textarea id="descriptionInput" placeholder="Add tracking note..." rows="3"
+                                         class="w-full px-3 py-2 border border-outline-variant rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"></textarea>
+                            </div>
+
+                            <button type="submit" class="w-full py-2.5 bg-gradient-to-br from-primary to-primary-container text-white font-semibold rounded-lg hover:shadow-md transition-all active:opacity-90">
+                                Update Tracking
+                            </button>
+                        </form>
+
+                        <!-- Current Status Display -->
+                        <div th:if="*{#lists.any(trackingHistory, t -> t.isCurrent)}" class="mt-6 pt-6 border-t border-outline-variant/15">
+                            <p class="text-xs text-on-surface-variant mb-3">Current Status:</p>
+                            <div th:each="tracking : ${trackingHistory}" th:if="${tracking.isCurrent}">
+                                <div class="bg-surface-container-low p-3 rounded-lg">
+                                    <p class="font-semibold text-sm text-primary" th:text="${tracking.status}">IN_TRANSIT</p>
+                                    <p class="text-xs text-on-surface-variant mt-1" th:text="${tracking.location}">Guangzhou Warehouse</p>
+                                    <p class="text-xs text-on-surface-variant mt-2" th:text="${#dates.format(tracking.createdAt, 'Updated: dd MMM HH:mm')}">Updated: 15 Dec 14:30</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script th:inline="javascript">
+        const form = document.getElementById('trackingForm');
+        const orderId = [[${order.orderId}]];
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const status = document.getElementById('statusSelect').value;
+            const location = document.getElementById('locationInput').value;
+            const description = document.getElementById('descriptionInput').value;
+
+            if (!status) {
+                alert('Please select a status');
+                return;
+            }
+
+            try {
+                const response = await fetch(`/admin/api/tracking/update/` + orderId, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        status: status,
+                        location: location,
+                        description: description
+                    })
+                });
+
+                const result = await response.json();
+                if (result.success) {
+                    alert('Tracking updated successfully!');
+                    location.reload();
+                } else {
+                    alert('Error: ' + result.error);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error updating tracking');
+            }
+        });
+    </script>
+</body>
+</html>

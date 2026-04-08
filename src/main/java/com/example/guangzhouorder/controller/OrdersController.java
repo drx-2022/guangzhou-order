@@ -4,6 +4,7 @@ import com.example.guangzhouorder.dto.OrderSummaryDto;
 import com.example.guangzhouorder.entity.Order;
 import com.example.guangzhouorder.entity.User;
 import com.example.guangzhouorder.repository.OrderRepository;
+import com.example.guangzhouorder.repository.OrderTrackingRepository;
 import com.example.guangzhouorder.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -21,6 +22,7 @@ public class OrdersController {
 
     private final UserService userService;
     private final OrderRepository orderRepository;
+    private final OrderTrackingRepository orderTrackingRepository;
 
     @GetMapping("/orders")
     public String myOrders(@AuthenticationPrincipal UserDetails userDetails, Model model) {
@@ -59,8 +61,12 @@ public class OrdersController {
         Order order = orderRepository.findById(id)
                 .filter(o -> o.getCustomer().getUserId().equals(user.getUserId()))
                 .orElseThrow(() -> new IllegalArgumentException("Order not found"));
+        
+        var trackingHistory = orderTrackingRepository.findByOrderOrderByCreatedAtDesc(order);
+        
         model.addAttribute("user", user);
         model.addAttribute("order", new OrderSummaryDto(order));
+        model.addAttribute("trackingHistory", trackingHistory);
         return "my_orders";
     }
 
