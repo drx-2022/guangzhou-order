@@ -80,6 +80,24 @@ public class DataSeeder implements ApplicationRunner {
                     .role("CUSTOMER")
                     .build();
             userRepository.save(customer2);
+
+            User affiliate = User.builder()
+                    .name("Affiliate 1")
+                    .email("affiliate1@gmail.com")
+                    .hashedPassword("password")
+                    .role("AFFILIATE")
+                    .build();
+            userRepository.save(affiliate);
+        }
+
+        if (!userRepository.existsByEmail("affiliate1@gmail.com")) {
+            User affiliate = User.builder()
+                    .name("Affiliate 1")
+                    .email("affiliate1@gmail.com")
+                    .hashedPassword("password")
+                    .role("AFFILIATE")
+                    .build();
+            userRepository.save(affiliate);
         }
 
         // Seed categories if table is empty

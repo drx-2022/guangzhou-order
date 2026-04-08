@@ -13,6 +13,7 @@ import java.util.List;
 @Repository
 public interface CommissionRepository extends JpaRepository<Commission, Long> {
     List<Commission> findByAffiliate(User affiliate);
+    long countByAffiliate(User affiliate);
 
     @Query("SELECT SUM(c.amount) FROM Commission c WHERE c.affiliate = :affiliate")
     BigDecimal sumAmountByAffiliate(@Param("affiliate") User affiliate);

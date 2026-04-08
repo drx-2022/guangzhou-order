@@ -44,7 +44,7 @@ public class SecurityConfig {
                 .requestMatchers("/ws", "/ws/**").permitAll()
                 .requestMatchers("/payment/webhook").permitAll()
                 .requestMatchers("/customer/dashboard").hasRole("CUSTOMER")
-                .requestMatchers("/affiliate/dashboard").hasRole("AFFILIATE")
+                .requestMatchers("/affiliate/dashboard", "/affiliate/catalog").hasRole("AFFILIATE")
                 .requestMatchers("/admin/dashboard").hasRole("ADMIN")
                 .requestMatchers("/dashboard", "/orders", "/orders/**", "/chat", "/settings", "/settings/**").authenticated()
 

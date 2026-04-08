@@ -8,6 +8,7 @@ guangzhou-order/
 │   │   │               ├── DataSeeder.java
 │   │   │               ├── GuangzhouOrderApplication.java
 │   │   │               ├── config/
+│   │   │               │   ├── CloudinaryConfig.java
 │   │   │               │   ├── RestClientConfig.java
 │   │   │               │   ├── SecurityConfig.java
 │   │   │               │   ├── WebSocketAuthChannelInterceptor.java
@@ -18,6 +19,7 @@ guangzhou-order/
 │   │   │               │   ├── ChatController.java
 │   │   │               │   ├── DashboardController.java
 │   │   │               │   ├── HomeController.java
+│   │   │               │   ├── ImageUploadController.java
 │   │   │               │   ├── OrdersController.java
 │   │   │               │   ├── PaymentController.java
 │   │   │               │   ├── PriceChartController.java
@@ -26,6 +28,7 @@ guangzhou-order/
 │   │   │               │   ├── ProposalCardController.java
 │   │   │               │   └── UserSettingsController.java
 │   │   │               ├── dto/
+│   │   │               │   ├── AffiliateDashboardStatsDto.java
 │   │   │               │   ├── ChangePasswordDTO.java
 │   │   │               │   ├── DashboardStatsDto.java
 │   │   │               │   ├── OrderSummaryDto.java
