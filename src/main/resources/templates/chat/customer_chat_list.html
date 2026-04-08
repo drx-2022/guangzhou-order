@@ -198,7 +198,7 @@ New Request
 <script th:inline="javascript">
     function createNewConversation() {
         fetch('/dashboard/chat/new', {
-            method: 'POST',
+            method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
             }
