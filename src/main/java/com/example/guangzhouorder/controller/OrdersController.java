@@ -6,12 +6,17 @@ import com.example.guangzhouorder.entity.User;
 import com.example.guangzhouorder.repository.OrderRepository;
 import com.example.guangzhouorder.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.server.ResponseStatusException;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -76,5 +81,47 @@ public class OrdersController {
         model.addAttribute("order", new OrderSummaryDto(order));
         model.addAttribute("visualProofUrl", order.getVisualProofUrl());
         return "visual_proof_review";
+    }
+
+    @PostMapping("/orders/{id}/review")
+    public String submitVisualProofDecision(
+            @PathVariable Long id,
+            @RequestParam String action,
+            @RequestParam(required = false) String feedbackText,
+            @AuthenticationPrincipal UserDetails userDetails,
+            RedirectAttributes redirectAttributes) {
+        User user = userService.findByEmail(userDetails.getUsername());
+        Order order = orderRepository.findById(id)
+                .filter(o -> o.getCustomer().getUserId().equals(user.getUserId()))
+                .orElseThrow(() -> new IllegalArgumentException("Order not found"));
+
+        if (!"PENDING_CUSTOMER_APPROVAL".equals(order.getStatus())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Order is not pending approval");
+        }
+
+        if ("APPROVE".equals(action)) {
+            order.setStatus("DONE");
+            orderRepository.save(order);
+            redirectAttributes.addFlashAttribute("successMessage",
+                    "Visual proof approved. Your order is now complete.");
+            return "redirect:/orders";
+        }
+
+        if ("REJECT".equals(action)) {
+            if (feedbackText == null || feedbackText.isBlank()) {
+                redirectAttributes.addFlashAttribute("errorMessage",
+                        "Please provide feedback before rejecting.");
+                return "redirect:/orders/" + id + "/review";
+            }
+
+            order.setStatus("IN_MANUFACTURING");
+            order.setRejectionNote(feedbackText);
+            orderRepository.save(order);
+            redirectAttributes.addFlashAttribute("successMessage",
+                    "Revision request submitted. The admin has been notified.");
+            return "redirect:/orders";
+        }
+
+        return "redirect:/orders/" + id + "/review";
     }
 }

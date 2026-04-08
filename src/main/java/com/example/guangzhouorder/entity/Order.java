@@ -55,6 +55,9 @@ public class Order {
     @Column(name = "visual_proof_url", columnDefinition = "TEXT")
     private String visualProofUrl;
 
+    @Column(name = "rejection_note", columnDefinition = "TEXT")
+    private String rejectionNote;
+
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
