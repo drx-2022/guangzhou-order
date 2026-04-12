@@ -1,9 +1,11 @@
 package com.example.guangzhouorder.controller;
 
 import com.example.guangzhouorder.dto.OrderSummaryDto;
+import com.example.guangzhouorder.dto.OrderTrackingDto;
 import com.example.guangzhouorder.entity.Order;
 import com.example.guangzhouorder.entity.User;
 import com.example.guangzhouorder.repository.OrderRepository;
+import com.example.guangzhouorder.service.OrderTrackingService;
 import com.example.guangzhouorder.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -21,6 +23,7 @@ public class OrdersController {
 
     private final UserService userService;
     private final OrderRepository orderRepository;
+    private final OrderTrackingService orderTrackingService;
 
     @GetMapping("/orders")
     public String myOrders(@AuthenticationPrincipal UserDetails userDetails, Model model) {
@@ -76,5 +79,24 @@ public class OrdersController {
         model.addAttribute("order", new OrderSummaryDto(order));
         model.addAttribute("visualProofUrl", order.getVisualProofUrl());
         return "visual_proof_review";
+    }
+
+    @GetMapping("/orders/{id}/tracking")
+    public String orderTracking(@PathVariable Long id,
+                                @AuthenticationPrincipal UserDetails userDetails,
+                                Model model) {
+        User user = userService.findByEmail(userDetails.getUsername());
+        Order order = orderRepository.findById(id)
+                .filter(o -> o.getCustomer().getUserId().equals(user.getUserId()))
+                .orElseThrow(() -> new IllegalArgumentException("Order not found"));
+        
+        var tracking = orderTrackingService.getOrCreateTracking(id);
+        var milestones = orderTrackingService.getMilestones(tracking.getTrackingId());
+        var trackingDto = new OrderTrackingDto(tracking, milestones);
+        
+        model.addAttribute("user", user);
+        model.addAttribute("order", new OrderSummaryDto(order));
+        model.addAttribute("tracking", trackingDto);
+        return "customer/order_tracking";
     }
 }

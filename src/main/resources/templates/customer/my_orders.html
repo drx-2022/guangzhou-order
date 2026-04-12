@@ -270,6 +270,13 @@
                         </td>
                         <td class="px-6 py-5 text-right">
                             <div class="flex items-center gap-2 justify-end">
+                                <!-- Track Delivery Button -->
+                                <a th:if="${order.status == 'READY_FOR_SHIPPING' || order.status == 'DONE'}" 
+                                   th:href="@{/orders/{id}/tracking(id=${order.orderId})}" 
+                                   class="px-3 py-1.5 bg-tertiary-container hover:bg-tertiary text-white text-[10px] font-bold uppercase rounded transition-all active:scale-95 whitespace-nowrap flex items-center gap-1">
+                                    <span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">local_shipping</span>
+                                    Track
+                                </a>
                                 <!-- Payment Buttons -->
                                 <a th:if="${order.status == 'PENDING_DEPOSIT' && (order.paymentStatus == null || order.paymentStatus == 'UNPAID')}" 
                                    th:href="@{/payment/{id}/deposit(id=${order.orderId})}" 
