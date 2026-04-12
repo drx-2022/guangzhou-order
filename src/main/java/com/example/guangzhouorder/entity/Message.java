@@ -29,7 +29,7 @@ public class Message {
     private Conversation conversation;
 
     /**
-     * Message types: TEXT, SPEC_PROPOSAL_CARD, IMAGE, VIDEO, FILE
+     * Message types: TEXT, SPEC_PROPOSAL_CARD, PRICE_QUOTE, IMAGE, VISUAL_PROOF, VIDEO, FILE
      */
     @Column(name = "message_type", nullable = false)
     private String messageType;

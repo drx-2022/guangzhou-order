@@ -199,6 +199,24 @@
                             <img th:src="${msg.mediaUrl}" alt="Shared image" class="w-full h-auto rounded-lg object-cover max-h-96">
                         </div>
 
+                        <div th:if="${msg.messageType == 'VISUAL_PROOF' and msg.visualProof != null}"
+                             class="bg-white rounded-xl shadow-lg overflow-hidden border border-outline-variant/20 max-w-sm"
+                             th:attr="data-visual-proof-id=${msg.visualProof.visualProofId}">
+                            <div class="bg-primary px-4 py-3 flex items-center justify-between">
+                                <h3 class="font-headline text-white font-bold text-sm">Visual Proof</h3>
+                                <span class="text-[10px] text-primary-fixed-dim font-bold tracking-tighter uppercase"
+                                      th:text="'ID: ' + ${msg.visualProof.visualProofId}"></span>
+                            </div>
+                            <div class="p-3">
+                                <img th:src="${msg.visualProof.imageUrl}" alt="Visual proof image" class="w-full h-auto rounded-lg object-cover max-h-96">
+                                <div class="mt-3" th:attr="id='visual-proof-status-' + ${msg.visualProof.visualProofId}">
+                                    <span th:classappend="${msg.visualProof.status == 'PENDING' ? 'bg-orange-100 text-orange-700' : msg.visualProof.status == 'ACCEPTED' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}"
+                                          class="text-[10px] font-bold px-2.5 py-1 rounded-full"
+                                          th:text="${msg.visualProof.status}"></span>
+                                </div>
+                            </div>
+                        </div>
+
                         <!-- Proposal card sent by admin (right aligned) -->
                         <div th:if="${msg.messageType == 'SPEC_PROPOSAL_CARD' and msg.proposalCard != null}"
                              class="bg-white rounded-xl shadow-lg overflow-hidden border border-outline-variant/20 max-w-md" th:attr="data-proposal-id=${msg.proposalCard.proposalCardId}">
@@ -427,6 +445,24 @@
                             <div th:if="${msg.messageType == 'IMAGE'}" class="max-w-sm">
                                 <img th:if="${msg.mediaUrl}" th:src="${msg.mediaUrl}" class="rounded-xl shadow-md max-h-64 object-cover" alt="Attached image">
                             </div>
+
+                            <div th:if="${msg.messageType == 'VISUAL_PROOF' and msg.visualProof != null}"
+                                 class="bg-white rounded-xl shadow-lg overflow-hidden border border-outline-variant/20 max-w-sm"
+                                 th:attr="data-visual-proof-id=${msg.visualProof.visualProofId}">
+                                <div class="bg-primary px-4 py-3 flex items-center justify-between">
+                                    <h3 class="font-headline text-white font-bold text-sm">Visual Proof</h3>
+                                    <span class="text-[10px] text-primary-fixed-dim font-bold tracking-tighter uppercase"
+                                          th:text="'ID: ' + ${msg.visualProof.visualProofId}"></span>
+                                </div>
+                                <div class="p-3">
+                                    <img th:src="${msg.visualProof.imageUrl}" alt="Visual proof image" class="w-full h-auto rounded-lg object-cover max-h-96">
+                                    <div class="mt-3" th:attr="id='visual-proof-status-' + ${msg.visualProof.visualProofId}">
+                                        <span th:classappend="${msg.visualProof.status == 'PENDING' ? 'bg-orange-100 text-orange-700' : msg.visualProof.status == 'ACCEPTED' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}"
+                                              class="text-[10px] font-bold px-2.5 py-1 rounded-full"
+                                              th:text="${msg.visualProof.status}"></span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -444,6 +480,7 @@
                     <div class="flex gap-1">
                         <button type="button" class="p-2 hover:bg-white rounded-xl text-on-surface-variant transition-all"><span class="material-symbols-outlined">attach_file</span></button>
                         <button id="imageBtn" type="button" class="p-2 hover:bg-white rounded-xl text-on-surface-variant transition-all"><span class="material-symbols-outlined">image</span></button>
+                        <button id="visualProofBtn" type="button" class="p-2 hover:bg-white rounded-xl text-on-surface-variant transition-all" title="Send Visual Proof"><span class="material-symbols-outlined">verified</span></button>
                     </div>
                     <button id="sendBtn" type="button" class="bg-primary text-white p-2 px-6 rounded-xl font-headline font-bold text-sm flex items-center gap-2 active:scale-95 transition-all">
                         Send <span class="material-symbols-outlined text-sm">send</span>
@@ -462,6 +499,12 @@
                accept="image/*"
                class="hidden"
                onchange="handleImageUpload(this.files[0])">
+
+            <input type="file"
+                   id="visualProofInput"
+                   accept="image/*"
+                   class="hidden"
+                   onchange="handleVisualProofUpload(this.files[0])">
     </section>
 
     <!-- Proposal Modal -->
@@ -579,6 +622,8 @@
                         updateProposalCardStatus(data.proposalCardId, data.status, data.resultOrderId);
                     } else if (data.eventType === 'PRICE_QUOTE_UPDATE') {
                         updateQuoteStatusFromWS(data.quoteId, data.status);
+                    } else if (data.eventType === 'VISUAL_PROOF_STATUS_UPDATE') {
+                        updateVisualProofStatusFromWS(data.visualProofId, data.status);
                     } else {
                         displayReceivedMessage(data);
                     }
@@ -651,6 +696,18 @@
         if (actionsEl) actionsEl.remove();
     }
 
+    function updateVisualProofStatusFromWS(visualProofId, newStatus) {
+        const statusEl = document.getElementById('visual-proof-status-' + visualProofId);
+        if (!statusEl) return;
+        const badge = statusEl.querySelector('.rounded-full');
+        if (!badge) return;
+        badge.textContent = newStatus;
+        badge.className = 'text-[10px] font-bold px-2.5 py-1 rounded-full ' +
+            (newStatus === 'ACCEPTED' ? 'bg-green-100 text-green-700' :
+             newStatus === 'DECLINED' ? 'bg-red-100 text-red-700' :
+             'bg-orange-100 text-orange-700');
+    }
+
     // Accept quote (admin accepting customer's quote)
     function acceptQuote(button) {
         const quoteId = button.getAttribute('data-quote-id');
@@ -696,6 +753,18 @@
                 messageContent = buildProposalCardHtml(card, messageResponse.createdAt);
             } else if (messageResponse.messageType === 'PRICE_QUOTE' && messageResponse.priceQuote) {
                 messageContent = buildPriceQuoteHtml(messageResponse.priceQuote, messageResponse.createdAt, true);
+            } else if (messageResponse.messageType === 'VISUAL_PROOF' && messageResponse.visualProof) {
+                messageContent = `
+                    ${buildVisualProofHtml(messageResponse.visualProof)}
+                    <span class="text-[10px] text-on-surface-variant">${formatTime(messageResponse.createdAt)}</span>
+                `;
+            } else if (messageResponse.messageType === 'IMAGE' && messageResponse.mediaUrl) {
+                messageContent = `
+                    <div class="max-w-sm bg-primary text-white p-2 rounded-xl rounded-tr-none shadow-sm">
+                        <img src="${escapeHtml(messageResponse.mediaUrl)}" alt="Shared image" class="w-full h-auto rounded-lg object-cover max-h-96">
+                    </div>
+                    <span class="text-[10px] text-on-surface-variant">${formatTime(messageResponse.createdAt)}</span>
+                `;
             } else {
                 messageContent = `
                     <div class="max-w-[80%] bg-primary text-white p-4 rounded-xl rounded-tr-none shadow-sm">
@@ -741,6 +810,8 @@
                         <img src="${escapeHtml(messageResponse.mediaUrl)}" class="rounded-xl shadow-md max-h-64 object-cover" alt="Attached image">
                     </div>
                 `;
+            } else if (messageResponse.messageType === 'VISUAL_PROOF' && messageResponse.visualProof) {
+                messageDisplay = buildVisualProofHtml(messageResponse.visualProof);
             }
 
             messageContent = `
@@ -886,6 +957,26 @@
         return html;
     }
 
+    function buildVisualProofHtml(visualProof) {
+        const statusClass = visualProof.status === 'ACCEPTED' ? 'bg-green-100 text-green-700' :
+            visualProof.status === 'DECLINED' ? 'bg-red-100 text-red-700' :
+            'bg-orange-100 text-orange-700';
+        return `
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-outline-variant/20 max-w-sm" data-visual-proof-id="${visualProof.visualProofId}">
+                <div class="bg-primary px-4 py-3 flex items-center justify-between">
+                    <h3 class="font-headline text-white font-bold text-sm">Visual Proof</h3>
+                    <span class="text-[10px] text-primary-fixed-dim font-bold tracking-tighter uppercase">ID: ${visualProof.visualProofId}</span>
+                </div>
+                <div class="p-3">
+                    <img src="${escapeHtml(visualProof.imageUrl)}" alt="Visual proof image" class="w-full h-auto rounded-lg object-cover max-h-96">
+                    <div class="mt-3" id="visual-proof-status-${visualProof.visualProofId}">
+                        <span class="text-[10px] font-bold px-2.5 py-1 rounded-full ${statusClass}">${visualProof.status}</span>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
     // Send message
     function sendMessage() {
         const input = document.getElementById('messageInput');
@@ -1010,6 +1101,56 @@
         }
     }
 
+    async function handleVisualProofUpload(file) {
+        if (!file) return;
+        if (!file.type.startsWith('image/')) {
+            alert('Only image files are allowed.');
+            return;
+        }
+        if (file.size > 5 * 1024 * 1024) {
+            alert('Image must be smaller than 5MB.');
+            return;
+        }
+
+        const uploadIndicator = document.getElementById('uploadIndicator');
+        if (uploadIndicator) uploadIndicator.classList.remove('hidden');
+
+        try {
+            const formData = new FormData();
+            formData.append('file', file);
+            formData.append('conversationId', conversationId);
+
+            const uploadResponse = await fetch('/api/chat/upload-image', {
+                method: 'POST',
+                body: formData
+            });
+
+            const uploadData = await uploadResponse.json().catch(() => ({}));
+            if (!uploadResponse.ok) {
+                alert('Upload failed: ' + (uploadData.error || 'Unknown error'));
+                return;
+            }
+
+            const sendResponse = await fetch('/admin/chat/' + conversationId + '/visual-proof/send', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ imageUrl: uploadData.url })
+            });
+
+            if (!sendResponse.ok) {
+                const sendData = await sendResponse.json().catch(() => ({}));
+                alert('Failed to send visual proof: ' + (sendData.error || 'Unknown error'));
+            }
+        } catch (err) {
+            console.error('Visual proof upload error:', err);
+            alert('Failed to send visual proof. Please try again.');
+        } finally {
+            if (uploadIndicator) uploadIndicator.classList.add('hidden');
+            const visualProofInput = document.getElementById('visualProofInput');
+            if (visualProofInput) visualProofInput.value = '';
+        }
+    }
+
     document.addEventListener('DOMContentLoaded', function() {
         connect();
 
@@ -1036,6 +1177,13 @@
         if (imageBtn) {
             imageBtn.addEventListener('click', function() {
                 document.getElementById('imageInput').click();
+            });
+        }
+
+        const visualProofBtn = document.getElementById('visualProofBtn');
+        if (visualProofBtn) {
+            visualProofBtn.addEventListener('click', function() {
+                document.getElementById('visualProofInput').click();
             });
         }
 

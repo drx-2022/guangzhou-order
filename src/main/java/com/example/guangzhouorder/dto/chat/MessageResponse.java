@@ -34,6 +34,7 @@ public class MessageResponse {
 
     private SpecProposalCardResponse proposalCard;
     private PriceQuoteResponse priceQuote;
+    private VisualProofResponse visualProof;
 
     public static MessageResponse from(Message message) {
         return MessageResponse.builder()
