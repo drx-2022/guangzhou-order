@@ -53,6 +53,7 @@ public class ChatService {
             UserRepository userRepository,
             ProductCardRepository productCardRepository,
             SpecProposalCardRepository specProposalCardRepository,
+            VisualProofRepository visualProofRepository,
             PriceQuoteRepository priceQuoteRepository,
             ObjectMapper objectMapper,
             @Lazy ProposalService proposalService
@@ -63,6 +64,7 @@ public class ChatService {
         this.userRepository = userRepository;
         this.productCardRepository = productCardRepository;
         this.specProposalCardRepository = specProposalCardRepository;
+        this.visualProofRepository = visualProofRepository;
         this.priceQuoteRepository = priceQuoteRepository;
         this.objectMapper = objectMapper;
         this.proposalService = proposalService;
