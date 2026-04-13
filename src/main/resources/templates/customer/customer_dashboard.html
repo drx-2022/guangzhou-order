@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 
 <html class="light" lang="en" xmlns:th="http://www.thymeleaf.org"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Guangzhou Direct - Dashboard</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Guangzhou Direct - Bảng Điều Khiển</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+    <script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
             theme: {
@@ -71,7 +71,7 @@
             },
         }
     </script>
-<style>
+    <style>
         .material-symbols-outlined {
             font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
         }
@@ -86,339 +86,338 @@
 <body class="bg-surface font-body text-on-surface">
 <!-- Top Navigation Bar -->
 <header class="fixed top-0 w-full z-50 bg-[#f8f9fb]/80 backdrop-blur-xl shadow-sm">
-<div class="flex justify-between items-center px-6 py-3 w-full max-w-screen-2xl mx-auto">
-<div class="flex items-center gap-8">
-<a th:href="@{/}" class="text-xl font-black text-[#003461] tracking-tighter font-headline no-underline">Guangzhou Direct</a>
-<nav class="hidden md:flex items-center space-x-6 font-headline font-bold tracking-tight">
-<a class="text-[#424750] hover:text-[#004B87] transition-colors" href="#">Trends</a>
-<a class="text-[#424750] hover:text-[#004B87] transition-colors" href="#">Sourcing</a>
-<a class="text-[#004B87] border-b-2 border-[#004B87] pb-1" href="#">Orders</a>
-<a class="text-[#424750] hover:text-[#004B87] transition-colors" href="#">Support</a>
-</nav>
-</div>
-<div class="flex items-center space-x-4">
-<button class="p-2 hover:bg-[#f2f4f6]/50 rounded-full transition-colors relative">
-<span class="material-symbols-outlined text-on-surface-variant">notifications</span>
-<span class="absolute top-2 right-2 w-2 h-2 bg-error rounded-full"></span>
-</button>
-<div class="flex items-center space-x-3 pl-4 border-l border-outline-variant/30">
-<div id="openSettingsBtn"
-     class="flex items-center gap-2 px-3 py-1.5 bg-surface-container rounded-lg cursor-pointer hover:bg-surface-container-high transition-all">
-    <span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">account_circle</span>
-    <div class="hidden sm:block">
-        <p class="font-headline font-bold text-xs text-primary" th:text="${currentUser.name}">Username</p>
-        <p class="font-label text-[10px] text-on-surface-variant" th:text="'ID: GZ-' + ${currentUser.userId}">ID</p>
+    <div class="flex justify-between items-center px-6 py-3 w-full max-w-screen-2xl mx-auto">
+        <div class="flex items-center gap-8">
+            <a th:href="@{/}" class="text-xl font-black text-[#003461] tracking-tighter font-headline no-underline">Guangzhou Direct</a>
+            <nav class="hidden md:flex items-center space-x-6 font-headline font-bold tracking-tight">
+                <a class="text-[#424750] hover:text-[#004B87] transition-colors" href="#">Xu Hướng</a>
+                <a class="text-[#004B87] border-b-2 border-[#004B87] pb-1" href="#">Đơn Hàng</a>
+                <a class="text-[#424750] hover:text-[#004B87] transition-colors" href="#">Hỗ Trợ</a>
+            </nav>
+        </div>
+        <div class="flex items-center space-x-4">
+            <button class="p-2 hover:bg-[#f2f4f6]/50 rounded-full transition-colors relative">
+                <span class="material-symbols-outlined text-on-surface-variant">notifications</span>
+                <span class="absolute top-2 right-2 w-2 h-2 bg-error rounded-full"></span>
+            </button>
+            <div class="flex items-center space-x-3 pl-4 border-l border-outline-variant/30">
+                <div id="openSettingsBtn"
+                     class="flex items-center gap-2 px-3 py-1.5 bg-surface-container rounded-lg cursor-pointer hover:bg-surface-container-high transition-all">
+                    <span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">account_circle</span>
+                    <div class="hidden sm:block">
+                        <p class="font-headline font-bold text-xs text-primary" th:text="${currentUser.name}">Username</p>
+                        <p class="font-label text-[10px] text-on-surface-variant" th:text="'ID: GZ-' + ${currentUser.userId}">ID</p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
-</div>
-</div>
-</div>
 </header>
 <div class="flex min-h-screen pt-16 pb-20 lg:pb-0">
-<!-- Side Navigation Bar -->
-<aside class="hidden lg:flex flex-col py-6 space-y-2 h-screen w-64 fixed left-0 bg-[#ffffff] border-r-0 font-['Manrope'] text-sm font-semibold">
-<div class="px-6 mb-8">
-<div class="flex items-center space-x-3 p-3 bg-surface-container-low rounded-xl">
-<div class="w-10 h-10 rounded-lg bg-primary-fixed flex items-center justify-center">
-<span class="material-symbols-outlined text-primary">analytics</span>
-</div>
-<div>
-<p class="text-xs font-bold text-primary leading-tight">Admin Console</p>
-<p class="text-[10px] text-on-surface-variant">Premium Edition</p>
-</div>
-</div>
-</div>
-<nav class="flex-1 space-y-1">
-<a class="flex items-center space-x-3 py-3 px-4 bg-[#cbe7f5] text-[#003461] rounded-lg mx-2 transition-all" th:href="@{/dashboard}">
-<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
-<span>Dashboard</span>
-</a>
-<a class="flex items-center space-x-3 py-3 px-4 text-[#424750] hover:bg-[#f2f4f6] mx-2 rounded-lg transition-all" th:href="@{/catalog}">
-<span class="material-symbols-outlined" data-icon="monitoring">monitoring</span>
-<span>Markets</span>
-</a>
-<a class="flex items-center space-x-3 py-3 px-4 text-[#424750] hover:bg-[#f2f4f6] mx-2 rounded-lg transition-all" th:href="@{/orders}">
-<span class="material-symbols-outlined" data-icon="receipt_long">receipt_long</span>
-<span>Transactions</span>
-</a>
-<a class="flex items-center space-x-3 py-3 px-4 text-[#424750] hover:bg-[#f2f4f6] mx-2 rounded-lg transition-all" href="/dashboard/chat">
-<span class="material-symbols-outlined" data-icon="chat_bubble">chat_bubble</span>
-<span>Messages</span>
-</a>
-<a class="flex items-center space-x-3 py-3 px-4 text-[#424750] hover:bg-[#f2f4f6] mx-2 rounded-lg transition-all" href="#" id="sidebarSettingsBtn">
-<span class="material-symbols-outlined" data-icon="settings">settings</span>
-<span>Settings</span>
-</a>
-</nav>
-<div class="px-4 mt-auto space-y-2">
-<a th:href="@{dashboard/chat}" class="w-full bg-primary-gradient text-white py-3 rounded-xl font-headline font-bold text-xs uppercase tracking-wider flex items-center justify-center space-x-2 shadow-lg shadow-primary/20 active:scale-95 transition-all">
-<span class="material-symbols-outlined text-sm">add_circle</span>
-<span>Create New Request</span>
-</a>
-</div>
-</aside>
-<!-- Main Content Area -->
-<main class="flex-1 lg:ml-64 p-6 md:p-10 max-w-7xl mx-auto w-full">
-<!-- Header Section -->
-<section class="mb-10 flex flex-col md:flex-row md:items-end justify-between gap-6">
-<div>
-<div th:if="${settingsSuccess}" class="mb-4 p-4 bg-tertiary-fixed rounded-lg">
-    <p class="text-tertiary text-sm font-medium" th:text="${settingsSuccess}"></p>
-</div>
-<h1 class="text-3xl md:text-4xl font-black text-primary font-headline tracking-tighter mb-2" th:text="'Welcome back, ' + ${user.name}">Welcome back</h1>
-<p class="text-on-surface-variant font-medium">Track your Guangzhou sourcing progress for today.</p>
-</div>
-<div class="flex items-center gap-3">
-<a th:href="@{/orders}" class="px-6 py-2.5 bg-surface-container-lowest text-primary font-bold rounded-lg border border-outline-variant/20 hover:bg-surface-container-low transition-colors flex items-center gap-2">
-<span class="material-symbols-outlined text-lg">download</span>
-<span>Export Report</span>
-</a>
-<a th:href="@{/chat}" class="px-6 py-2.5 bg-primary-gradient text-white font-bold rounded-lg flex items-center gap-2 shadow-lg shadow-primary/20">
-<span class="material-symbols-outlined text-lg" style="font-variation-settings: 'FILL' 1;">support_agent</span>
-<span>Contact Specialist</span>
-</a>
-</div>
-</section>
-<!-- Bento Grid: Order Overview -->
-<section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-<!-- Card 1 -->
-<div class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant/10 group hover:border-primary/20 transition-all">
-<div class="flex justify-between items-start mb-4">
-<div class="p-3 bg-secondary-container rounded-lg text-primary">
-<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">handshake</span>
-</div>
-<span class="text-3xl font-black text-primary font-headline" th:text="${stats.negotiating}">0</span>
-</div>
-<h3 class="font-headline font-bold text-on-surface-variant mb-1">Negotiating</h3>
-<p class="text-xs text-on-surface-variant/70">Quote response required</p>
-</div>
-<!-- Card 2 -->
-<div class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant/10 group hover:border-primary/20 transition-all">
-<div class="flex justify-between items-start mb-4">
-<div class="p-3 bg-tertiary-fixed text-tertiary">
-<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">factory</span>
-</div>
-<span class="text-3xl font-black text-primary font-headline" th:text="${stats.inProduction}">0</span>
-</div>
-<h3 class="font-headline font-bold text-on-surface-variant mb-1">In Production</h3>
-<p class="text-xs text-on-surface-variant/70">On schedule</p>
-</div>
-<!-- Card 3 -->
-<div class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant/10 group hover:border-primary/20 transition-all">
-<div class="flex justify-between items-start mb-4">
-<div class="p-3 bg-[#fff4e5] text-[#b45d00] rounded-lg">
-<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">camera_enhance</span>
-</div>
-<span class="text-3xl font-black text-primary font-headline" th:text="${stats.pendingApproval}">0</span>
-</div>
-<h3 class="font-headline font-bold text-on-surface-variant mb-1">Pending Approval</h3>
-<p class="text-xs text-[#b45d00] font-bold" th:classappend="${stats.pendingApproval > 0} ? '' : 'hidden'">Action required</p>
-<p class="text-xs text-on-surface-variant/70" th:classappend="${stats.pendingApproval == 0} ? '' : 'hidden'">No items pending</p>
-</div>
-<!-- Card 4 -->
-<div class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant/10 group hover:border-primary/20 transition-all">
-<div class="flex justify-between items-start mb-4">
-<div class="p-3 bg-primary-fixed text-primary rounded-lg">
-<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">task_alt</span>
-</div>
-<span class="text-3xl font-black text-primary font-headline" th:text="${stats.completed}">0</span>
-</div>
-<h3 class="font-headline font-bold text-on-surface-variant mb-1">Completed</h3>
-<p class="text-xs text-on-surface-variant/70">Total completed orders</p>
-</div>
-</section>
-<!-- Main Layout Split -->
-<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-<!-- Production Roadmap (2/3 width) -->
-<div class="lg:col-span-2">
-<div class="flex items-center justify-between mb-6">
-<h2 class="text-xl font-black text-primary font-headline tracking-tight">Production Roadmap</h2>
-<a class="text-sm font-bold text-primary-container hover:underline" th:href="@{/orders}">View all orders</a>
-</div>
-<div class="space-y-4">
-<!-- Empty state -->
-<div th:if="${activeOrders.isEmpty()}" class="bg-surface-container-lowest p-8 rounded-xl border border-outline-variant/10 text-center">
-<span class="material-symbols-outlined text-4xl text-outline mb-3 block">inventory_2</span>
-<p class="font-headline font-bold text-on-surface-variant mb-1">No active orders</p>
-<p class="text-xs text-on-surface-variant/70">Your active orders will appear here once created.</p>
-<a th:href="@{/dashboard/chat}" class="inline-flex items-center gap-2 mt-4 px-4 py-2 bg-primary-gradient text-white text-xs font-bold rounded-lg">
-<span class="material-symbols-outlined text-sm">add_circle</span>Create New Request
-</a>
-</div>
-<!-- Dynamic order cards -->
-<div th:each="o : ${activeOrders}" class="bg-surface-container-lowest p-5 rounded-xl border border-outline-variant/10 flex flex-col md:flex-row gap-6">
-<div class="w-24 h-24 rounded-lg bg-surface-container flex items-center justify-center shrink-0">
-<span class="material-symbols-outlined text-4xl text-outline">inventory_2</span>
-</div>
-<div class="flex-1 space-y-3">
-<div class="flex justify-between items-start">
-<div>
-<h4 class="font-headline font-extrabold text-primary" th:text="${o.displayId + ' • ' + o.name}">GZ-ORD-0000</h4>
-<p class="text-xs text-on-surface-variant" th:text="'Status: ' + ${o.statusLabel}">Status</p>
-</div>
-<span class="px-2 py-1 bg-tertiary-fixed text-[10px] font-black uppercase tracking-tighter rounded" th:text="${o.statusLabel}">Active</span>
-</div>
-<div class="space-y-1.5">
-<div class="flex justify-between text-[10px] font-bold text-on-surface-variant">
-<span th:text="'Progress: ' + ${o.progressPercent} + '%'">Progress: 0%</span>
-<span th:text="${o.progressPercent} + '%'">0%</span>
-</div>
-<div class="w-full h-2 bg-surface-container rounded-full overflow-hidden">
-<div class="h-full bg-primary-gradient" th:style="'width: ' + ${o.progressPercent} + '%'"></div>
-</div>
-</div>
-<div class="flex items-center gap-4 pt-1">
-<a th:href="@{/orders/{id}(id=${o.orderId})}" class="flex items-center gap-1 text-[10px] font-bold text-primary-container hover:underline">
-<span class="material-symbols-outlined text-sm">open_in_new</span>
-View Order
-</a>
-<a th:if="${o.status == 'PENDING_CUSTOMER_APPROVAL'}" th:href="@{/orders/{id}/review(id=${o.orderId})}" class="flex items-center gap-1 text-[10px] font-bold text-[#b45d00] hover:underline">
-<span class="material-symbols-outlined text-sm">camera_enhance</span>
-Approve Visual Proof
-</a>
-<a th:if="${o.status == 'Pending Deposit'}" th:href="@{/payment/{id}/deposit(id=${o.orderId})}" class="flex items-center gap-1 text-[10px] font-bold text-tertiary-container hover:underline">
-<span class="material-symbols-outlined text-sm">payments</span>
-Pay Deposit
-</a>
-<a th:if="${o.paymentStatus == 'DEPOSITED'}" th:href="@{/payment/{id}/balance(id=${o.orderId})}" class="flex items-center gap-1 text-[10px] font-bold text-tertiary-container hover:underline">
-<span class="material-symbols-outlined text-sm">payments</span>
-Pay Balance
-</a>
-</div>
-</div>
-</div>
-</div>
-</div>
-<!-- Latest Notifications (1/3 width) -->
-<div>
-<h2 class="text-xl font-black text-primary font-headline tracking-tight mb-6">Latest Updates</h2>
-<div class="bg-surface-container-low rounded-2xl p-6 space-y-6">
-<!-- Dynamic: orders awaiting visual proof approval -->
-<div th:each="o, iter : ${pendingOrders}">
-<div class="flex gap-4 group">
-<div class="shrink-0 w-10 h-10 rounded-full bg-[#fff4e5] flex items-center justify-center text-[#b45d00] group-hover:scale-110 transition-transform">
-<span class="material-symbols-outlined text-xl">camera_enhance</span>
-</div>
-<div class="space-y-1">
-<div class="flex justify-between items-center">
-<p class="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">Photo QC</p>
-<span class="text-[10px] text-on-surface-variant/60">Action required</span>
-</div>
-<h5 class="text-sm font-bold text-primary font-headline" th:text="'Visual proof ready for ' + ${o.displayId}">Order ready</h5>
-<p class="text-xs text-on-surface-variant leading-relaxed" th:text="${o.name}">Product name</p>
-<a th:href="@{/orders/{id}/review(id=${o.orderId})}" class="text-xs font-black text-primary-container pt-2 flex items-center gap-1">
-Approve now <span class="material-symbols-outlined text-sm">chevron_right</span>
-</a>
-</div>
-</div>
-<div class="h-px bg-outline-variant/15" th:if="${!iter.last or !pendingOrders.isEmpty()}"></div>
-</div>
-<!-- Empty state for pending approvals -->
-<div th:if="${pendingOrders.isEmpty()}" class="flex gap-4 group cursor-pointer">
-<div class="shrink-0 w-10 h-10 rounded-full bg-primary-fixed flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
-<span class="material-symbols-outlined text-xl">task_alt</span>
-</div>
-<div class="space-y-1">
-<p class="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">All Clear</p>
-<h5 class="text-sm font-bold text-primary font-headline">No items need approval</h5>
-<p class="text-xs text-on-surface-variant leading-relaxed">You're all caught up. New updates will appear here.</p>
-</div>
-</div>
-<!-- Divider -->
-<div class="h-px bg-outline-variant/15" th:if="${pendingOrders.isEmpty()}"></div>
-<!-- Static: Negotiating orders notification -->
-<div class="flex gap-4 group cursor-pointer">
-<div class="shrink-0 w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
-<span class="material-symbols-outlined text-xl">handshake</span>
-</div>
-<div class="space-y-1">
-<div class="flex justify-between items-center">
-<p class="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">Negotiating</p>
-<span class="text-[10px] text-on-surface-variant/60" th:text="${stats.negotiating} + ' orders'">0 orders</span>
-</div>
-<h5 class="text-sm font-bold text-primary font-headline" th:text="${stats.negotiating} + ' order(s) awaiting quote response'">Orders in negotiation</h5>
-<a th:href="@{/orders}" class="text-xs font-black text-primary-container pt-2 flex items-center gap-1">
-View orders <span class="material-symbols-outlined text-sm">chevron_right</span>
-</a>
-</div>
-</div>
-<!-- Divider -->
-<div class="h-px bg-outline-variant/15"></div>
-<!-- Static: Community Catalog -->
-<div class="flex gap-4 group cursor-pointer">
-<div class="shrink-0 w-10 h-10 rounded-full bg-tertiary-fixed flex items-center justify-center text-tertiary group-hover:scale-110 transition-transform">
-<span class="material-symbols-outlined text-xl">storefront</span>
-</div>
-<div class="space-y-1">
-<div class="flex justify-between items-center">
-<p class="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">Catalog</p>
-</div>
-<h5 class="text-sm font-bold text-primary font-headline">Browse the Community Catalog</h5>
-<p class="text-xs text-on-surface-variant leading-relaxed">Find proven product configurations and clone them into a new request.</p>
-<a th:href="@{/catalog}" class="text-xs font-black text-primary-container pt-2 flex items-center gap-1">
-Explore now <span class="material-symbols-outlined text-sm">chevron_right</span>
-</a>
-</div>
-</div>
-</div>
-</div>
-</div>
-</main>
+    <!-- Side Navigation Bar -->
+    <aside class="hidden lg:flex flex-col py-6 space-y-2 h-screen w-64 fixed left-0 bg-[#ffffff] border-r-0 font-['Manrope'] text-sm font-semibold">
+        <div class="px-6 mb-8">
+            <div class="flex items-center space-x-3 p-3 bg-surface-container-low rounded-xl">
+                <div class="w-10 h-10 rounded-lg bg-primary-fixed flex items-center justify-center">
+                    <span class="material-symbols-outlined text-primary">analytics</span>
+                </div>
+                <div>
+                    <p class="text-xs font-bold text-primary leading-tight">Bảng Điều Khiển</p>
+                    <p class="text-[10px] text-on-surface-variant">Phiên Bản Cao Cấp</p>
+                </div>
+            </div>
+        </div>
+        <nav class="flex-1 space-y-1">
+            <a class="flex items-center space-x-3 py-3 px-4 bg-[#cbe7f5] text-[#003461] rounded-lg mx-2 transition-all" th:href="@{/customer/dashboard}">
+                <span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+                <span>Bảng Điều Khiển</span>
+            </a>
+            <a class="flex items-center space-x-3 py-3 px-4 text-[#424750] hover:bg-[#f2f4f6] mx-2 rounded-lg transition-all" th:href="@{/catalog}">
+                <span class="material-symbols-outlined" data-icon="monitoring">monitoring</span>
+                <span>Thị Trường</span>
+            </a>
+            <a class="flex items-center space-x-3 py-3 px-4 text-[#424750] hover:bg-[#f2f4f6] mx-2 rounded-lg transition-all" th:href="@{/orders}">
+                <span class="material-symbols-outlined" data-icon="receipt_long">receipt_long</span>
+                <span>Giao Dịch</span>
+            </a>
+            <a class="flex items-center space-x-3 py-3 px-4 text-[#424750] hover:bg-[#f2f4f6] mx-2 rounded-lg transition-all" href="/dashboard/chat">
+                <span class="material-symbols-outlined" data-icon="chat_bubble">chat_bubble</span>
+                <span>Tin Nhắn</span>
+            </a>
+            <a class="flex items-center space-x-3 py-3 px-4 text-[#424750] hover:bg-[#f2f4f6] mx-2 rounded-lg transition-all" href="/settings" id="sidebarSettingsBtn">
+                <span class="material-symbols-outlined" data-icon="settings">settings</span>
+                <span>Cài Đặt</span>
+            </a>
+        </nav>
+        <div class="px-4 mt-auto space-y-2">
+            <a th:href="@{dashboard/chat}" class="w-full bg-primary-gradient text-white py-3 rounded-xl font-headline font-bold text-xs uppercase tracking-wider flex items-center justify-center space-x-2 shadow-lg shadow-primary/20 active:scale-95 transition-all">
+                <span class="material-symbols-outlined text-sm">add_circle</span>
+                <span>Tạo Yêu Cầu Mới</span>
+            </a>
+        </div>
+    </aside>
+    <!-- Main Content Area -->
+    <main class="flex-1 lg:ml-64 p-6 md:p-10 max-w-7xl mx-auto w-full">
+        <!-- Header Section -->
+        <section class="mb-10 flex flex-col md:flex-row md:items-end justify-between gap-6">
+            <div>
+                <div th:if="${settingsSuccess}" class="mb-4 p-4 bg-tertiary-fixed rounded-lg">
+                    <p class="text-tertiary text-sm font-medium" th:text="${settingsSuccess}"></p>
+                </div>
+                <h1 class="text-3xl md:text-4xl font-black text-primary font-headline tracking-tighter mb-2" th:text="'Chào mừng trở lại, ' + ${user.name}">Chào mừng trở lại</h1>
+                <p class="text-on-surface-variant font-medium">Theo dõi tiến trình mua hàng Quảng Châu của bạn hôm nay.</p>
+            </div>
+            <div class="flex items-center gap-3">
+                <a th:href="@{/orders}" class="px-6 py-2.5 bg-surface-container-lowest text-primary font-bold rounded-lg border border-outline-variant/20 hover:bg-surface-container-low transition-colors flex items-center gap-2">
+                    <span class="material-symbols-outlined text-lg">download</span>
+                    <span>Xuất Báo Cáo</span>
+                </a>
+                <a th:href="@{/dashboard/chat}" class="px-6 py-2.5 bg-primary-gradient text-white font-bold rounded-lg flex items-center gap-2 shadow-lg shadow-primary/20">
+                    <span class="material-symbols-outlined text-lg" style="font-variation-settings: 'FILL' 1;">support_agent</span>
+                    <span>Liên Hệ Chuyên Viên</span>
+                </a>
+            </div>
+        </section>
+        <!-- Bento Grid: Order Overview -->
+        <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+            <!-- Card 1 -->
+            <div class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant/10 group hover:border-primary/20 transition-all">
+                <div class="flex justify-between items-start mb-4">
+                    <div class="p-3 bg-secondary-container rounded-lg text-primary">
+                        <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">handshake</span>
+                    </div>
+                    <span class="text-3xl font-black text-primary font-headline" th:text="${stats.negotiating}">0</span>
+                </div>
+                <h3 class="font-headline font-bold text-on-surface-variant mb-1">Đang Thương Lượng</h3>
+                <p class="text-xs text-on-surface-variant/70">Cần phản hồi báo giá</p>
+            </div>
+            <!-- Card 2 -->
+            <div class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant/10 group hover:border-primary/20 transition-all">
+                <div class="flex justify-between items-start mb-4">
+                    <div class="p-3 bg-tertiary-fixed text-tertiary">
+                        <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">factory</span>
+                    </div>
+                    <span class="text-3xl font-black text-primary font-headline" th:text="${stats.inProduction}">0</span>
+                </div>
+                <h3 class="font-headline font-bold text-on-surface-variant mb-1">Đang Sản Xuất</h3>
+                <p class="text-xs text-on-surface-variant/70">Đúng tiến độ</p>
+            </div>
+            <!-- Card 3 -->
+            <div class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant/10 group hover:border-primary/20 transition-all">
+                <div class="flex justify-between items-start mb-4">
+                    <div class="p-3 bg-[#fff4e5] text-[#b45d00] rounded-lg">
+                        <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">camera_enhance</span>
+                    </div>
+                    <span class="text-3xl font-black text-primary font-headline" th:text="${stats.pendingApproval}">0</span>
+                </div>
+                <h3 class="font-headline font-bold text-on-surface-variant mb-1">Chờ Duyệt</h3>
+                <p class="text-xs text-[#b45d00] font-bold" th:classappend="${stats.pendingApproval > 0} ? '' : 'hidden'">Cần hành động</p>
+                <p class="text-xs text-on-surface-variant/70" th:classappend="${stats.pendingApproval == 0} ? '' : 'hidden'">Không có mục chờ</p>
+            </div>
+            <!-- Card 4 -->
+            <div class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant/10 group hover:border-primary/20 transition-all">
+                <div class="flex justify-between items-start mb-4">
+                    <div class="p-3 bg-primary-fixed text-primary rounded-lg">
+                        <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">task_alt</span>
+                    </div>
+                    <span class="text-3xl font-black text-primary font-headline" th:text="${stats.completed}">0</span>
+                </div>
+                <h3 class="font-headline font-bold text-on-surface-variant mb-1">Hoàn Thành</h3>
+                <p class="text-xs text-on-surface-variant/70">Tổng đơn hàng đã hoàn thành</p>
+            </div>
+        </section>
+        <!-- Main Layout Split -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Production Roadmap (2/3 width) -->
+            <div class="lg:col-span-2">
+                <div class="flex items-center justify-between mb-6">
+                    <h2 class="text-xl font-black text-primary font-headline tracking-tight">Lộ Trình Sản Xuất</h2>
+                    <a class="text-sm font-bold text-primary-container hover:underline" th:href="@{/orders}">Xem tất cả đơn hàng</a>
+                </div>
+                <div class="space-y-4">
+                    <!-- Empty state -->
+                    <div th:if="${activeOrders.isEmpty()}" class="bg-surface-container-lowest p-8 rounded-xl border border-outline-variant/10 text-center">
+                        <span class="material-symbols-outlined text-4xl text-outline mb-3 block">inventory_2</span>
+                        <p class="font-headline font-bold text-on-surface-variant mb-1">Không có đơn hàng đang hoạt động</p>
+                        <p class="text-xs text-on-surface-variant/70">Đơn hàng đang hoạt động của bạn sẽ xuất hiện ở đây khi được tạo.</p>
+                        <a th:href="@{/dashboard/chat}" class="inline-flex items-center gap-2 mt-4 px-4 py-2 bg-primary-gradient text-white text-xs font-bold rounded-lg">
+                            <span class="material-symbols-outlined text-sm">add_circle</span>Tạo Yêu Cầu Mới
+                        </a>
+                    </div>
+                    <!-- Dynamic order cards -->
+                    <div th:each="o : ${activeOrders}" class="bg-surface-container-lowest p-5 rounded-xl border border-outline-variant/10 flex flex-col md:flex-row gap-6">
+                        <div class="w-24 h-24 rounded-lg bg-surface-container flex items-center justify-center shrink-0">
+                            <span class="material-symbols-outlined text-4xl text-outline">inventory_2</span>
+                        </div>
+                        <div class="flex-1 space-y-3">
+                            <div class="flex justify-between items-start">
+                                <div>
+                                    <h4 class="font-headline font-extrabold text-primary" th:text="${o.displayId + ' • ' + o.name}">GZ-ORD-0000</h4>
+                                    <p class="text-xs text-on-surface-variant" th:text="'Status: ' + ${o.statusLabel}">Status</p>
+                                </div>
+                                <span class="px-2 py-1 bg-tertiary-fixed text-[10px] font-black uppercase tracking-tighter rounded" th:text="${o.statusLabel}">Đang hoạt động</span>
+                            </div>
+                            <div class="space-y-1.5">
+                                <div class="flex justify-between text-[10px] font-bold text-on-surface-variant">
+                                    <span th:text="'Tiến độ: ' + ${o.progressPercent} + '%'">Tiến độ: 0%</span>
+                                    <span th:text="${o.progressPercent} + '%'">0%</span>
+                                </div>
+                                <div class="w-full h-2 bg-surface-container rounded-full overflow-hidden">
+                                    <div class="h-full bg-primary-gradient" th:style="'width: ' + ${o.progressPercent} + '%'"></div>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-4 pt-1">
+                                <a th:href="@{/orders/{id}(id=${o.orderId})}" class="flex items-center gap-1 text-[10px] font-bold text-primary-container hover:underline">
+                                    <span class="material-symbols-outlined text-sm">open_in_new</span>
+                                    Xem Đơn Hàng
+                                </a>
+                                <a th:if="${o.status == 'PENDING_CUSTOMER_APPROVAL'}" th:href="@{/orders/{id}/review(id=${o.orderId})}" class="flex items-center gap-1 text-[10px] font-bold text-[#b45d00] hover:underline">
+                                    <span class="material-symbols-outlined text-sm">camera_enhance</span>
+                                    Duyệt Hình Ảnh
+                                </a>
+                                <a th:if="${o.status == 'Pending Deposit'}" th:href="@{/payment/{id}/deposit(id=${o.orderId})}" class="flex items-center gap-1 text-[10px] font-bold text-tertiary-container hover:underline">
+                                    <span class="material-symbols-outlined text-sm">payments</span>
+                                    Thanh Toán Đặt Cọc
+                                </a>
+                                <a th:if="${o.paymentStatus == 'DEPOSITED'}" th:href="@{/payment/{id}/balance(id=${o.orderId})}" class="flex items-center gap-1 text-[10px] font-bold text-tertiary-container hover:underline">
+                                    <span class="material-symbols-outlined text-sm">payments</span>
+                                    Thanh Toán Số Dư
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Latest Notifications (1/3 width) -->
+            <div>
+                <h2 class="text-xl font-black text-primary font-headline tracking-tight mb-6">Cập Nhật Mới Nhất</h2>
+                <div class="bg-surface-container-low rounded-2xl p-6 space-y-6">
+                    <!-- Dynamic: orders awaiting visual proof approval -->
+                    <div th:each="o, iter : ${pendingOrders}">
+                        <div class="flex gap-4 group">
+                            <div class="shrink-0 w-10 h-10 rounded-full bg-[#fff4e5] flex items-center justify-center text-[#b45d00] group-hover:scale-110 transition-transform">
+                                <span class="material-symbols-outlined text-xl">camera_enhance</span>
+                            </div>
+                            <div class="space-y-1">
+                                <div class="flex justify-between items-center">
+                                    <p class="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">Kiểm Tra Ảnh</p>
+                                    <span class="text-[10px] text-on-surface-variant/60">Cần hành động</span>
+                                </div>
+                                <h5 class="text-sm font-bold text-primary font-headline" th:text="'Visual proof ready for ' + ${o.displayId}">Đơn hàng sẵn sàng</h5>
+                                <p class="text-xs text-on-surface-variant leading-relaxed" th:text="${o.name}">Tên sản phẩm</p>
+                                <a th:href="@{/orders/{id}/review(id=${o.orderId})}" class="text-xs font-black text-primary-container pt-2 flex items-center gap-1">
+                                    Duyệt ngay <span class="material-symbols-outlined text-sm">chevron_right</span>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="h-px bg-outline-variant/15" th:if="${!iter.last or !pendingOrders.isEmpty()}"></div>
+                    </div>
+                    <!-- Empty state for pending approvals -->
+                    <div th:if="${pendingOrders.isEmpty()}" class="flex gap-4 group cursor-pointer">
+                        <div class="shrink-0 w-10 h-10 rounded-full bg-primary-fixed flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
+                            <span class="material-symbols-outlined text-xl">task_alt</span>
+                        </div>
+                        <div class="space-y-1">
+                            <p class="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">Tất Cả Đã Xong</p>
+                            <h5 class="text-sm font-bold text-primary font-headline">Không có mục cần duyệt</h5>
+                            <p class="text-xs text-on-surface-variant leading-relaxed">Bạn đã cập nhật đầy đủ. Thông báo mới sẽ xuất hiện ở đây.</p>
+                        </div>
+                    </div>
+                    <!-- Divider -->
+                    <div class="h-px bg-outline-variant/15" th:if="${pendingOrders.isEmpty()}"></div>
+                    <!-- Static: Negotiating orders notification -->
+                    <div class="flex gap-4 group cursor-pointer">
+                        <div class="shrink-0 w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
+                            <span class="material-symbols-outlined text-xl">handshake</span>
+                        </div>
+                        <div class="space-y-1">
+                            <div class="flex justify-between items-center">
+                                <p class="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">Đang Thương Lượng</p>
+                                <span class="text-[10px] text-on-surface-variant/60" th:text="${stats.negotiating} + ' orders'">0 orders</span>
+                            </div>
+                            <h5 class="text-sm font-bold text-primary font-headline" th:text="${stats.negotiating} + ' order(s) awaiting quote response'">Đơn hàng đang thương lượng</h5>
+                            <a th:href="@{/orders}" class="text-xs font-black text-primary-container pt-2 flex items-center gap-1">
+                                Xem đơn hàng <span class="material-symbols-outlined text-sm">chevron_right</span>
+                            </a>
+                        </div>
+                    </div>
+                    <!-- Divider -->
+                    <div class="h-px bg-outline-variant/15"></div>
+                    <!-- Static: Community Catalog -->
+                    <div class="flex gap-4 group cursor-pointer">
+                        <div class="shrink-0 w-10 h-10 rounded-full bg-tertiary-fixed flex items-center justify-center text-tertiary group-hover:scale-110 transition-transform">
+                            <span class="material-symbols-outlined text-xl">storefront</span>
+                        </div>
+                        <div class="space-y-1">
+                            <div class="flex justify-between items-center">
+                                <p class="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">Danh Mục</p>
+                            </div>
+                            <h5 class="text-sm font-bold text-primary font-headline">Khám Phá Danh Mục Cộng Đồng</h5>
+                            <p class="text-xs text-on-surface-variant leading-relaxed">Tìm cấu hình sản phẩm đã được chứng minh và sao chép vào yêu cầu mới.</p>
+                            <a th:href="@{/catalog}" class="text-xs font-black text-primary-container pt-2 flex items-center gap-1">
+                                Khám phá ngay <span class="material-symbols-outlined text-sm">chevron_right</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
 </div>
 <!-- Bottom Navigation Bar (Mobile Only) -->
 <nav class="lg:hidden fixed bottom-0 left-0 w-full bg-[#ffffff]/90 backdrop-blur-lg flex justify-around items-center px-4 pb-safe pt-2 z-50 shadow-[0_-4px_12px_rgba(0,0,0,0.05)] border-t border-[#c2c6d1]/15">
-<a class="flex flex-col items-center justify-center text-[#003461] bg-[#cbe7f5]/50 rounded-xl px-4 py-1" th:href="@{/dashboard}">
-<span class="material-symbols-outlined" data-icon="home">home</span>
-<span class="font-['Inter'] text-[10px] font-medium uppercase tracking-widest">Home</span>
-</a>
-<a class="flex flex-col items-center justify-center text-[#424750]" th:href="@{/catalog}">
-<span class="material-symbols-outlined" data-icon="show_chart">show_chart</span>
-<span class="font-['Inter'] text-[10px] font-medium uppercase tracking-widest">Charts</span>
-</a>
-<a class="flex flex-col items-center justify-center text-[#424750]" th:href="@{/orders}">
-<span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
-<span class="font-['Inter'] text-[10px] font-medium uppercase tracking-widest">Orders</span>
-</a>
-<a class="flex flex-col items-center justify-center text-[#424750]" th:href="@{/chat}">
-<span class="material-symbols-outlined" data-icon="forum">forum</span>
-<span class="font-['Inter'] text-[10px] font-medium uppercase tracking-widest">Chat</span>
-</a>
+    <a class="flex flex-col items-center justify-center text-[#003461] bg-[#cbe7f5]/50 rounded-xl px-4 py-1" th:href="@{/dashboard}">
+        <span class="material-symbols-outlined" data-icon="home">home</span>
+        <span class="font-['Inter'] text-[10px] font-medium uppercase tracking-widest">Trang Chủ</span>
+    </a>
+    <a class="flex flex-col items-center justify-center text-[#424750]" th:href="@{/catalog}">
+        <span class="material-symbols-outlined" data-icon="show_chart">show_chart</span>
+        <span class="font-['Inter'] text-[10px] font-medium uppercase tracking-widest">Biểu Đồ</span>
+    </a>
+    <a class="flex flex-col items-center justify-center text-[#424750]" th:href="@{/orders}">
+        <span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
+        <span class="font-['Inter'] text-[10px] font-medium uppercase tracking-widest">Đơn Hàng</span>
+    </a>
+    <a class="flex flex-col items-center justify-center text-[#424750]" th:href="@{/chat}">
+        <span class="material-symbols-outlined" data-icon="forum">forum</span>
+        <span class="font-['Inter'] text-[10px] font-medium uppercase tracking-widest">Trò Chuyện</span>
+    </a>
 </nav>
 <!-- Footer -->
 <footer class="bg-[#f2f4f6] w-full py-12 px-6 border-t border-[#c2c6d1]/10 mt-12">
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
-<div class="space-y-4">
-<span class="font-['Manrope'] font-bold text-[#003461] text-lg">Guangzhou Curator</span>
-<p class="font-['Inter'] text-xs text-[#424750] leading-relaxed">Direct connection solutions to leading factories in Guangzhou for Vietnamese businesses.</p>
-</div>
-<div>
-<h4 class="font-headline font-bold text-primary text-sm mb-4">Products</h4>
-<ul class="space-y-2 font-['Inter'] text-xs">
-<li><a class="text-[#424750] hover:text-[#004B87]" href="#">Sourcing Search</a></li>
-<li><a class="text-[#424750] hover:text-[#004B87]" href="#">Factory Audits</a></li>
-<li><a class="text-[#424750] hover:text-[#004B87]" href="#">Order Management</a></li>
-<li><a class="text-[#424750] hover:text-[#004B87]" href="#">B2B Shipping</a></li>
-</ul>
-</div>
-<div>
-<h4 class="font-headline font-bold text-primary text-sm mb-4">Support</h4>
-<ul class="space-y-2 font-['Inter'] text-xs">
-<li><a class="text-[#424750] hover:text-[#004B87]" href="#">Sourcing Guide</a></li>
-<li><a class="text-[#424750] hover:text-[#004B87]" href="#">Contact Us</a></li>
-<li><a class="text-[#424750] hover:text-[#004B87]" href="#">Terms of Service</a></li>
-<li><a class="text-[#424750] hover:text-[#004B87]" href="#">Privacy Policy</a></li>
-</ul>
-</div>
-<div class="space-y-4">
-<h4 class="font-headline font-bold text-primary text-sm">© 2024 Guangzhou Curator</h4>
-<p class="font-['Inter'] text-xs text-[#424750]">The optimized B2B platform dedicated to the Vietnamese market.</p>
-<div class="flex gap-4">
-<span class="material-symbols-outlined text-primary cursor-pointer hover:opacity-80 transition-opacity">language</span>
-<span class="material-symbols-outlined text-primary cursor-pointer hover:opacity-80 transition-opacity">mail</span>
-<span class="material-symbols-outlined text-primary cursor-pointer hover:opacity-80 transition-opacity">call</span>
-</div>
-</div>
-</div>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
+        <div class="space-y-4">
+            <span class="font-['Manrope'] font-bold text-[#003461] text-lg">Guangzhou Curator</span>
+            <p class="font-['Inter'] text-xs text-[#424750] leading-relaxed">Giải pháp kết nối trực tiếp với các nhà máy hàng đầu tại Quảng Châu cho doanh nghiệp Việt Nam.</p>
+        </div>
+        <div>
+            <h4 class="font-headline font-bold text-primary text-sm mb-4">Sản Phẩm</h4>
+            <ul class="space-y-2 font-['Inter'] text-xs">
+                <li><a class="text-[#424750] hover:text-[#004B87]" href="#">Tìm Kiếm Nguồn Hàng</a></li>
+                <li><a class="text-[#424750] hover:text-[#004B87]" href="#">Kiểm Tra Nhà Máy</a></li>
+                <li><a class="text-[#424750] hover:text-[#004B87]" href="#">Quản Lý Đơn Hàng</a></li>
+                <li><a class="text-[#424750] hover:text-[#004B87]" href="#">Vận Chuyển B2B</a></li>
+            </ul>
+        </div>
+        <div>
+            <h4 class="font-headline font-bold text-primary text-sm mb-4">Hỗ Trợ</h4>
+            <ul class="space-y-2 font-['Inter'] text-xs">
+                <li><a class="text-[#424750] hover:text-[#004B87]" href="#">Hướng Dẫn Mua Hàng</a></li>
+                <li><a class="text-[#424750] hover:text-[#004B87]" href="#">Liên Hệ</a></li>
+                <li><a class="text-[#424750] hover:text-[#004B87]" href="#">Điều Khoản Dịch Vụ</a></li>
+                <li><a class="text-[#424750] hover:text-[#004B87]" href="#">Chính Sách Bảo Mật</a></li>
+            </ul>
+        </div>
+        <div class="space-y-4">
+            <h4 class="font-headline font-bold text-primary text-sm">© 2024 Guangzhou Curator</h4>
+            <p class="font-['Inter'] text-xs text-[#424750]">Nền tảng B2B tối ưu dành riêng cho thị trường Việt Nam.</p>
+            <div class="flex gap-4">
+                <span class="material-symbols-outlined text-primary cursor-pointer hover:opacity-80 transition-opacity">language</span>
+                <span class="material-symbols-outlined text-primary cursor-pointer hover:opacity-80 transition-opacity">mail</span>
+                <span class="material-symbols-outlined text-primary cursor-pointer hover:opacity-80 transition-opacity">call</span>
+            </div>
+        </div>
+    </div>
 </footer>
 <div th:replace="~{fragments/settings_modal :: modal}"></div>
 <script>

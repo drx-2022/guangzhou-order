@@ -1,76 +1,76 @@
 <!DOCTYPE html>
 
-<html class="light" lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
-      tailwind.config = {
-        darkMode: "class",
-        theme: {
-          extend: {
-            colors: {
-              "on-secondary-fixed-variant": "#304a55",
-              "tertiary": "#003b34",
-              "tertiary-container": "#00544b",
-              "on-error-container": "#93000a",
-              "inverse-on-surface": "#eff1f3",
-              "surface-bright": "#f8f9fb",
-              "secondary-container": "#cbe7f5",
-              "background": "#f8f9fb",
-              "primary": "#003461",
-              "on-primary-container": "#8abcff",
-              "secondary-fixed": "#cbe7f5",
-              "surface-container-high": "#e6e8ea",
-              "on-error": "#ffffff",
-              "on-primary": "#ffffff",
-              "on-secondary-container": "#4e6874",
-              "inverse-primary": "#a3c9ff",
-              "surface-variant": "#e0e3e5",
-              "surface-container-highest": "#e0e3e5",
-              "surface-tint": "#27609d",
-              "on-tertiary": "#ffffff",
-              "on-background": "#191c1e",
-              "on-surface-variant": "#424750",
-              "on-tertiary-container": "#63cbbb",
-              "tertiary-fixed-dim": "#70d8c8",
-              "secondary-fixed-dim": "#afcbd8",
-              "tertiary-fixed": "#8df5e4",
-              "on-primary-fixed-variant": "#004882",
-              "on-tertiary-fixed": "#00201c",
-              "on-tertiary-fixed-variant": "#005048",
-              "surface-dim": "#d8dadc",
-              "secondary": "#48626e",
-              "surface": "#f8f9fb",
-              "inverse-surface": "#2d3133",
-              "surface-container": "#eceef0",
-              "primary-fixed-dim": "#a3c9ff",
-              "on-surface": "#191c1e",
-              "surface-container-lowest": "#ffffff",
-              "on-primary-fixed": "#001c38",
-              "on-secondary-fixed": "#021f29",
-              "primary-fixed": "#d3e4ff",
-              "surface-container-low": "#f2f4f6",
-              "error-container": "#ffdad6",
-              "outline": "#727781",
-              "error": "#ba1a1a",
-              "on-secondary": "#ffffff",
-              "primary-container": "#004b87",
-              "outline-variant": "#c2c6d1"
+<html class="light" lang="vi" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"><head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+    <script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              colors: {
+                "on-secondary-fixed-variant": "#304a55",
+                "tertiary": "#003b34",
+                "tertiary-container": "#00544b",
+                "on-error-container": "#93000a",
+                "inverse-on-surface": "#eff1f3",
+                "surface-bright": "#f8f9fb",
+                "secondary-container": "#cbe7f5",
+                "background": "#f8f9fb",
+                "primary": "#003461",
+                "on-primary-container": "#8abcff",
+                "secondary-fixed": "#cbe7f5",
+                "surface-container-high": "#e6e8ea",
+                "on-error": "#ffffff",
+                "on-primary": "#ffffff",
+                "on-secondary-container": "#4e6874",
+                "inverse-primary": "#a3c9ff",
+                "surface-variant": "#e0e3e5",
+                "surface-container-highest": "#e0e3e5",
+                "surface-tint": "#27609d",
+                "on-tertiary": "#ffffff",
+                "on-background": "#191c1e",
+                "on-surface-variant": "#424750",
+                "on-tertiary-container": "#63cbbb",
+                "tertiary-fixed-dim": "#70d8c8",
+                "secondary-fixed-dim": "#afcbd8",
+                "tertiary-fixed": "#8df5e4",
+                "on-primary-fixed-variant": "#004882",
+                "on-tertiary-fixed": "#00201c",
+                "on-tertiary-fixed-variant": "#005048",
+                "surface-dim": "#d8dadc",
+                "secondary": "#48626e",
+                "surface": "#f8f9fb",
+                "inverse-surface": "#2d3133",
+                "surface-container": "#eceef0",
+                "primary-fixed-dim": "#a3c9ff",
+                "on-surface": "#191c1e",
+                "surface-container-lowest": "#ffffff",
+                "on-primary-fixed": "#001c38",
+                "on-secondary-fixed": "#021f29",
+                "primary-fixed": "#d3e4ff",
+                "surface-container-low": "#f2f4f6",
+                "error-container": "#ffdad6",
+                "outline": "#727781",
+                "error": "#ba1a1a",
+                "on-secondary": "#ffffff",
+                "primary-container": "#004b87",
+                "outline-variant": "#c2c6d1"
+              },
+              fontFamily: {
+                "headline": ["Manrope"],
+                "body": ["Inter"],
+                "label": ["Inter"]
+              },
+              borderRadius: {"DEFAULT": "0.125rem", "lg": "0.5rem", "xl": "1rem", "full": "9999px"},
             },
-            fontFamily: {
-              "headline": ["Manrope"],
-              "body": ["Inter"],
-              "label": ["Inter"]
-            },
-            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.5rem", "xl": "1rem", "full": "9999px"},
           },
-        },
-      }
+        }
     </script>
-<style>
+    <style>
         .material-symbols-outlined {
             font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
         }
@@ -83,343 +83,396 @@
 <body class="bg-background font-body text-on-background antialiased selection:bg-secondary-container selection:text-primary">
 <!-- TopNavBar -->
 <nav class="fixed top-0 w-full z-50 bg-[#f8f9fb]/80 dark:bg-slate-900/80 backdrop-blur-xl shadow-sm dark:shadow-none">
-<div class="flex justify-between items-center px-6 py-3 w-full max-w-screen-2xl mx-auto">
-<a th:href="@{/}" class="text-xl font-black text-[#003461] dark:text-white tracking-tighter font-headline no-underline">
-                Guangzhou Direct
-            </a>
-<div class="hidden md:flex items-center space-x-8 font-headline font-bold tracking-tight">
-<a class="text-[#004B87] dark:text-[#cbe7f5] border-b-2 border-[#004B87] pb-1" th:href="@{/}">Trends</a>
-<a class="text-[#424750] dark:text-slate-400 hover:text-[#004B87] transition-colors" th:href="@{/chat}">Sourcing</a>
-<a class="text-[#424750] dark:text-slate-400 hover:text-[#004B87] transition-colors" th:href="@{/my-orders}" sec:authorize="isAuthenticated()">Orders</a>
-<a class="text-[#424750] dark:text-slate-400 hover:text-[#004B87] transition-colors" href="#">Support</a>
-</div>
-<div class="flex items-center space-x-4">
-    <!-- NOT logged in: show Login button -->
-    <div sec:authorize="!isAuthenticated()" class="flex items-center gap-3">
-        <a th:href="@{/login}"
-           class="px-5 py-2 border-2 border-primary text-primary rounded-lg font-headline font-bold text-xs tracking-widest uppercase hover:bg-primary hover:text-white transition-all">
-            Login
+    <div class="flex justify-between items-center px-6 py-3 w-full max-w-screen-2xl mx-auto">
+        <a th:href="@{/}" class="text-xl font-black text-[#003461] dark:text-white tracking-tighter font-headline no-underline">
+            Guangzhou Direct
         </a>
-        <a th:href="@{/signup}"
-           class="px-5 py-2 bg-primary text-white rounded-lg font-headline font-bold text-xs tracking-widest uppercase hover:opacity-90 transition-all">
-            Register
-        </a>
-    </div>
+        <div class="hidden md:flex items-center space-x-8 font-headline font-bold tracking-tight">
+            <a class="text-[#004B87] dark:text-[#cbe7f5] border-b-2 border-[#004B87] pb-1" th:href="@{/}">Xu hướng</a>
+            <a class="text-[#424750] dark:text-slate-400 hover:text-[#004B87] transition-colors" th:href="@{/chat}">Tìm nguồn</a>
+            <a class="text-[#424750] dark:text-slate-400 hover:text-[#004B87] transition-colors" th:href="@{/my-orders}" sec:authorize="isAuthenticated()">Đơn hàng</a>
+            <a class="text-[#424750] dark:text-slate-400 hover:text-[#004B87] transition-colors" href="#">Hỗ trợ</a>
+        </div>
+        <div class="flex items-center space-x-4">
+            <!-- NOT logged in: show Login button -->
+            <div sec:authorize="!isAuthenticated()" class="flex items-center gap-3">
+                <a th:href="@{/login}"
+                   class="px-5 py-2 border-2 border-primary text-primary rounded-lg font-headline font-bold text-xs tracking-widest uppercase hover:bg-primary hover:text-white transition-all">
+                    Đăng nhập
+                </a>
+                <a th:href="@{/signup}"
+                   class="px-5 py-2 bg-primary text-white rounded-lg font-headline font-bold text-xs tracking-widest uppercase hover:opacity-90 transition-all">
+                    Đăng ký
+                </a>
+            </div>
 
-    <!-- Logged in: show notification bell + user info + dashboard link -->
-    <div sec:authorize="isAuthenticated()" class="flex items-center gap-3">
+            <!-- Logged in: show notification bell + user info + dashboard link -->
+            <div sec:authorize="isAuthenticated()" class="flex items-center gap-3">
 
-        <!-- Notification bell -->
-        <button class="p-2 text-[#424750] hover:bg-[#f2f4f6]/50 rounded-full transition-colors active:scale-95 duration-150">
-            <span class="material-symbols-outlined">notifications</span>
-        </button>
+                <!-- Notification bell -->
+                <button class="p-2 text-[#424750] hover:bg-[#f2f4f6]/50 rounded-full transition-colors active:scale-95 duration-150">
+                    <span class="material-symbols-outlined">notifications</span>
+                </button>
 
-        <!-- Dashboard button — role-based destination -->
-        <a sec:authorize="hasRole('CUSTOMER')" th:href="@{/customer/dashboard}"
-           class="flex items-center gap-2 px-4 py-2 bg-surface-container rounded-lg hover:bg-surface-container-high transition-all">
-            <span class="material-symbols-outlined text-primary">dashboard</span>
-            <span class="font-headline font-bold text-sm text-primary hidden sm:inline">Dashboard</span>
-        </a>
+                <!-- Dashboard button — role-based destination -->
+                <a sec:authorize="hasRole('CUSTOMER')" th:href="@{/customer/dashboard}"
+                   class="flex items-center gap-2 px-4 py-2 bg-surface-container rounded-lg hover:bg-surface-container-high transition-all">
+                    <span class="material-symbols-outlined text-primary">dashboard</span>
+                    <span class="font-headline font-bold text-sm text-primary hidden sm:inline">Bảng điều khiển</span>
+                </a>
 
-        <a sec:authorize="hasRole('AFFILIATE')" th:href="@{/affiliate/dashboard}"
-           class="flex items-center gap-2 px-4 py-2 bg-surface-container rounded-lg hover:bg-surface-container-high transition-all">
-            <span class="material-symbols-outlined text-primary">dashboard</span>
-            <span class="font-headline font-bold text-sm text-primary hidden sm:inline">Dashboard</span>
-        </a>
+                <a sec:authorize="hasRole('AFFILIATE')" th:href="@{/affiliate/dashboard}"
+                   class="flex items-center gap-2 px-4 py-2 bg-surface-container rounded-lg hover:bg-surface-container-high transition-all">
+                    <span class="material-symbols-outlined text-primary">dashboard</span>
+                    <span class="font-headline font-bold text-sm text-primary hidden sm:inline">Bảng điều khiển</span>
+                </a>
 
-        <a sec:authorize="hasRole('ADMIN')" th:href="@{/admin/dashboard}"
-           class="flex items-center gap-2 px-4 py-2 bg-surface-container rounded-lg hover:bg-surface-container-high transition-all">
-            <span class="material-symbols-outlined text-primary">admin_panel_settings</span>
-            <span class="font-headline font-bold text-sm text-primary hidden sm:inline">Admin Panel</span>
-        </a>
+                <a sec:authorize="hasRole('ADMIN')" th:href="@{/admin/dashboard}"
+                   class="flex items-center gap-2 px-4 py-2 bg-surface-container rounded-lg hover:bg-surface-container-high transition-all">
+                    <span class="material-symbols-outlined text-primary">admin_panel_settings</span>
+                    <span class="font-headline font-bold text-sm text-primary hidden sm:inline">Bảng quản trị</span>
+                </a>
 
-        <!-- User avatar + name -->
-        <div class="flex items-center gap-2 px-3 py-1.5 bg-surface-container rounded-lg">
-            <span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">account_circle</span>
-            <div class="hidden sm:block">
-                <p class="font-headline font-bold text-xs text-primary" th:text="${#authentication.name}">Username</p>
+                <!-- User avatar + name -->
+                <div class="flex items-center gap-2 px-3 py-1.5 bg-surface-container rounded-lg">
+                    <span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">account_circle</span>
+                    <div class="hidden sm:block">
+                        <p class="font-headline font-bold text-xs text-primary" th:text="${#authentication.name}">Tên người dùng</p>
+                    </div>
+                </div>
+
             </div>
         </div>
-
     </div>
-</div>
-</div>
 </nav>
 <main class="pt-20">
-<!-- Hero Section -->
-<section class="relative overflow-hidden px-6 pt-16 pb-24 lg:pt-32 lg:pb-40">
-<div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-<div class="z-10">
+    <!-- Hero Section -->
+    <section class="relative overflow-hidden px-6 pt-16 pb-24 lg:pt-32 lg:pb-40">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            <div class="z-10">
 <span class="inline-block px-4 py-1.5 rounded-full bg-secondary-container text-primary font-label text-xs font-bold tracking-widest uppercase mb-6">
-                        B2B Procurement Platform
+                        Nền tảng mua sắm B2B
                     </span>
-<h1 class="font-headline text-5xl lg:text-7xl font-extrabold text-primary leading-[1.1] tracking-tighter mb-8">
-                        Source Directly from Guangzhou
-                    </h1>
-<p class="text-on-surface-variant text-xl lg:text-2xl font-normal leading-relaxed mb-10 max-w-xl">
-                        Transparent process, clear product DNA. Connect directly with leading factories at the global trade hub.
-                    </p>
-<div class="flex flex-col sm:flex-row gap-4">
-<a th:href="@{/register}" class="px-8 py-4 bg-gradient-to-br from-primary to-primary-container text-white rounded-lg font-headline font-bold text-sm tracking-widest uppercase shadow-lg hover:opacity-90 transition-all active:scale-95">
-                            Get Started
-                        </a>
-<a th:href="@{/catalog}" class="px-8 py-4 border-2 border-outline-variant text-primary rounded-lg font-headline font-bold text-sm tracking-widest uppercase hover:bg-surface-container-low transition-all active:scale-95">
-                            Explore Market
-                        </a>
-</div>
-</div>
-<div class="relative group">
-<div class="absolute -inset-4 bg-primary/5 rounded-[2rem] blur-2xl group-hover:bg-primary/10 transition-colors"></div>
-<div class="relative bg-surface-container-lowest rounded-xl shadow-2xl overflow-hidden border border-outline-variant/15">
-<img alt="Commercial district" class="w-full h-[500px] object-cover" data-alt="Modern high-angle shot of a busy commercial logistics hub in Guangzhou with sleek glass buildings and organized shipping containers" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB6FuoXjliWiAfRue51S3gq7uiB7ZA1IE9JQY5zFvOnMya86IlKGIfpn6D9pcXoDgBHn_Lb7OTjwccqB29lyBCiTfNlTbblzwU2kAcRQ6n-Cd-hbw2NYYNNHNwlAEGZBgd7VmwLYVqXypA_QssY5whmLjCQ6d_TfBC1WOKVsJgQeORNs0f_rT5mDbkslSDK8-0YTT3zboyQGBJpBfIa9ogfei4a-LAldnT_er6bw8kcChbm9zduM0548-GhHWGjzl5VlybIpDMh0c0"/>
-<div class="absolute bottom-6 left-6 right-6 p-6 glass-nav bg-white/60 rounded-lg border border-white/20">
-<div class="flex items-center justify-between">
-<div>
-<p class="text-xs font-bold text-primary uppercase tracking-widest mb-1">Live Update</p>
-<p class="text-lg font-headline font-extrabold text-on-surface">Leather &amp; Footwear Market</p>
-</div>
-<div class="text-right">
-<p class="text-xs text-on-surface-variant">Status</p>
-<p class="text-sm font-bold text-tertiary-container">• Now Open</p>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</section>
-<!-- Section 1: Structured Sourcing Process -->
-<section class="py-24 bg-surface-container-low">
-<div class="max-w-7xl mx-auto px-6">
-<div class="text-center mb-16">
-<h2 class="font-headline text-3xl lg:text-4xl font-extrabold text-primary mb-4">Structured Sourcing Process</h2>
-<p class="text-on-surface-variant max-w-2xl mx-auto">Experience professional communication with integrated Product DNA Cards directly in the chat interface.</p>
-</div>
-<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-<!-- Step 1 -->
-<div class="bg-surface-container-lowest p-8 rounded-xl border border-outline-variant/10 shadow-sm">
-<div class="w-12 h-12 bg-primary rounded-lg flex items-center justify-center text-white mb-6">
-<span class="material-symbols-outlined" data-icon="chat_bubble">chat_bubble</span>
-</div>
-<h3 class="font-headline font-bold text-xl text-primary mb-3">Intelligent Live Chat</h3>
-<p class="text-on-surface-variant text-sm leading-relaxed">Exchange directly with sourcing staff. System automatically translates and standardizes your requirements.</p>
-</div>
-<!-- Step 2 -->
-<div class="bg-surface-container-lowest p-8 rounded-xl border border-outline-variant/10 shadow-sm relative md:translate-y-8">
-<div class="w-12 h-12 bg-primary-container rounded-lg flex items-center justify-center text-white mb-6">
-<span class="material-symbols-outlined" data-icon="dna">genetics</span>
-</div>
-<h3 class="font-headline font-bold text-xl text-primary mb-3">Product DNA Cards</h3>
-<p class="text-on-surface-variant text-sm leading-relaxed">All technical specs, materials, and factory prices are packaged into transparent, easy-to-compare data cards.</p>
-</div>
-<!-- Step 3 -->
-<div class="bg-surface-container-lowest p-8 rounded-xl border border-outline-variant/10 shadow-sm">
-<div class="w-12 h-12 bg-primary rounded-lg flex items-center justify-center text-white mb-6">
-<span class="material-symbols-outlined" data-icon="task_alt">task_alt</span>
-</div>
-<h3 class="font-headline font-bold text-xl text-primary mb-3">Precise Order Confirmation</h3>
-<p class="text-on-surface-variant text-sm leading-relaxed">Confirm orders based on agreed parameters, completely eliminating the risk of incorrect goods.</p>
-</div>
-</div>
-</div>
-</section>
-<!-- Section 2: Visual Proof -->
-<section class="py-24 overflow-hidden">
-<div class="max-w-7xl mx-auto px-6">
-<div class="flex flex-col lg:flex-row items-center gap-16">
-<div class="lg:w-1/2">
-<h2 class="font-headline text-3xl lg:text-5xl font-extrabold text-primary mb-8 leading-tight">Visual Proof</h2>
-<p class="text-on-surface-variant text-lg mb-10 leading-relaxed">
-                            We don't just talk about quality, we prove it. Every shipment is inspected at our Guangzhou warehouse with high-resolution photos and videos sent directly to you before international payment.
-                        </p>
-<ul class="space-y-6">
-<li class="flex items-start gap-4">
-<span class="material-symbols-outlined text-tertiary-container mt-1" data-icon="check_circle" style="font-variation-settings: 'FILL' 1;">check_circle</span>
-<div>
-<h4 class="font-bold text-on-surface">100% Quality Control</h4>
-<p class="text-sm text-on-surface-variant">Close-up photos of tags, stitching, and packaging for every unit.</p>
-</div>
-</li>
-<li class="flex items-start gap-4">
-<span class="material-symbols-outlined text-tertiary-container mt-1" data-icon="check_circle" style="font-variation-settings: 'FILL' 1;">check_circle</span>
-<div>
-<h4 class="font-bold text-on-surface">Live Video Review</h4>
-<p class="text-sm text-on-surface-variant">Request on-demand videos to test features or materials as you wish.</p>
-</div>
-</li>
-</ul>
-</div>
-<div class="lg:w-1/2 grid grid-cols-2 gap-4">
-<div class="space-y-4">
-<img alt="Warehouse inspection" class="rounded-xl w-full h-64 object-cover shadow-lg" data-alt="Professional quality control inspector checking fabrics in a bright modern warehouse setting with a tablet" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBmIRZBvLGhW5su1dmlMoM2ks7KWgus0XPTjvgL3YstcEVSaK4Ley2G84MiHkBJMGvtkhQPdk5mmDUYyIqREMZt2n53GbNN16m8_8OXb4hzYxwnJWD-ttsSfK-betGZ1G2alN5uuIzccYkfSIm2SqV97a1FJpErzJLFsSZzmZKoJq3btV9PQ_9Uej-_5836rNF2Y5Rf87bsd1LbBnYrWf0v4V5LIhg7w-Ak1UIFkdKlOLPMh_1jWMuJXTAh8-U1AMIZBMabES7NYYI"/>
-<img alt="Product detail" class="rounded-xl w-full h-48 object-cover shadow-lg" data-alt="Macro close-up of high-quality leather stitching and premium metallic hardware on a designer handbag" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDin8S2vsvxJo3HlDB7aTF7jjW_gA4yJrhjkR1KDOl_BcOszUzYISEJa1hU05Oc9v-e3IQuJGUD4X3yuAmst4vQh4XScyhE5lrHDnBYLFaTUmzQUdIMLKb5S0WUBMdI2VrvInTwkZ2n4dxAk9ru7qB5hJNN2nedxdFR0AnnftyNgk2jMqfTbQOI3guO21u6I6qN27huHqdIE_wf063g5f3W5FHwnhC-M7YHl0t0eatngYxuSWTIm9Kc27LRVJdzJJM-cA4bq5TR5Es"/>
-</div>
-<div class="space-y-4 pt-8">
-<img alt="Logistics center" class="rounded-xl w-full h-48 object-cover shadow-lg" data-alt="Modern logistics center with organized shelves and bright industrial lighting, clean and professional environment" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAHyWkAHiM8fTb2fudtaC6kIRfqx2tGefDomcq6DBfKToAw2O5DamrcSt8LzTr1Jvx1j2tflZWCyEzzqjrH8C6PpPfUWIxb5nkRfdqm9jh4umsBupDnfHgHMi-dxpZ5i7h3XH5tBpp8nSOyY0uh5PI6IFgWCVE5sN_4o4qs8DjHMmoAzJZQnZMNlPiD1TotfE9t_woQhK29FYy8kwEW58e5kG_qn-Qlr2FqNBBUguQI-0HTiK6Rn_Xg6rfWNkgiiuaCkk6dDSjv7LE"/>
-<img alt="Packaging" class="rounded-xl w-full h-64 object-cover shadow-lg" data-alt="Carefully packaged electronics boxes with protective wrapping and professional labels ready for shipping" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBTuDevobUtQo4ETi21tvfN5uSnBYNnvtCVAH_ncAbYro6jAxdGDgedVrIGwQw8P2rpqbh92cM5RNeDRG2zIuOP5OaxAccmAlZimgXOjvTAeXFc6Hkm8jJhVbU1kfZDvty6RgU9gZzdXhKCjTB6HeOOMfdDHHBjUDbX5ziUfeO8ePgYiIjngvaY0x8NgDd4Gh0-o2ibCtyuIeccw7vltb5uNghkadL1dqWymF3xZDWys8f2Bw9R9GpXKE9vs_PcbHsqm7uJ7n78ZUg"/>
-</div>
-</div>
-</div>
-</div>
-</section>
-<!-- Section 3: Interactive Pricing -->
-<section class="py-24 bg-primary text-white overflow-hidden relative">
-<div class="absolute inset-0 opacity-10">
-<div class="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_50%_50%,_rgba(255,255,255,0.1)_0%,_transparent_50%)]"></div>
-</div>
-<div class="max-w-7xl mx-auto px-6 relative z-10">
-<div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-<div class="order-2 lg:order-1">
-<div class="bg-white/10 backdrop-blur-md p-8 rounded-xl border border-white/10">
-<div class="flex items-center justify-between mb-8">
-<h3 class="font-headline font-bold text-xl">Market Price History</h3>
-<div class="flex gap-2">
-<span class="px-3 py-1 bg-tertiary-fixed text-on-tertiary-fixed text-[10px] font-bold rounded-full uppercase tracking-tighter">Downward Trend</span>
-</div>
-</div>
-<div class="h-64 flex items-end gap-2 px-2">
-<div class="flex-1 bg-secondary-fixed/30 rounded-t-sm h-[40%]"></div>
-<div class="flex-1 bg-secondary-fixed/30 rounded-t-sm h-[55%]"></div>
-<div class="flex-1 bg-secondary-fixed/30 rounded-t-sm h-[45%]"></div>
-<div class="flex-1 bg-secondary-fixed/30 rounded-t-sm h-[70%]"></div>
-<div class="flex-1 bg-secondary-fixed/30 rounded-t-sm h-[60%]"></div>
-<div class="flex-1 bg-secondary-fixed/30 rounded-t-sm h-[85%]"></div>
-<div class="flex-1 bg-secondary-fixed/30 rounded-t-sm h-[50%]"></div>
-<div class="flex-1 bg-secondary-fixed rounded-t-sm h-[30%]"></div>
-</div>
-<div class="mt-8 flex justify-between text-xs font-label text-white/60">
-<span>Jan</span>
-<span>Apr</span>
-<span>Aug</span>
-<span>Dec</span>
-</div>
-</div>
-</div>
-<div class="order-1 lg:order-2">
-<h2 class="font-headline text-3xl lg:text-4xl font-extrabold mb-6">Interactive Price Charts</h2>
-<p class="text-white/80 text-lg mb-8 leading-relaxed">
-                            Make procurement decisions based on real data. Track price fluctuations for thousands of SKUs across seasons and currency exchange rates.
-                        </p>
-<div class="space-y-4">
-<div class="flex items-center gap-4">
-<div class="w-10 h-10 rounded-full bg-secondary-fixed/20 flex items-center justify-center">
-<span class="material-symbols-outlined text-secondary-fixed" data-icon="insights">insights</span>
-</div>
-<p class="font-bold">Predict best purchase timing</p>
-</div>
-<div class="flex items-center gap-4">
-<div class="w-10 h-10 rounded-full bg-secondary-fixed/20 flex items-center justify-center">
-<span class="material-symbols-outlined text-secondary-fixed" data-icon="currency_exchange">currency_exchange</span>
-</div>
-<p class="font-bold">Optimize costs with real-time FX rates</p>
-</div>
-</div>
-</div>
-</div>
-</div>
-</section>
-<!-- Section 4: Professional Sourcing Community -->
-<section class="py-24">
-<div class="max-w-7xl mx-auto px-6">
-<div class="text-center mb-16">
-<h2 class="font-headline text-3xl lg:text-4xl font-extrabold text-primary mb-4">Professional Sourcing Community</h2>
-<p class="text-on-surface-variant max-w-2xl mx-auto">Join a network sharing trusted sources and an Affiliate system connecting supply and demand.</p>
-</div>
-<!-- th:each="card : ${featuredProducts}" placeholder for future trending section -->
-<div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-<!-- Community Catalog Card -->
-<div class="group relative overflow-hidden rounded-xl bg-surface-container-low p-12 transition-all hover:bg-surface-container-high">
-<div class="relative z-10">
-<span class="material-symbols-outlined text-5xl text-primary mb-6" data-icon="groups">groups</span>
-<h3 class="font-headline text-2xl font-extrabold text-primary mb-4">Community Catalog</h3>
-<p class="text-on-surface-variant mb-8 leading-relaxed">Explore product catalogs audited and rated by the community for quality. Find "hidden gems" from lesser-known factories.</p>
-<a class="inline-flex items-center text-primary font-bold gap-2 hover:gap-4 transition-all" th:href="@{/catalog}">
-                                View Catalog <span class="material-symbols-outlined" data-icon="arrow_forward">arrow_forward</span>
-</a>
-</div>
-<div class="absolute -right-20 -bottom-20 w-64 h-64 bg-primary/5 rounded-full blur-3xl group-hover:bg-primary/10 transition-colors"></div>
-</div>
-<!-- Affiliate Network Card -->
-<div class="group relative overflow-hidden rounded-xl bg-surface-container-low p-12 transition-all hover:bg-surface-container-high">
-<div class="relative z-10">
-<span class="material-symbols-outlined text-5xl text-primary mb-6" data-icon="hub">hub</span>
-<h3 class="font-headline text-2xl font-extrabold text-primary mb-4">Affiliate Network</h3>
-<p class="text-on-surface-variant mb-8 leading-relaxed">Build your own business by connecting shop owners with high-quality sources. Earn lifetime commissions on every order.</p>
-<a class="inline-flex items-center text-primary font-bold gap-2 hover:gap-4 transition-all" href="#">
-                                Learn Policy <span class="material-symbols-outlined" data-icon="arrow_forward">arrow_forward</span>
-</a>
-</div>
-<div class="absolute -right-20 -bottom-20 w-64 h-64 bg-secondary-container/20 rounded-full blur-3xl group-hover:bg-secondary-container/40 transition-colors"></div>
-</div>
-</div>
-</div>
-</section>
-<!-- Final CTA -->
-<section class="py-24 bg-surface-container-highest">
-<div class="max-w-4xl mx-auto px-6 text-center">
-<h2 class="font-headline text-4xl lg:text-5xl font-extrabold text-primary mb-6 tracking-tight">Ready to optimize your sourcing?</h2>
-<p class="text-on-surface-variant text-lg mb-12">Join 5,000+ businesses sourcing intelligently every day.</p>
-<a th:href="@{/signup}" class="px-12 py-5 bg-gradient-to-br from-primary to-primary-container text-white rounded-lg font-headline font-bold text-lg tracking-widest uppercase shadow-xl hover:scale-105 transition-all">
-                    Register Free Account
-                </a>
-</div>
-</section>
-</main>
-<!-- Footer -->
-<footer class="bg-[#f2f4f6] dark:bg-slate-950 w-full py-12 px-6 border-t border-[#c2c6d1]/10">
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
-<div>
-<div class="font-['Manrope'] font-bold text-[#003461] dark:text-white text-lg mb-4">Guangzhou Curator</div>
-<p class="text-[#424750] dark:text-slate-400 font-['Inter'] text-xs leading-relaxed">
-                    B2B platform optimizing direct supply chains from Guangzhou to your doorstep.
+                <h1 class="font-headline text-5xl lg:text-7xl font-extrabold text-primary leading-[1.1] tracking-tighter mb-8">
+                    Lấy hàng trực tiếp từ Quảng Châu
+                </h1>
+                <p class="text-on-surface-variant text-xl lg:text-2xl font-normal leading-relaxed mb-10 max-w-xl">
+                    Quy trình minh bạch, DNA sản phẩm rõ ràng. Kết nối trực tiếp với các nhà máy tại trung tâm thương mại toàn cầu.
                 </p>
-</div>
-<div>
-            <h4 class="font-bold text-[#003461] mb-4 text-sm">Ecosystem</h4>
-            <ul class="space-y-2 font-['Inter'] text-xs">
-<li><a class="text-[#424750] hover:text-[#004B87] transition-colors" th:href="@{/sourcing-service}">Sourcing Service</a></li>
-<li><a class="text-[#424750] hover:text-[#004B87] transition-colors" th:href="@{/logistics-hub}">Logistics Hub</a></li>
-<li><a class="text-[#424750] hover:text-[#004B87] transition-colors" th:href="@{/api-integration}">API Integration</a></li>
-</ul>
-</div>
-<div>
-<h4 class="font-bold text-[#003461] mb-4 text-sm">Resources</h4>
-<ul class="space-y-2 font-['Inter'] text-xs">
-<li><a class="text-[#424750] hover:text-[#004B87] transition-colors" th:href="@{/terms}">Terms of Service</a></li>
-<li><a class="text-[#424750] hover:text-[#004B87] transition-colors" th:href="@{/privacy}">Privacy Policy</a></li>
-<li><a class="text-[#424750] hover:text-[#004B87] transition-colors" th:href="@{/sourcing-guide}">Sourcing Guide</a></li>
-</ul>
-</div>
-<div>
-<h4 class="font-bold text-[#003461] mb-4 text-sm">Contact</h4>
-<ul class="space-y-2 font-['Inter'] text-xs">
-<li class="text-[#424750]">Hotline: 1900 88xx</li>
-<li class="text-[#424750]">Email: support@gzdirect.vn</li>
-<li class="text-[#424750]">Office: District 1, Ho Chi Minh City</li>
-</ul>
-</div>
-</div>
-<div class="max-w-7xl mx-auto mt-12 pt-8 border-t border-outline-variant/10 text-center font-['Inter'] text-xs text-[#003461] dark:text-slate-400">
-            © 2024 Guangzhou Curator. Premium B2B Platform.
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <a th:href="@{/register}" class="px-8 py-4 bg-gradient-to-br from-primary to-primary-container text-white rounded-lg font-headline font-bold text-sm tracking-widest uppercase shadow-lg hover:opacity-90 transition-all active:scale-95">
+                        Bắt đầu
+                    </a>
+                    <a th:href="@{/catalog}" class="px-8 py-4 border-2 border-outline-variant text-primary rounded-lg font-headline font-bold text-sm tracking-widest uppercase hover:bg-surface-container-low transition-all active:scale-95">
+                        Khám phá catalog
+                    </a>
+                </div>
+            </div>
+            <div class="relative group">
+                <div class="absolute -inset-4 bg-primary/5 rounded-[2rem] blur-2xl group-hover:bg-primary/10 transition-colors"></div>
+                <div class="relative bg-surface-container-lowest rounded-xl shadow-2xl overflow-hidden border border-outline-variant/15">
+                    <img alt="Khu thương mại" class="w-full h-[500px] object-cover" data-alt="Bức ảnh có góc nhìn cao của trung tâm logistics thương mại bận rộn ở Quảng Châu với các tòa nhà kính kinh tế và thùng chứa vận chuyển được sắp xếp gọn gàng" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB6FuoXjliWiAfRue51S3gq7uiB7ZA1IE9JQY5zFvOnMya86IlKGIfpn6D9pcXoDgBHn_Lb7OTjwccqB29lyBCiTfNlTbblzwU2kAcRQ6n-Cd-hbw2NYYNNHNwlAEGZBgd7VmwLYVqXypA_QssY5whmLjCQ6d_TfBC1WOKVsJgQeORNs0f_rT5mDbkslSDK8-0YTT3zboyQGBJpBfIa9ogfei4a-LAldnT_er6bw8kcChbm9zduM0548-GhHWGjzl5VlybIpDMh0c0"/>
+                    <div class="absolute bottom-6 left-6 right-6 p-6 glass-nav bg-white/60 rounded-lg border border-white/20">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-xs font-bold text-primary uppercase tracking-widest mb-1">Cập nhật trực tiếp</p>
+                                <p class="text-lg font-headline font-extrabold text-on-surface">Thị trường da &amp; giày dép</p>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-xs text-on-surface-variant">Trạng thái</p>
+                                <p class="text-sm font-bold text-tertiary-container">• Đang hoạt động</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-</footer>
-<!-- BottomNavBar (Mobile Only) -->
-<nav class="lg:hidden fixed bottom-0 left-0 w-full flex justify-around items-center px-4 pb-safe pt-2 bg-[#ffffff]/90 dark:bg-slate-950/90 backdrop-blur-lg border-t border-[#c2c6d1]/15 z-50 shadow-[0_-4px_12px_rgba(0,0,0,0.05)]">
-<a class="flex flex-col items-center justify-center text-[#003461] dark:text-white bg-[#cbe7f5]/50 dark:bg-[#004B87]/30 rounded-xl px-4 py-1 active:scale-90 duration-200" href="#">
-<span class="material-symbols-outlined" data-icon="home">home</span>
-<span class="font-['Inter'] text-[10px] font-medium uppercase tracking-widest mt-1">Home</span>
-</a>
-<a class="flex flex-col items-center justify-center text-[#424750] dark:text-slate-500 active:scale-90 duration-200" href="#">
-<span class="material-symbols-outlined" data-icon="show_chart">show_chart</span>
-<span class="font-['Inter'] text-[10px] font-medium uppercase tracking-widest mt-1">Charts</span>
-</a>
-<a class="flex flex-col items-center justify-center text-[#424750] dark:text-slate-500 active:scale-90 duration-200" href="#">
-<span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
-<span class="font-['Inter'] text-[10px] font-medium uppercase tracking-widest mt-1">Orders</span>
-</a>
-<a class="flex flex-col items-center justify-center text-[#424750] dark:text-slate-500 active:scale-90 duration-200" href="#">
-<span class="material-symbols-outlined" data-icon="forum">forum</span>
-<span class="font-['Inter'] text-[10px] font-medium uppercase tracking-widest mt-1">Chat</span>
-</a>
-</nav>
-</body></html>
+    </section>
+    <!-- Section 1: Structured Sourcing Process -->
+    <section class="py-24 bg-surface-container-low">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="font-headline text-3xl lg:text-4xl font-extrabold text-primary mb-4">Quy trình order </h2>
+                <p class="text-on-surface-variant max-w-2xl mx-auto">Trải nghiệm giao tiếp chuyên nghiệp với Thẻ DNA sản phẩm tích hợp trực tiếp trong giao diện trò chuyện.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Step 1 -->
+                <div class="bg-surface-container-lowest p-8 rounded-xl border border-outline-variant/10 shadow-sm">
+                    <div class="w-12 h-12 bg-primary rounded-lg flex items-center justify-center text-white mb-6">
+                        <span class="material-symbols-outlined" data-icon="chat_bubble">chat_bubble</span>
+                    </div>
+                    <h3 class="font-headline font-bold text-xl text-primary mb-3">Trò chuyện trực tiếp thông minh</h3>
+                    <p class="text-on-surface-variant text-sm leading-relaxed">Trao đổi trực tiếp với nhân viên order. Hệ thống tự động dịch và tiêu chuẩn hóa yêu cầu của bạn.</p>
+                </div>
+                <!-- Step 2 -->
+                <div class="bg-surface-container-lowest p-8 rounded-xl border border-outline-variant/10 shadow-sm relative md:translate-y-8">
+                    <div class="w-12 h-12 bg-primary-container rounded-lg flex items-center justify-center text-white mb-6">
+                        <span class="material-symbols-outlined" data-icon="dna">genetics</span>
+                    </div>
+                    <h3 class="font-headline font-bold text-xl text-primary mb-3">Thẻ DNA sản phẩm</h3>
+                    <p class="text-on-surface-variant text-sm leading-relaxed">Tất cả các thông số kỹ thuật, vật liệu và giá nhà máy được đóng gói thành các thẻ dữ liệu minh bạch, dễ so sánh.</p>
+                </div>
+                <!-- Step 3 -->
+                <div class="bg-surface-container-lowest p-8 rounded-xl border border-outline-variant/10 shadow-sm">
+                    <div class="w-12 h-12 bg-primary rounded-lg flex items-center justify-center text-white mb-6">
+                        <span class="material-symbols-outlined" data-icon="task_alt">task_alt</span>
+                    </div>
+                    <h3 class="font-headline font-bold text-xl text-primary mb-3">Xác nhận đơn hàng chính xác</h3>
+                    <p class="text-on-surface-variant text-sm leading-relaxed">Xác nhận đơn hàng dựa trên các thông số được thỏa thuận, hoàn toàn loại bỏ rủi ro nhận hàng sai.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Section 2: Visual Proof -->
+    <section class="py-24 overflow-hidden">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex flex-col lg:flex-row items-center gap-16">
+                <div class="lg:w-1/2">
+                    <h2 class="font-headline text-3xl lg:text-5xl font-extrabold text-primary mb-8 leading-tight">Bằng chứng hình ảnh</h2>
+                    <p class="text-on-surface-variant text-lg mb-10 leading-relaxed">
+                        Chúng tôi không chỉ nói về chất lượng, chúng tôi chứng minh nó. Mỗi lô hàng được kiểm tra tại kho Quảng Châu của chúng tôi với các ảnh và video độ phân giải cao được gửi trực tiếp cho bạn trước khi thanh toán quốc tế.
+                    </p>
+                    <ul class="space-y-6">
+                        <li class="flex items-start gap-4">
+                            <span class="material-symbols-outlined text-tertiary-container mt-1" data-icon="check_circle" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+                            <div>
+                                <h4 class="font-bold text-on-surface">Kiểm soát chất lượng 100%</h4>
+                                <p class="text-sm text-on-surface-variant">Ảnh chụp cận cảnh các thẻ, đường chỉ và bao bì cho mỗi sản phẩm.</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start gap-4">
+                            <span class="material-symbols-outlined text-tertiary-container mt-1" data-icon="check_circle" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+                            <div>
+                                <h4 class="font-bold text-on-surface">Xem lại video trực tiếp</h4>
+                                <p class="text-sm text-on-surface-variant">Yêu cầu video theo yêu cầu để kiểm tra các tính năng hoặc vật liệu theo ý thích của bạn.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="lg:w-1/2 grid grid-cols-2 gap-4">
+                    <div class="space-y-4">
+                        <img alt="Kiểm tra kho hàng" class="rounded-xl w-full h-64 object-cover shadow-lg" data-alt="Nhân viên kiểm soát chất lượng chuyên nghiệp kiểm tra các loại vải trong một kho hiện đại sáng với máy tính bảng" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBmIRZBvLGhW5su1dmlMoM2ks7KWgus0XPTjvgL3YstcEVSaK4Ley2G84MiHkBJMGvtkhQPdk5mmDUYyIqREMZt2n53GbNN16m8_8OXb4hzYxwnJWD-ttsSfK-betGZ1G2alN5uuIzccYkfSIm2SqV97a1FJpErzJLFsSZzmZKoJq3btV9PQ_9Uej-_5836rNF2Y5Rf87bsd1LbBnYrWf0v4V5LIhg7w-Ak1UIFkdKlOLPMh_1jWMuJXTAh8-U1AMIZBMabES7NYYI"/>
+                        <img alt="Chi tiết sản phẩm" class="rounded-xl w-full h-48 object-cover shadow-lg" data-alt="Ảnh macro của độ ráp chất lượng cao da lộn và phần cứng kim loại cao cấp trên một chiếc túi xách thiết kế" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDin8S2vsvxJo3HlDB7aTF7jjW_gA4yJrhjkR1KDOl_BcOszUzYISEJa1hU05Oc9v-e3IQuJGUD4X3yuAmst4vQh4XScyhE5lrHDnBYLFaTUmzQUdIMLKb5S0WUBMdI2VrvInTwkZ2n4dxAk9ru7qB5hJNN2nedxdFR0AnnftyNgk2jMqfTbQOI3guO21u6I6qN27huHqdIE_wf063g5f3W5FHwnhC-M7YHl0t0eatngYxuSWTIm9Kc27LRVJdzJJM-cA4bq5TR5Es"/>
+                    </div>
+                    <div class="space-y-4 pt-8">
+                        <img alt="Trung tâm logistics" class="rounded-xl w-full h-48 object-cover shadow-lg" data-alt="Trung tâm logistics hiện đại với các kệ được sắp xếp gọn gàng và ánh sáng công nghiệp sáng, môi trường sạch sẽ và chuyên nghiệp" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAHyWkAHiM8fTb2fudtaC6kIRfqx2tGefDomcq6DBfKToAw2O5DamrcSt8LzTr1Jvx1j2tflZWCyEzzqjrH8C6PpPfUWIxb5nkRfdqm9jh4umsBupDnfHgHMi-dxpZ5i7h3XH5tBpp8nSOyY0uh5PI6IFgWCVE5sN_4o4qs8DjHMmoAzJZQnZMNlPiD1TotfE9t_woQhK29FYy8kwEW58e5kG_qn-Qlr2FqNBBUguQI-0HTiK6Rn_Xg6rfWNkgiiuaCkk6dDSjv7LE"/>
+                        <img alt="Bao bì" class="rounded-xl w-full h-64 object-cover shadow-lg" data-alt="Các hộp điện tử được đóng gói cẩn thận với bọc bảo vệ và nhãn chuyên nghiệp sẵn sàng vận chuyển" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBTuDevobUtQo4ETi21tvfN5uSnBYNnvtCVAH_ncAbYro6jAxdGDgedVrIGwQw8P2rpqbh92cM5RNeDRG2zIuOP5OaxAccmAlZimgXOjvTAeXFc6Hkm8jJhVbU1kfZDvty6RgU9gZzdXhKCjTB6HeOOMfdDHHBjUDbX5ziUfeO8ePgYiIjngvaY0x8NgDd4Gh0-o2ibCtyuIeccw7vltb5uNghkadL1dqWymF3xZDWys8f2Bw9R9GpXKE9vs_PcbHsqm7uJ7n78ZUg"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Section 3: Interactive Pricing -->
+    <section class="py-24 bg-primary text-white overflow-hidden relative">
+        <div class="absolute inset-0 opacity-10">
+            <div class="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_50%_50%,_rgba(255,255,255,0.1)_0%,_transparent_50%)]"></div>
+        </div>
+        <div class="max-w-7xl mx-auto px-6 relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                <div class="order-2 lg:order-1">
+                    <div class="bg-white/10 backdrop-blur-md p-8 rounded-xl border border-white/10">
+                        <div class="flex items-center justify-between mb-8">
+                            <h3 class="font-headline font-bold text-xl">Lịch sử giá thị trường</h3>
+                            <div class="flex gap-2">
+                                <span class="px-3 py-1 bg-tertiary-fixed text-on-tertiary-fixed text-[10px] font-bold rounded-full uppercase tracking-tighter">Xu hướng giảm</span>
+                            </div>
+                        </div>
+                        <div class="h-64 flex items-end gap-2 px-2">
+                            <div class="flex-1 bg-secondary-fixed/30 rounded-t-sm h-[40%]"></div>
+                            <div class="flex-1 bg-secondary-fixed/30 rounded-t-sm h-[55%]"></div>
+                            <div class="flex-1 bg-secondary-fixed/30 rounded-t-sm h-[45%]"></div>
+                            <div class="flex-1 bg-secondary-fixed/30 rounded-t-sm h-[70%]"></div>
+                            <div class="flex-1 bg-secondary-fixed/30 rounded-t-sm h-[60%]"></div>
+                            <div class="flex-1 bg-secondary-fixed/30 rounded-t-sm h-[85%]"></div>
+                            <div class="flex-1 bg-secondary-fixed/30 rounded-t-sm h-[50%]"></div>
+                            <div class="flex-1 bg-secondary-fixed rounded-t-sm h-[30%]"></div>
+                        </div>
+                        <div class="mt-8 flex justify-between text-xs font-label text-white/60">
+                            <span>Tháng 1</span>
+                            <span>Tháng 4</span>
+                            <span>Tháng 8</span>
+                            <span>Tháng 12</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="order-1 lg:order-2">
+                    <h2 class="font-headline text-3xl lg:text-4xl font-extrabold mb-6">Biểu đồ giá tương tác</h2>
+                    <p class="text-white/80 text-lg mb-8 leading-relaxed">
+                        Đưa ra quyết định mua sắm dựa trên dữ liệu thực. Theo dõi biến động giá cho hàng nghìn SKU trong các mùa và tỷ giá hối đoái.
+                    </p>
+                    <div class="space-y-4">
+                        <div class="flex items-center gap-4">
+                            <div class="w-10 h-10 rounded-full bg-secondary-fixed/20 flex items-center justify-center">
+                                <span class="material-symbols-outlined text-secondary-fixed" data-icon="insights">insights</span>
+                            </div>
+                            <p class="font-bold">Dự đoán thời điểm mua hàng tốt nhất</p>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <div class="w-10 h-10 rounded-full bg-secondary-fixed/20 flex items-center justify-center">
+                                <span class="material-symbols-outlined text-secondary-fixed" data-icon="currency_exchange">currency_exchange</span>
+                            </div>
+                            <p class="font-bold">Tối ưu hóa chi phí với tỷ giá FX thực tế</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Section 4: Professional Sourcing Community -->
+    <section class="py-24">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="font-headline text-3xl lg:text-4xl font-extrabold text-primary mb-4">Cộng đồng tìm nguồn chuyên nghiệp</h2>
+                <p class="text-on-surface-variant max-w-2xl mx-auto">Tham gia một mạng lưới chia sẻ các nguồn tin đáng tin cậy và hệ thống Liên kết kết nối cung và cầu.</p>
+            </div>
+            <!-- th:each="card : ${featuredProducts}" placeholder for future trending section -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- Community Catalog Card -->
+                <div class="group relative overflow-hidden rounded-xl bg-surface-container-low p-12 transition-all hover:bg-surface-container-high">
+                    <div class="relative z-10">
+                        <span class="material-symbols-outlined text-5xl text-primary mb-6" data-icon="groups">groups</span>
+                        <h3 class="font-headline text-2xl font-extrabold text-primary mb-4">Danh mục cộng đồng</h3>
+                        <p class="text-on-surface-variant mb-8 leading-relaxed">Khám phá các danh mục sản phẩm được kiểm toán và xếp hạng bởi cộng đồng về chất lượng. Tìm những "viên ngọc ẩn"</p>
+                        <a th:href="@{/community-catalog}" class="inline-flex items-center gap-2 text-primary font-bold hover:gap-3 transition-all">
+                            Duyệt danh mục
+                            <span class="material-symbols-outlined">arrow_forward</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Affiliate System Card -->
+                <div class="group relative overflow-hidden rounded-xl bg-surface-container-low p-12 transition-all hover:bg-surface-container-high">
+                    <div class="relative z-10">
+                        <span class="material-symbols-outlined text-5xl text-primary mb-6" data-icon="hub">hub</span>
+                        <h3 class="font-headline text-2xl font-extrabold text-primary mb-4">Hệ thống liên kết</h3>
+                        <p class="text-on-surface-variant mb-8 leading-relaxed">Kết nối những người mua với những người bán. Nhận hoa hồng cho các giới thiệu thành công.</p>
+                        <a th:href="@{/affiliate-signup}" class="inline-flex items-center gap-2 text-primary font-bold hover:gap-3 transition-all">
+                            Tham gia chương trình
+                            <span class="material-symbols-outlined">arrow_forward</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Section 5: Core Values -->
+    <section class="py-24 bg-surface-container-low">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="font-headline text-3xl lg:text-4xl font-extrabold text-primary mb-4">Tại sao chọn Guangzhou Direct</h2>
+                <p class="text-on-surface-variant max-w-2xl mx-auto">Chúng tôi không phải là một thị trường thông thường. Chúng tôi là một hệ sinh thái tìm nguồn được thiết kế bởi các chuyên gia giao dịch quốc tế.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="flex gap-4">
+                    <div class="flex-shrink-0">
+                        <div class="flex items-center justify-center h-12 w-12 rounded-md bg-primary text-white">
+                            <span class="material-symbols-outlined" data-icon="verified">verified</span>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-lg text-on-surface mb-2">Những nhà cung cấp được xác minh</h3>
+                        <p class="text-on-surface-variant">Chỉ các nhà máy có giấy phép và được kiểm toán từ Quảng Châu.</p>
+                    </div>
+                </div>
+
+                <div class="flex gap-4">
+                    <div class="flex-shrink-0">
+                        <div class="flex items-center justify-center h-12 w-12 rounded-md bg-primary text-white">
+                            <span class="material-symbols-outlined" data-icon="language">language</span>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-lg text-on-surface mb-2">Hỗ trợ đa ngôn ngữ</h3>
+                        <p class="text-on-surface-variant">Giao tiếp liền mạch với dịch thuật AI tích hợp.</p>
+                    </div>
+                </div>
+
+                <div class="flex gap-4">
+                    <div class="flex-shrink-0">
+                        <div class="flex items-center justify-center h-12 w-12 rounded-md bg-primary text-white">
+                            <span class="material-symbols-outlined" data-icon="paid">paid</span>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-lg text-on-surface mb-2">Chi phí minh bạch</h3>
+                        <p class="text-on-surface-variant">Không phí ẩn, không chi phí bất ngờ, chỉ giá thoả thuận.</p>
+                    </div>
+                </div>
+
+                <div class="flex gap-4">
+                    <div class="flex-shrink-0">
+                        <div class="flex items-center justify-center h-12 w-12 rounded-md bg-primary text-white">
+                            <span class="material-symbols-outlined" data-icon="security">security</span>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-lg text-on-surface mb-2">An toàn thanh toán</h3>
+                        <p class="text-on-surface-variant">Khóa tiền trong ký quỹ cho đến khi kiểm tra chất lượng hoàn thành.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- CTA Section -->
+    <section class="py-24 bg-primary text-white text-center">
+        <div class="max-w-3xl mx-auto px-6">
+            <h2 class="font-headline text-3xl lg:text-5xl font-extrabold mb-6">Sẵn sàng bắt đầu?</h2>
+            <p class="text-white/80 text-xl mb-10 leading-relaxed">Tham gia hàng nghìn nhà mua hàng đã giảm chi phí và cải thiện chất lượng với Guangzhou Direct.</p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a th:href="@{/register}" class="px-8 py-4 bg-white text-primary rounded-lg font-headline font-bold text-sm tracking-widest uppercase shadow-lg hover:opacity-90 transition-all active:scale-95">
+                    Đăng ký miễn phí
+                </a>
+                <a th:href="@{/chat}" class="px-8 py-4 border-2 border-white text-white rounded-lg font-headline font-bold text-sm tracking-widest uppercase hover:bg-white/10 transition-all active:scale-95">
+                    Liên hệ với chúng tôi
+                </a>
+            </div>
+        </div>
+    </section>
+    <!-- Footer -->
+    <footer class="bg-surface-container py-12 border-t border-outline-variant/20">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
+                <div>
+                    <h4 class="font-headline font-bold text-on-surface mb-4">Guangzhou Direct</h4>
+                    <p class="text-on-surface-variant text-sm">Nền tảng mua sắm B2B kết nối những người mua với những nhà máy tại Quảng Châu.</p>
+                </div>
+                <div>
+                    <h4 class="font-headline font-bold text-on-surface mb-4">Công ty</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#" class="text-on-surface-variant hover:text-primary transition-colors">Về chúng tôi</a></li>
+                        <li><a href="#" class="text-on-surface-variant hover:text-primary transition-colors">Công nghệ</a></li>
+                        <li><a href="#" class="text-on-surface-variant hover:text-primary transition-colors">Bảo mật</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-headline font-bold text-on-surface mb-4">Tài nguyên</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#" class="text-on-surface-variant hover:text-primary transition-colors">Tài liệu</a></li>
+                        <li><a href="#" class="text-on-surface-variant hover:text-primary transition-colors">Hỗ trợ</a></li>
+                        <li><a href="#" class="text-on-surface-variant hover:text-primary transition-colors">Cộng đồng</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-headline font-bold text-on-surface mb-4">Pháp lý</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#" class="text-on-surface-variant hover:text-primary transition-colors">Quyền riêng tư</a></li>
+                        <li><a href="#" class="text-on-surface-variant hover:text-primary transition-colors">Điều khoản</a></li>
+                        <li><a href="#" class="text-on-surface-variant hover:text-primary transition-colors">Giải quyết tranh chấp</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-outline-variant/20 pt-8">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <p class="text-on-surface-variant text-sm">© 2024 Guangzhou Direct. Bảo lưu mọi quyền.</p>
+                    <div class="flex gap-6 mt-4 md:mt-0">
+                        <a href="#" class="text-on-surface-variant hover:text-primary transition-colors">
+                            <span class="material-symbols-outlined">language</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+</main>
+</body>
+</html>
