@@ -6,6 +6,7 @@ import com.example.guangzhouorder.dto.chat.MessageResponse;
 import com.example.guangzhouorder.entity.Conversation;
 import com.example.guangzhouorder.entity.User;
 import com.example.guangzhouorder.service.ChatService;
+import com.example.guangzhouorder.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -31,6 +32,7 @@ public class ChatController {
 
     private final ChatService chatService;
     private final SimpMessagingTemplate simpMessagingTemplate;
+    private final UserService userService;
 
 
     //Customer chat list: show all conversations for the customer.
@@ -48,6 +50,7 @@ public class ChatController {
         List<ConversationResponse> conversations = chatService.getCustomerConversations(currentUser);
         model.addAttribute("conversations", conversations);
         model.addAttribute("currentUserEmail", currentUser.getEmail());
+        model.addAttribute("currentUser", currentUser);
         
         return "chat/customer_chat_list";
     }
@@ -102,6 +105,7 @@ public class ChatController {
         model.addAttribute("conversation", conversationResponse);
         model.addAttribute("messages", messages);
         model.addAttribute("currentUserEmail", currentUser.getEmail());
+        model.addAttribute("currentUser", currentUser);
         
         return "chat/customer_chat";
     }
