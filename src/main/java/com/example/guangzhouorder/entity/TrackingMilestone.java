@@ -41,8 +41,10 @@ public class TrackingMilestone {
     private LocalDateTime timestamp;
 
     @Column(name = "is_completed")
-    private boolean isCompleted;
+    @Builder.Default
+    private boolean isCompleted = false;
 
     @Column(name = "is_current")
-    private boolean isCurrent;
+    @Builder.Default
+    private boolean isCurrent = false;
 }

@@ -216,21 +216,6 @@
             </div>
         </div>
 
-        <!-- Progress Bar -->
-        <div class="bg-surface-container-lowest p-6 rounded-xl shadow-sm border border-outline-variant/10 mb-8">
-            <div class="flex justify-between items-center mb-3">
-                <p class="text-sm font-bold text-primary">Delivery Progress</p>
-                <p class="text-sm font-extrabold text-primary" th:text="${tracking.progressPercent} + '%'">0%</p>
-            </div>
-            <div class="w-full h-3 bg-surface-container rounded-full overflow-hidden">
-                <div class="h-full bg-primary-gradient transition-all duration-500 rounded-full" th:style="'width: ' + ${tracking.progressPercent} + '%'"></div>
-            </div>
-            <div class="flex justify-between mt-2">
-                <p class="text-xs text-on-surface-variant" th:text="${tracking.originLocation}">Guangzhou, China</p>
-                <p class="text-xs text-on-surface-variant" th:text="${tracking.destinationLocation}">Ho Chi Minh City</p>
-            </div>
-        </div>
-
         <!-- Timeline Section -->
         <div class="bg-surface-container-lowest p-8 rounded-xl shadow-sm border border-outline-variant/10 relative overflow-hidden">
             <div class="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-bl-full -mr-8 -mt-8"></div>

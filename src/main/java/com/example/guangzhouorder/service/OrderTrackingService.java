@@ -13,7 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Random;
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -23,6 +22,11 @@ public class OrderTrackingService {
     private final TrackingMilestoneRepository milestoneRepository;
     private final OrderRepository orderRepository;
     private final Random random = new Random();
+
+    public OrderTracking getTrackingByOrderId(Long orderId) {
+        return trackingRepository.findByOrderOrderId(orderId)
+                .orElse(null);
+    }
 
     @Transactional
     public OrderTracking getOrCreateTracking(Long orderId) {
@@ -45,120 +49,42 @@ public class OrderTrackingService {
                 .order(order)
                 .trackingNumber(trackingNumber)
                 .carrier("Guangzhou Direct Logistics")
-                .currentStatus("IN_TRANSIT")
+                .currentStatus("PICKED_UP")
                 .originLocation("Guangzhou, China")
                 .destinationLocation("Ho Chi Minh City, Vietnam")
-                .currentLocation(getRandomLocation())
+                .currentLocation("Guangzhou Warehouse")
                 .estimatedDelivery(LocalDateTime.now().plusDays(5 + random.nextInt(10)))
                 .isDelivered(false)
                 .build();
 
         tracking = trackingRepository.save(tracking);
 
-        List<TrackingMilestone> milestones = generateFakeMilestones(tracking);
-        milestoneRepository.saveAll(milestones);
+        List<TrackingMilestone> milestones = List.of(
+            createMilestone(tracking, 1, "PICKED_UP", "Picked Up", "Guangzhou Warehouse", "Package picked up from factory", true, false),
+            createMilestone(tracking, 2, "AT_FACTORY", "At Factory", "Guangzhou Sorting Center", "Package processed at sorting facility", false, false),
+            createMilestone(tracking, 3, "CUSTOMS_EXPORT", "Export Customs", "Shenzhen Customs", "Cleared Chinese export customs", false, false),
+            createMilestone(tracking, 4, "IN_TRANSIT", "In Transit", "In Transit", "Package in transit to destination", false, false),
+            createMilestone(tracking, 5, "CUSTOMS_IMPORT", "Import Customs", "Ho Chi Minh City", "Pending Vietnam import customs", false, false),
+            createMilestone(tracking, 6, "OUT_FOR_DELIVERY", "Out for Delivery", "HCMC Distribution Center", "Out for delivery to customer", false, false),
+            createMilestone(tracking, 7, "DELIVERED", "Delivered", "Customer Address", "Package delivered successfully", false, false)
+        );
 
+        milestoneRepository.saveAll(milestones);
         return tracking;
     }
 
-    private List<TrackingMilestone> generateFakeMilestones(OrderTracking tracking) {
-        LocalDateTime now = LocalDateTime.now();
-        Order order = tracking.getOrder();
-        boolean isDelivered = "DONE".equals(order.getStatus());
-
-        return List.of(
-            TrackingMilestone.builder()
+    private TrackingMilestone createMilestone(OrderTracking tracking, int step, String status, String label, String location, String desc, boolean completed, boolean current) {
+        return TrackingMilestone.builder()
                 .tracking(tracking)
-                .stepOrder(1)
-                .status("PICKED_UP")
-                .statusLabel("Picked Up")
-                .location("Guangzhou Warehouse")
-                .description("Package picked up from factory in Baiyun District")
-                .timestamp(now.minusDays(3 + random.nextInt(3)))
-                .isCompleted(true)
-                .isCurrent(false)
-                .build(),
-            TrackingMilestone.builder()
-                .tracking(tracking)
-                .stepOrder(2)
-                .status("AT_FACTORY")
-                .statusLabel("At Factory")
-                .location("Guangzhou Sorting Center")
-                .description("Package processed at Guangzhou sorting facility")
-                .timestamp(now.minusDays(2 + random.nextInt(2)))
-                .isCompleted(true)
-                .isCurrent(false)
-                .build(),
-            TrackingMilestone.builder()
-                .tracking(tracking)
-                .stepOrder(3)
-                .status("CUSTOMS_EXPORT")
-                .statusLabel("Export Customs")
-                .location("Shenzhen Customs")
-                .description("Cleared Chinese export customs - awaiting transport")
-                .timestamp(now.minusDays(1 + random.nextInt(2)))
-                .isCompleted(true)
-                .isCurrent(false)
-                .build(),
-            TrackingMilestone.builder()
-                .tracking(tracking)
-                .stepOrder(4)
-                .status("IN_TRANSIT")
-                .statusLabel(isDelivered ? "In Transit" : "In Transit")
-                .location(tracking.getCurrentLocation())
-                .description(isDelivered ? "Package in transit to destination" : "Package currently in transit via land route")
-                .timestamp(now.minusHours(random.nextInt(24)))
-                .isCompleted(isDelivered)
-                .isCurrent(!isDelivered)
-                .build(),
-            TrackingMilestone.builder()
-                .tracking(tracking)
-                .stepOrder(5)
-                .status("CUSTOMS_IMPORT")
-                .statusLabel("Import Customs")
-                .location("Ho Chi Minh City")
-                .description(isDelivered ? "Cleared Vietnam import customs" : "Pending Vietnam import customs clearance")
-                .timestamp(isDelivered ? now.minusHours(12) : null)
-                .isCompleted(isDelivered)
-                .isCurrent(!isDelivered)
-                .build(),
-            TrackingMilestone.builder()
-                .tracking(tracking)
-                .stepOrder(6)
-                .status("OUT_FOR_DELIVERY")
-                .statusLabel("Out for Delivery")
-                .location("Ho Chi Minh City Distribution Center")
-                .description(isDelivered ? "Out for delivery to customer" : "Estimated delivery soon")
-                .timestamp(isDelivered ? now.minusHours(6) : null)
-                .isCompleted(isDelivered)
-                .isCurrent(!isDelivered)
-                .build(),
-            TrackingMilestone.builder()
-                .tracking(tracking)
-                .stepOrder(7)
-                .status("DELIVERED")
-                .statusLabel("Delivered")
-                .location("Customer Address")
-                .description(isDelivered ? "Package delivered successfully" : "Pending delivery")
-                .timestamp(isDelivered ? now : null)
-                .isCompleted(isDelivered)
-                .isCurrent(false)
-                .build()
-        );
-    }
-
-    private String getRandomLocation() {
-        List<String> locations = List.of(
-            "Shenzhen - Dongguan Highway",
-            "Guangzhou - Foshan Route",
-            "Hanoi - Ha Long Expressway",
-            "Nanning Border Crossing",
-            "Lang Son Checkpoint",
-            "Bac Ninh Distribution Hub",
-            "Hai Phong Port",
-            "Hanoi Logistics Center"
-        );
-        return locations.get(random.nextInt(locations.size()));
+                .stepOrder(step)
+                .status(status)
+                .statusLabel(label)
+                .location(location)
+                .description(desc)
+                .timestamp(completed ? LocalDateTime.now().minusHours(random.nextInt(48)) : null)
+                .isCompleted(completed)
+                .isCurrent(current)
+                .build();
     }
 
     public List<TrackingMilestone> getMilestones(Long trackingId) {
@@ -172,5 +98,43 @@ public class OrderTrackingService {
         List<TrackingMilestone> milestones = milestoneRepository.findByTrackingTrackingIdOrderByStepOrderAsc(tracking.getTrackingId());
         long completed = milestones.stream().filter(TrackingMilestone::isCompleted).count();
         return (int) ((completed * 100) / milestones.size());
+    }
+
+    @Transactional
+    public void updateMilestoneStatus(Long trackingId, int stepOrder, boolean completed, String timestamp) {
+        TrackingMilestone milestone = milestoneRepository.findByTrackingTrackingIdOrderByStepOrderAsc(trackingId)
+                .stream()
+                .filter(m -> m.getStepOrder() == stepOrder)
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException("Milestone not found"));
+
+        milestone.setCompleted(completed);
+        if (timestamp != null) {
+            milestone.setTimestamp(LocalDateTime.parse(timestamp));
+        }
+        milestoneRepository.save(milestone);
+
+        if (completed) {
+            milestoneRepository.findByTrackingTrackingIdOrderByStepOrderAsc(trackingId)
+                    .stream()
+                    .filter(m -> m.getStepOrder() == stepOrder + 1)
+                    .findFirst()
+                    .ifPresent(next -> {
+                        next.setCurrent(true);
+                        milestoneRepository.save(next);
+                    });
+        }
+
+        OrderTracking tracking = trackingRepository.findById(trackingId)
+                .orElseThrow(() -> new RuntimeException("Tracking not found"));
+        tracking.setCurrentLocation(milestone.getLocation());
+        tracking.setCurrentStatus(milestone.getStatus());
+        
+        if (stepOrder == 7 && completed) {
+            tracking.setDelivered(true);
+            tracking.setActualDelivery(LocalDateTime.now());
+        }
+        
+        trackingRepository.save(tracking);
     }
 }
