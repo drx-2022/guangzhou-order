@@ -10,6 +10,11 @@ import com.example.guangzhouorder.repository.PaymentRepository;
 import com.example.guangzhouorder.repository.ProductCardRepository;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.WriterException;
+import com.google.zxing.client.j2se.MatrixToImageWriter;
+import com.google.zxing.common.BitMatrix;
+import com.google.zxing.qrcode.QRCodeWriter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -24,13 +29,12 @@ import org.springframework.web.client.RestTemplate;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.nio.charset.StandardCharsets;
-import java.util.HexFormat;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 @Slf4j
@@ -174,13 +178,31 @@ public class PaymentService {
                     .payosOrderCode(orderCode)
                     .payosPaymentLinkId(paymentLinkId)
                     .payosCheckoutUrl(checkoutUrl)
-                    .payosQrCode(qrCode)
+                    .payosQrCode(generateQrCodeBase64(qrCode, 300, 300))
                     .build();
 
             return paymentRepository.save(payment);
         } catch (Exception e) {
             if (e instanceof RuntimeException) throw (RuntimeException) e;
             throw new RuntimeException("Failed to parse PayOS response: " + response.getBody(), e);
+        }
+    }
+
+    public String generateQrCodeBase64(String text, int width, int height) {
+        try {
+            QRCodeWriter qrCodeWriter = new QRCodeWriter();
+            BitMatrix bitMatrix = qrCodeWriter.encode(text, BarcodeFormat.QR_CODE, width, height);
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            MatrixToImageWriter.writeToStream(bitMatrix, "PNG", outputStream);
+            byte[] pngData = outputStream.toByteArray();
+            String result = Base64.getEncoder().encodeToString(pngData);
+            return result;
+        } catch (WriterException e) {
+            log.error("Error generating QR code", e);
+            throw new RuntimeException("Could not generate QR code", e);
+        } catch (IOException e) {
+            log.error("Error generating QR code", e);
+            throw new RuntimeException(e);
         }
     }
 

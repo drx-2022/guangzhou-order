@@ -97,9 +97,13 @@
 
                 <div class="p-8 flex flex-col items-center">
                     <div class="bg-white p-4 rounded-2xl shadow-lg border-2 border-primary/10 animate-pulse-border">
-                        <img th:src="'https://quickchart.io/qr?text=' + ${payment.payosCheckoutUrl}"
+                        <img th:if="${payment.payosQrCode != null}"
+                             th:src="'data:image/png;base64,' + ${payment.payosQrCode}"
                              class="w-64 h-64 md:w-72 md:h-72 object-contain rounded-xl"
-                             alt="Mã QR thanh toán"/>
+                             alt="Mã QR thanh toán" />
+                        <div th:unless="${payment.payosQrCode != null}" class="w-64 h-64 md:w-72 md:h-72 flex items-center justify-center bg-surface-container rounded-xl">
+                            <p class="text-sm text-on-surface-variant">Đang tạo mã QR...</p>
+                        </div>
                     </div>
 
                     <div class="mt-6 text-center">

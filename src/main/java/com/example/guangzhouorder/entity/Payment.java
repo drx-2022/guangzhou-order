@@ -49,7 +49,7 @@ public class Payment {
     @Column(name = "payos_checkout_url")
     private String payosCheckoutUrl;
 
-    @Column(name = "payos_qr_code")
+    @Column(name = "payos_qr_code", columnDefinition = "TEXT")
     private String payosQrCode;
 
     @CreationTimestamp
