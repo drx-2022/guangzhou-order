@@ -84,7 +84,7 @@
         <div class="flex items-center gap-8">
             <span class="text-xl font-black text-[#003461] dark:text-white tracking-tighter font-headline">Guangzhou Direct</span>
             <div class="hidden md:flex gap-6 items-center">
-                <a class="font-headline font-bold tracking-tight text-[#424750] dark:text-slate-400 hover:text-[#004B87]" href="/dashboard">Bảng Điều Khiển</a>
+                <a class="font-headline font-bold tracking-tight text-[#424750] dark:text-slate-400 hover:text-[#004B87]" href="/customer/dashboard">Bảng Điều Khiển</a>
                 <a class="font-headline font-bold tracking-tight text-[#424750] dark:text-slate-400 hover:text-[#004B87]" href="/orders">Đơn Hàng</a>
                 <a class="font-headline font-bold tracking-tight text-[#424750] dark:text-slate-400 hover:text-[#004B87]" href="/catalog">Tìm Nguồn</a>
 
@@ -117,7 +117,7 @@
             <p class="text-xs text-on-surface-variant">Quản lý cuộc trò chuyện của bạn</p>
         </div>
         <nav class="flex-1 overflow-y-auto p-4 space-y-2">
-            <a class="flex items-center gap-3 py-2 px-4 text-[#424750] hover:bg-[#f2f4f6] rounded-lg transition-all" href="/dashboard">
+            <a class="flex items-center gap-3 py-2 px-4 text-[#424750] hover:bg-[#f2f4f6] rounded-lg transition-all" href="/customer/dashboard">
                 <span class="material-symbols-outlined text-[20px]">dashboard</span>
                 <span class="font-headline text-sm font-semibold">Bảng Điều Khiển</span>
             </a>
@@ -253,7 +253,7 @@
 
     function createNewConversation() {
         fetch('/dashboard/chat/new', {
-            method: 'POST',
+            method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
             }

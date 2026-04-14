@@ -588,7 +588,7 @@ function openSettingsModal() {
     // Create new request/conversation
     function createNewRequest() {
         fetch('/dashboard/chat/new', {
-            method: 'POST',
+            method: 'GET',
             headers: { 'Content-Type': 'application/json' }
         })
         .then(response => {
