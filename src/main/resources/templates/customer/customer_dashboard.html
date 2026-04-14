@@ -275,7 +275,7 @@ Xem Đơn Hàng
 <span class="material-symbols-outlined text-sm">camera_enhance</span>
 Phê Duyệt Visual Proof
 </a>
-<a th:if="${o.status == 'Pending Deposit'}" th:href="@{/payment/{id}/deposit(id=${o.orderId})}" class="flex items-center gap-1 text-[10px] font-bold text-tertiary-container hover:underline">
+<a th:if="${o.status == 'PENDING_DEPOSIT'}" th:href="@{/payment/{id}/deposit(id=${o.orderId})}" class="flex items-center gap-1 text-[10px] font-bold text-tertiary-container hover:underline">
 <span class="material-symbols-outlined text-sm">payments</span>
 Thanh Toán Đặt Cọc
 </a>

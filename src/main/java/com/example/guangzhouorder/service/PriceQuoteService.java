@@ -156,7 +156,7 @@ public class PriceQuoteService {
         priceQuoteRepository.save(quote);
 
         order.setFinalPrice(quote.getProposedPrice());
-        order.setStatus("Pending Deposit");
+        order.setStatus("PENDING_DEPOSIT");
         order.setPaymentStatus("UNPAID");
         orderRepository.save(order);
 

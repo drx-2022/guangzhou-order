@@ -67,7 +67,7 @@ public class PaymentService {
             throw new AccessDeniedException("Access denied");
         }
 
-        if (!"Pending Deposit".equals(order.getStatus())) {
+        if (!"PENDING_DEPOSIT".equals(order.getStatus())) {
             throw new IllegalStateException("Order is not in Pending Deposit status");
         }
 

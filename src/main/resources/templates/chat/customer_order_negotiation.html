@@ -142,21 +142,31 @@
             </div>
 
             <div class="bg-surface-container-low rounded-xl p-4 space-y-3">
-                <p class="text-[10px] font-bold uppercase tracking-wider text-on-surface-variant">Giá Ước Tính (Trần)</p>
-                <p class="text-lg font-bold text-primary" th:text="${!#lists.isEmpty(quotes) ? quotes[0].estimatePrice : 'N/A'}"></p>
+                <p class="text-[10px] font-bold uppercase tracking-wider text-on-surface-variant">Giá Ước Tính</p>
+                <p class="text-lg font-bold text-primary" th:if="${!#lists.isEmpty(quotes) and quotes[0].estimatePrice != null}" th:text="${#numbers.formatDecimal(quotes[0].estimatePrice, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'"></p>
+                <p class="text-lg font-bold text-primary" th:unless="${!#lists.isEmpty(quotes) and quotes[0].estimatePrice != null}">N/A</p>
             </div>
 
             <div th:if="${order.finalPrice != null}" class="bg-tertiary-fixed/20 rounded-xl p-4 space-y-3">
                 <p class="text-[10px] font-bold uppercase tracking-wider text-tertiary">Giá Cuối Cùng Đã Thống Nhất</p>
-                <p class="text-lg font-bold text-tertiary" th:text="'VNĐ' + ${order.finalPrice}"></p>
+                <p class="text-lg font-bold text-tertiary" th:text="${#numbers.formatDecimal(order.finalPrice, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'"></p>
             </div>
 
-            <div th:if="${order.status == 'Pending Deposit'}" class="bg-primary-container rounded-xl p-4 space-y-3">
+            <div th:if="${order.status == 'PENDING_DEPOSIT'}" class="bg-primary-container rounded-xl p-4 space-y-3">
                 <p class="text-[10px] font-bold uppercase tracking-wider text-white">Bước Tiếp Theo: Thanh Toán</p>
                 <p class="text-xs text-white/80">Thanh toán 30% để bắt đầu sản xuất</p>
                 <a class="block w-full text-center bg-white text-primary py-2 rounded-lg font-bold text-sm hover:bg-white/90 transition-all"
                    th:href="'/payment/' + ${order.orderId} + '/deposit'">
                     Thanh Toán Cọc Ngay
+                </a>
+            </div>
+
+            <div th:if="${order.paymentStatus == 'DEPOSITED'}" class="bg-green-600 rounded-xl p-4 space-y-3">
+                <p class="text-[10px] font-bold uppercase tracking-wider text-white">Bước Tiếp Theo: Thanh Toán Còn Lại</p>
+                <p class="text-xs text-white/80">Thanh toán 70% còn lại để hoàn tất đơn hàng</p>
+                <a class="block w-full text-center bg-white text-green-600 py-2 rounded-lg font-bold text-sm hover:bg-white/90 transition-all"
+                   th:href="'/payment/' + ${order.orderId} + '/balance'">
+                    Thanh Toán Còn Lại Ngay
                 </a>
             </div>
         </div>
@@ -249,13 +259,13 @@
                             <!-- Proposed Price -->
                             <div class="bg-surface-container-low rounded-xl p-4">
                                 <p class="text-[10px] font-headline font-bold text-on-surface-variant uppercase tracking-wider mb-1">Giá Đề Xuất</p>
-                                <p class="text-3xl font-extrabold text-on-surface" th:text="'$' + ${quote.proposedPrice}"></p>
+                                <p class="text-3xl font-extrabold text-on-surface" th:text="${#numbers.formatDecimal(quote.proposedPrice, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'"></p>
                             </div>
 
                             <!-- Estimate Price (ceiling) -->
                             <div th:if="${quote.estimatePrice != null}">
-                                <p class="text-[10px] font-headline font-bold text-on-surface-variant uppercase tracking-wider mb-1">Giá Trần Ước Tính</p>
-                                <p class="text-sm font-semibold text-on-surface" th:text="'$' + ${quote.estimatePrice}"></p>
+                                <p class="text-[10px] font-headline font-bold text-on-surface-variant uppercase tracking-wider mb-1">Giá Ước Tính</p>
+                                <p class="text-sm font-semibold text-on-surface" th:text="${#numbers.formatDecimal(quote.estimatePrice, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'"></p>
                             </div>
 
                             <!-- Note -->
@@ -303,7 +313,7 @@
                 </p>
                 <div class="flex gap-3">
                     <div class="flex-1">
-                        <label class="text-[10px] font-bold text-on-surface-variant uppercase tracking-wider">Giá Đề Xuất Của Bạn ($)</label>
+                        <label class="text-[10px] font-bold text-on-surface-variant uppercase tracking-wider">Giá Đề Xuất Của Bạn (VNĐ)</label>
                         <input type="number" name="proposedPrice" step="0.01" min="0.01" required
                                class="w-full mt-1.5 px-3 py-2.5 border border-outline-variant/30 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 bg-white"
                                placeholder="ví dụ 12.50"/>
@@ -342,7 +352,7 @@
                               class="text-[10px] font-bold px-2 py-0.5 rounded-full"
                               th:text="${quote.status}"></span>
                     </div>
-                    <p class="text-lg font-bold text-primary" th:text="'$' + ${quote.proposedPrice}"></p>
+                    <p class="text-lg font-bold text-primary" th:text="${#numbers.formatDecimal(quote.proposedPrice, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'"></p>
                     <p th:if="${quote.note}" class="text-[10px] text-on-surface-variant" th:text="${quote.note}"></p>
                     <p class="text-[10px] text-on-surface-variant opacity-60" th:text="${quote.createdAt}"></p>
                 </div>
@@ -545,7 +555,7 @@
         const estimateHtml = data.estimatePrice ? `
             <div>
                 <p class="text-[10px] font-headline font-bold text-on-surface-variant uppercase tracking-wider mb-1">Giá Trần Ước Tính</p>
-                <p class="text-sm font-semibold text-on-surface">$${escapeHtml(String(data.estimatePrice))}</p>
+                <p class="text-sm font-semibold text-on-surface">${escapeHtml(String(data.estimatePrice).replace(/\B(?=(\d{3})+(?!\d))/g, ','))} VNĐ</p>
             </div>` : '';
 
         const acceptBtnHtml = (!isMyQuote && data.status === 'PENDING') ? `
@@ -580,7 +590,7 @@
                     </div>
                     <div class="bg-surface-container-low rounded-xl p-4">
                         <p class="text-[10px] font-headline font-bold text-on-surface-variant uppercase tracking-wider mb-1">Giá Đề Xuất</p>
-                        <p class="text-3xl font-extrabold text-on-surface">$${escapeHtml(String(data.proposedPrice))}</p>
+                        <p class="text-3xl font-extrabold text-on-surface">${escapeHtml(String(data.proposedPrice).replace(/\B(?=(\d{3})+(?!\d))/g, ','))} VNĐ</p>
                     </div>
                     ${estimateHtml}
                     ${noteHtml}
@@ -607,7 +617,7 @@
                     <span class="text-[10px] font-bold text-on-surface-variant">${escapeHtml(data.proposedByName)}</span>
                     <span class="text-[10px] font-bold px-2 py-0.5 rounded-full ${statusClass}">${escapeHtml(data.status)}</span>
                 </div>
-                <p class="text-lg font-bold text-primary">$${escapeHtml(String(data.proposedPrice))}</p>
+                <p class="text-lg font-bold text-primary">${escapeHtml(String(data.proposedPrice).replace(/\B(?=(\d{3})+(?!\d))/g, ','))} VNĐ</p>
                 ${data.note ? '<p class="text-[10px] text-on-surface-variant">' + escapeHtml(data.note) + '</p>' : ''}
                 <p class="text-[10px] text-on-surface-variant opacity-60">${escapeHtml(data.createdAt || 'Vừa xong')}</p>
             </div>`;

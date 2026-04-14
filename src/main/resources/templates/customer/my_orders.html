@@ -165,7 +165,7 @@
                 <p class="text-2xl font-extrabold text-[#004b87]" th:text="${processingOrders}">0</p>
             </div>
             <div class="bg-surface-container-lowest p-5 rounded-xl shadow-sm border border-outline-variant/10">
-                <p class="text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-1">Đang Thương Lượng</p>
+                <p class="text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-1">Đã Thanh Toán</p>
                 <p class="text-2xl font-extrabold text-[#00544b]" th:text="${negotiatingOrders}">0</p>
             </div>
             <div class="bg-surface-container-lowest p-5 rounded-xl shadow-sm border border-outline-variant/10">
@@ -183,7 +183,7 @@
                         <th class="px-6 py-4 text-xs font-bold text-on-surface-variant uppercase tracking-widest">Ngày Tạo</th>
                         <th class="px-6 py-4 text-xs font-bold text-on-surface-variant uppercase tracking-widest">Trạng Thái</th>
                         <th class="px-6 py-4 text-xs font-bold text-on-surface-variant uppercase tracking-widest">Thanh Toán</th>
-                        <th class="px-6 py-4 text-xs font-bold text-on-surface-variant uppercase tracking-widest text-right">Giá Trị Ước Tính</th>
+                        <th class="px-6 py-4 text-xs font-bold text-on-surface-variant uppercase tracking-widest text-right">Giá Ước Tính</th>
                         <th class="px-6 py-4 text-xs font-bold text-on-surface-variant uppercase tracking-widest"></th>
                     </tr>
                     </thead>
@@ -260,7 +260,7 @@
                             </span>
                         </td>
                         <td class="px-6 py-5 text-right">
-                            <p class="text-sm font-bold text-primary" th:if="${order.finalPrice != null}" th:text="${#numbers.formatDecimal(order.finalPrice, 0, 'COMMA', 0, 'POINT')} + ' ₫'">0 ₫</p>
+                            <p class="text-sm font-bold text-primary" th:if="${order.finalPrice != null}" th:text="${#numbers.formatDecimal(order.finalPrice, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'">0 ₫</p>
                             <p class="text-sm font-bold text-on-surface-variant" th:unless="${order.finalPrice != null}">TBD</p>
                         </td>
                         <td class="px-6 py-5 text-right">

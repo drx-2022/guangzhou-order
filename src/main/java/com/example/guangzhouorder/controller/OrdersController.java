@@ -39,7 +39,7 @@ public class OrdersController {
                 .filter(o -> "IN_PRODUCTION".equals(o.getStatus()) || "PENDING_CUSTOMER_APPROVAL".equals(o.getStatus()))
                 .count();
         long negotiatingOrders = orders.stream()
-                .filter(o -> "NEGOTIATING".equals(o.getStatus()))
+                .filter(o -> "DONE".equals(o.getPaymentStatus()))
                 .count();
         long completedOrders = orders.stream()
                 .filter(o -> "DONE".equals(o.getStatus()))

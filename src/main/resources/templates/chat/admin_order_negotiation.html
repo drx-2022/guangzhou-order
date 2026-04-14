@@ -137,7 +137,7 @@
       <!-- Final Price -->
       <div th:if="${order.finalPrice != null}" class="bg-tertiary-fixed/20 rounded-xl p-4 space-y-2">
         <p class="text-[10px] font-bold uppercase tracking-wider text-tertiary">Final Agreed Price</p>
-        <p class="text-xl font-bold text-tertiary" th:text="'$' + ${order.finalPrice}"></p>
+        <p class="text-xl font-bold text-tertiary" th:text="'VNĐ' + ${order.finalPrice}"></p>
       </div>
 
        <!-- Payment Status -->
@@ -243,12 +243,12 @@
 
               <div class="bg-surface-container-low rounded-xl p-4">
                 <p class="text-[10px] font-headline font-bold text-on-surface-variant uppercase tracking-wider mb-1">Proposed Price</p>
-                <p class="text-3xl font-extrabold text-on-surface" th:text="'$' + ${quote.proposedPrice}"></p>
+                <p class="text-3xl font-extrabold text-on-surface" th:text="'VNĐ' + ${quote.proposedPrice}"></p>
               </div>
 
               <div th:if="${quote.estimatePrice != null}">
                 <p class="text-[10px] font-headline font-bold text-on-surface-variant uppercase tracking-wider mb-1">Estimate Ceiling</p>
-                <p class="text-sm font-semibold text-on-surface" th:text="'$' + ${quote.estimatePrice}"></p>
+                <p class="text-sm font-semibold text-on-surface" th:text="'VNĐ' + ${quote.estimatePrice}"></p>
               </div>
 
               <div th:if="${quote.note != null and !quote.note.isEmpty()}" class="bg-surface-container-low rounded-xl p-3">
@@ -331,7 +331,7 @@
                   class="text-[10px] font-bold px-2 py-0.5 rounded-full"
                   th:text="${quote.status}"></span>
           </div>
-          <p class="text-lg font-bold text-primary" th:text="'$' + ${quote.proposedPrice}"></p>
+          <p class="text-lg font-bold text-primary" th:text="'VNĐ' + ${quote.proposedPrice}"></p>
           <p th:if="${quote.note}" class="text-[10px] text-on-surface-variant" th:text="${quote.note}"></p>
           <p class="text-[10px] text-on-surface-variant opacity-60" th:text="${quote.createdAt}"></p>
         </div>

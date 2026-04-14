@@ -249,7 +249,7 @@
                                 <!-- Estimate Price -->
                                 <div th:if="${msg.proposalCard.estimatePrice}" class="border-b border-outline-variant/20 pb-3">
                                     <p class="text-[10px] font-headline font-bold text-on-surface-variant uppercase tracking-wide mb-1">Estimate Price (Ceiling)</p>
-                                    <p class="text-sm font-semibold text-primary" th:text="'$' + ${msg.proposalCard.estimatePrice}"></p>
+                                    <p class="text-sm font-semibold text-primary" th:text="'VNĐ' + ${msg.proposalCard.estimatePrice}"></p>
                                 </div>
                                 <div th:if="${msg.proposalCard.technicalNotes}" class="border-b border-outline-variant/20 pb-3">
                                     <p class="text-[10px] font-headline font-bold text-on-surface-variant uppercase tracking-wide mb-1">Technical Notes</p>
@@ -304,7 +304,7 @@
                                 <div class="flex items-baseline gap-1 mb-1">
                                     <p class="text-[10px] font-headline font-bold text-on-surface-variant/60 uppercase tracking-widest">PROPOSED PRICE</p>
                                 </div>
-                                <p class="text-3xl font-extrabold text-on-surface font-headline tracking-tight" th:text="'$' + ${msg.priceQuote.proposedPrice}"></p>
+                                <p class="text-3xl font-extrabold text-on-surface font-headline tracking-tight" th:text="'VNĐ' + ${msg.priceQuote.proposedPrice}"></p>
                                 <div th:if="${msg.priceQuote.note != null and !msg.priceQuote.note.isEmpty()}" class="mt-4 bg-surface-container-low rounded-xl px-4 py-3">
                                     <p class="text-xs text-on-surface-variant leading-relaxed" th:text="${msg.priceQuote.note}"></p>
                                 </div>
@@ -354,7 +354,7 @@
                                     </div>
                                     <div th:if="${msg.proposalCard.estimatePrice}" class="border-b border-outline-variant/20 pb-3">
                                         <p class="text-[10px] font-headline font-bold text-on-surface-variant uppercase tracking-wide mb-1">Estimate Price (Ceiling)</p>
-                                        <p class="text-sm font-semibold text-primary" th:text="'$' + ${msg.proposalCard.estimatePrice}"></p>
+                                        <p class="text-sm font-semibold text-primary" th:text="'VNĐ' + ${msg.proposalCard.estimatePrice}"></p>
                                     </div>
                                     <div th:if="${msg.proposalCard.technicalNotes}" class="border-b border-outline-variant/20 pb-3">
                                         <p class="text-[10px] font-headline font-bold text-on-surface-variant uppercase tracking-wide mb-1">Technical Notes</p>
@@ -405,7 +405,7 @@
                                     <div class="mb-1">
                                         <p class="text-[10px] font-headline font-bold text-on-surface-variant/60 uppercase tracking-widest">PROPOSED PRICE</p>
                                     </div>
-                                    <p class="text-3xl font-extrabold text-on-surface font-headline tracking-tight" th:text="'$' + ${msg.priceQuote.proposedPrice}"></p>
+                                    <p class="text-3xl font-extrabold text-on-surface font-headline tracking-tight" th:text="'VNĐ' + ${msg.priceQuote.proposedPrice}"></p>
                                     <div th:if="${msg.priceQuote.note != null and !msg.priceQuote.note.isEmpty()}" class="mt-4 bg-surface-container-low rounded-xl px-4 py-3">
                                         <p class="text-xs text-on-surface-variant leading-relaxed" th:text="${msg.priceQuote.note}"></p>
                                     </div>

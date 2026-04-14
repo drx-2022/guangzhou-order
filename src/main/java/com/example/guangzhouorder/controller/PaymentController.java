@@ -117,14 +117,14 @@ public class PaymentController {
         if ("DEPOSIT".equals(type)) {
             if ("DEPOSITED".equals(order.getPaymentStatus())) {
                 model.addAttribute("success", true);
-                model.addAttribute("message", "Thanh toan tien coc thanh cong!");
+                model.addAttribute("message", "Thanh toán tiền cọc thành công!");
             } else {
                 return "redirect:/payment/" + orderId + "/deposit?error=payment_not_confirmed";
             }
         } else if ("BALANCE".equals(type)) {
             if ("DONE".equals(order.getPaymentStatus())) {
                 model.addAttribute("success", true);
-                model.addAttribute("message", "Thanh toan cuoi cung thanh cong!");
+                model.addAttribute("message", "Thanh toán số tiền còn lại thành công!");
             } else {
                 return "redirect:/payment/" + orderId + "/balance?error=payment_not_confirmed";
             }

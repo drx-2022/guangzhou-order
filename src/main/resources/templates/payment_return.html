@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <title>Ket qua thanh toan - Guangzhou Direct</title>
+    <title>Kết quả thanh toán - Guangzhou Direct</title>
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
@@ -54,23 +54,23 @@
             <span class="material-symbols-outlined text-5xl text-success" style="font-variation-settings: 'FILL' 1;">check_circle</span>
         </div>
 
-        <h1 class="text-2xl font-extrabold font-headline text-primary mb-2" th:text="${message}">Thanh toan thanh cong!</h1>
-        <p class="text-on-surface-variant mb-8">Don hang cua ban da duoc xac nhan va se duoc xu ly som nhat.</p>
+        <h1 class="text-2xl font-extrabold font-headline text-primary mb-2" th:text="${message}">Thanh toán thành công!</h1>
+        <p class="text-on-surface-variant mb-8">Đơn hàng của bạn đã được xác nhận và sẽ được xử lý sớm nhất.</p>
 
         <div class="bg-surface-container-lowest rounded-xl border border-outline-variant/20 shadow-sm p-6 mb-8 text-left">
-            <h3 class="text-sm font-bold text-on-surface-variant uppercase tracking-wider mb-4">Chi tiet don hang</h3>
+            <h3 class="text-sm font-bold text-on-surface-variant uppercase tracking-wider mb-4">Chi tiết đơn hàng</h3>
             <div class="space-y-3">
                 <div class="flex justify-between">
-                    <span class="text-sm text-on-surface-variant">Ma don hang</span>
+                    <span class="text-sm text-on-surface-variant">Mã đơn hàng</span>
                     <span class="text-sm font-bold" th:text="'#' + ${order.orderId}">#0</span>
                 </div>
                 <div class="flex justify-between">
-                    <span class="text-sm text-on-surface-variant">Trang thai</span>
-                    <span class="text-sm font-bold text-success" th:text="${order.status}">IN_PRODUCTION</span>
+                    <span class="text-sm text-on-surface-variant">Trạng thái</span>
+                    <span class="text-sm font-bold text-success" th:text="${order.status == 'NEGOTIATING' ? 'Đang Thương Lượng' : (order.status == 'PENDING_DEPOSIT' ? 'Chờ Đặt Cọc' : (order.status == 'IN_PRODUCTION' ? 'Đang Sản Xuất' : (order.status == 'PENDING_CUSTOMER_APPROVAL' ? 'Chờ Phê Duyệt' : (order.status == 'READY_FOR_SHIPPING' ? 'Sẵn Sàng Giao' : (order.status == 'DONE' ? 'Hoàn Thành' : (order.status == 'DRAFT' ? 'Bản Nháp' : order.status))))))}">IN_PRODUCTION</span>
                 </div>
                 <div class="flex justify-between">
-                    <span class="text-sm text-on-surface-variant">Tong cong</span>
-                    <span class="text-sm font-bold" th:text="${#numbers.formatDecimal(order.finalPrice, 0, 'COMMA', 0, 'POINT')} + ' d'">0 d</span>
+                    <span class="text-sm text-on-surface-variant">Tổng cộng</span>
+                    <span class="text-sm font-bold" th:text="${#numbers.formatDecimal(order.finalPrice, 0, 'COMMA', 0, 'POINT')} + ' đ'">0 đ</span>
                 </div>
             </div>
         </div>
@@ -79,12 +79,12 @@
             <a class="px-6 py-3 bg-primary text-on-primary font-bold rounded-lg hover:opacity-90 transition-all inline-flex items-center justify-center gap-2"
                th:href="@{/orders}">
                 <span class="material-symbols-outlined text-sm">inventory_2</span>
-                Xem don hang
+                Xem đơn hàng
             </a>
             <a class="px-6 py-3 bg-surface-container-low border border-outline-variant text-on-surface font-bold rounded-lg hover:bg-surface-container transition-all inline-flex items-center justify-center gap-2"
                th:href="@{/}">
                 <span class="material-symbols-outlined text-sm">home</span>
-                Ve trang chu
+                Về trang chủ
             </a>
         </div>
     </div>
