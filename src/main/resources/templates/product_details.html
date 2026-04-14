@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html class="light" lang="en" xmlns:th="http://www.thymeleaf.org"><head>
+<html class="light" lang="vi" xmlns:th="http://www.thymeleaf.org"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
@@ -87,9 +87,9 @@
 <div class="flex items-center gap-8">
 <a th:href="@{/}" class="text-xl font-extrabold tracking-tighter text-[#003461] no-underline">Guangzhou Direct</a>
 <nav class="hidden md:flex gap-6">
-<a class="font-manrope text-sm font-semibold tracking-tight text-[#003461] border-b-2 border-[#004b87] pb-1" href="#">Products</a>
-<a class="font-manrope text-sm font-semibold tracking-tight text-[#424750] hover:text-[#003461] transition-colors" href="#">Orders</a>
-<a class="font-manrope text-sm font-semibold tracking-tight text-[#424750] hover:text-[#003461] transition-colors" href="#">Community</a>
+<a class="font-manrope text-sm font-semibold tracking-tight text-[#003461] border-b-2 border-[#004b87] pb-1" href="#">Sản phẩm</a>
+<a class="font-manrope text-sm font-semibold tracking-tight text-[#424750] hover:text-[#003461] transition-colors" href="#">Đơn hàng</a>
+<a class="font-manrope text-sm font-semibold tracking-tight text-[#424750] hover:text-[#003461] transition-colors" href="#">Cộng đồng</a>
 </nav>
 </div>
 <div class="flex items-center gap-4">
@@ -105,9 +105,9 @@
 <!-- Breadcrumb & Title -->
 <div class="mb-10">
 <div class="flex items-center gap-2 text-on-surface-variant text-sm mb-4">
-<a th:href="@{/}" class="hover:text-primary transition-colors">Community</a>
+<a th:href="@{/}" class="hover:text-primary transition-colors">Cộng đồng</a>
 <span class="material-symbols-outlined text-xs">chevron_right</span>
-<a th:href="@{/catalog}" class="hover:text-primary transition-colors">Sourcing Directory</a>
+<a th:href="@{/catalog}" class="hover:text-primary transition-colors">Danh mục nguồn hàng</a>
 <span class="material-symbols-outlined text-xs">chevron_right</span>
 <span class="text-primary font-medium" th:text="${card.name}">Product Name</span>
 </div>
@@ -115,7 +115,7 @@
 <div>
 <h1 class="font-headline text-4xl font-extrabold text-primary tracking-tight leading-tight mb-2" th:text="${card.name}">Product Name</h1>
 <div class="flex items-center gap-3">
-<span class="bg-secondary-container text-on-secondary-container px-3 py-1 rounded-full text-xs font-bold tracking-wider uppercase">Verified Supplier</span>
+<span class="bg-secondary-container text-on-secondary-container px-3 py-1 rounded-full text-xs font-bold tracking-wider uppercase">Nhà cung cấp đã xác minh</span>
 <span class="text-on-surface-variant text-sm flex items-center gap-1">
 <span class="material-symbols-outlined text-sm">sell</span>
 <span th:text="'SKU: ' + ${card.sku}">SKU</span>
@@ -130,7 +130,7 @@
 <a th:href="@{/dashboard/chat/new(cloneFrom=${card.productCardId})}"
    class="flex items-center justify-center gap-3 px-8 py-4 bg-gradient-to-br from-primary to-primary-container text-white rounded-xl shadow-lg hover:opacity-90 active:scale-95 transition-all">
 <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">content_copy</span>
-<span class="font-headline font-bold tracking-tight text-lg">CLONE ORDER</span>
+<span class="font-headline font-bold tracking-tight text-lg">SAO CHÉP ĐƠN HÀNG</span>
 </a>
 </div>
 </div>
@@ -141,16 +141,16 @@
 <section class="bg-surface-container-lowest p-8 rounded-xl border border-outline-variant/15">
 <h2 class="font-headline text-xl font-bold text-primary mb-6 flex items-center gap-2">
 <span class="material-symbols-outlined">analytics</span>
-                        Technical DNA
+                        DNA Kỹ thuật
                     </h2>
 <div class="space-y-6">
 <!-- Always show material and configuration if present -->
 <div class="flex flex-col gap-1" th:if="${card.material != '—'}">
-<span class="text-xs font-bold text-on-surface-variant uppercase tracking-widest">Main Material</span>
+<span class="text-xs font-bold text-on-surface-variant uppercase tracking-widest">Vật liệu chính</span>
 <span class="text-on-surface font-semibold text-lg" th:text="${card.material}">Material</span>
 </div>
 <div class="flex flex-col gap-1" th:if="${card.configuration != '—'}">
-<span class="text-xs font-bold text-on-surface-variant uppercase tracking-widest">Configuration</span>
+<span class="text-xs font-bold text-on-surface-variant uppercase tracking-widest">Cấu hình</span>
 <span class="text-on-surface font-semibold text-lg" th:text="${card.configuration}">Config</span>
 </div>
 <!-- Dynamic specs from the specs array -->
@@ -160,17 +160,17 @@
 </div>
 <!-- Fallback when no specs -->
 <div th:if="${card.specs.isEmpty() and card.material == '—' and card.configuration == '—'}" class="text-sm text-on-surface-variant italic">
-No technical specifications available.
+Không có thông số kỹ thuật.
 </div>
 </div>
 <div class="mt-8 pt-6 border-t border-outline-variant/15">
 <div class="bg-surface-container-low p-4 rounded-lg">
 <div class="flex items-center gap-2 mb-2 text-primary">
 <span class="material-symbols-outlined text-sm">payments</span>
-<span class="text-xs font-bold uppercase tracking-widest">Display Price</span>
+<span class="text-xs font-bold uppercase tracking-widest">Giá hiển thị</span>
 </div>
 <p class="text-2xl font-black text-primary"
-   th:text="${card.displayPrice != null} ? ${#numbers.formatDecimal(card.displayPrice, 0, 'COMMA', 0, 'POINT') + ' ₫'} : 'Contact for price'">Price</p>
+   th:text="${card.displayPrice != null} ? ${#numbers.formatDecimal(card.displayPrice, 0, 'COMMA', 0, 'POINT') + ' ₫'} : 'Liên hệ để biết giá'">Price</p>
 </div>
 </div>
 </section>
@@ -178,20 +178,20 @@ No technical specifications available.
 <section class="bg-surface-container-high/30 p-6 rounded-xl border border-outline-variant/15">
 <h3 class="font-headline text-sm font-bold text-primary mb-4 flex items-center gap-2">
 <span class="material-symbols-outlined text-sm">history</span>
-                        Sourcing History
+                        Lịch sử nhập hàng
                     </h3>
 <div class="space-y-4">
 <div class="flex justify-between items-center text-sm">
-<span class="text-on-surface-variant">Last Order</span>
+<span class="text-on-surface-variant">Đơn hàng gần nhất</span>
 <span class="font-medium">12/05/2024</span>
 </div>
 <div class="flex justify-between items-center text-sm">
-<span class="text-on-surface-variant">Imported Quantity</span>
-<span class="font-medium text-primary">240 sets</span>
+<span class="text-on-surface-variant">Số lượng nhập</span>
+<span class="font-medium text-primary">240 bộ</span>
 </div>
 <div class="flex justify-between items-center text-sm">
-<span class="text-on-surface-variant">Lead Time</span>
-<span class="font-medium">18 days</span>
+<span class="text-on-surface-variant">Thời gian sản xuất</span>
+<span class="font-medium">18 ngày</span>
 </div>
 </div>
 </section>
@@ -202,9 +202,9 @@ No technical specifications available.
 <div class="flex items-center justify-between mb-6">
 <h2 class="font-headline text-xl font-bold text-primary flex items-center gap-2">
 <span class="material-symbols-outlined">visibility</span>
-                            Visual Proof
+                            Bằng chứng thực tế
                         </h2>
-<span class="text-sm text-on-surface-variant font-medium">8 Images &amp; 1 Real Video</span>
+<span class="text-sm text-on-surface-variant font-medium">8 Hình ảnh &amp; 1 Video thực tế</span>
 </div>
 <!-- Gallery Grid -->
 <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
@@ -230,7 +230,7 @@ No technical specifications available.
 </div>
 </div>
 <div class="absolute bottom-3 left-3">
-<span class="bg-primary text-white text-[10px] px-2 py-0.5 rounded font-bold uppercase">QC Video</span>
+<span class="bg-primary text-white text-[10px] px-2 py-0.5 rounded font-bold uppercase">Video QC</span>
 </div>
 </div>
 <!-- Secondary Thumbnails -->
@@ -243,7 +243,7 @@ No technical specifications available.
 <div class="group relative overflow-hidden rounded-xl aspect-square bg-surface-container">
 <img alt="close up of premium adjustable leg leveler on an industrial metal desk against a workshop floor" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDEEheCw9iDSU-9Y0nP0wJQZhWETI-N5yT1TImTw582m93kUyoJt1G1b0q4MEriQYFr_oRG_kmKRyMJ30sfGWE0J4bJNCwWgfc24f4CfC56uCZiYrl4WIB4jhQV7M3RSsmFl7szTcsLbuT-0E5eqN_ryErqo754l8bngTUEe5_YSRvmMTMMMQc_H8gHBx-B6aUmTEyKHLbM4AETLrO8LWXZOviNdShSwMw5VRiBjV2CRc1AVVYu9z9i8ZiFUkM5bHhKpVUUKuBKizc"/>
 <div class="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-<span class="text-white font-bold text-sm">+4 More</span>
+<span class="text-white font-bold text-sm">+4 Ảnh khác</span>
 </div>
 </div>
 </div>
@@ -251,26 +251,26 @@ No technical specifications available.
 <!-- Detailed Description / Proof Points -->
 <section class="grid grid-cols-1 md:grid-cols-2 gap-6">
 <div class="bg-surface-container-low p-6 rounded-xl border border-outline-variant/15">
-<h4 class="font-headline font-bold text-primary mb-3">Supplier Commitment</h4>
+<h4 class="font-headline font-bold text-primary mb-3">Cam kết nhà cung cấp</h4>
 <ul class="space-y-3">
 <li class="flex items-start gap-2 text-sm text-on-surface-variant">
 <span class="material-symbols-outlined text-tertiary-container text-sm mt-0.5">check_circle</span>
-<span>100% Stainless steel meeting GB/T 700 standards.</span>
+<span>100% thép không gỉ đạt tiêu chuẩn GB/T 700.</span>
 </li>
 <li class="flex items-start gap-2 text-sm text-on-surface-variant">
 <span class="material-symbols-outlined text-tertiary-container text-sm mt-0.5">check_circle</span>
-<span>5-year structural warranty for Clone orders.</span>
+<span>Bảo hành kết cấu 5 năm cho đơn hàng sao chép.</span>
 </li>
 <li class="flex items-start gap-2 text-sm text-on-surface-variant">
 <span class="material-symbols-outlined text-tertiary-container text-sm mt-0.5">check_circle</span>
-<span>Laser-engraved logo customization supported for qty &gt; 50 sets.</span>
+<span>Hỗ trợ khắc logo bằng laser cho số lượng &gt; 50 bộ.</span>
 </li>
 </ul>
 </div>
 <div class="bg-surface-container-low p-6 rounded-xl border border-outline-variant/15">
-<h4 class="font-headline font-bold text-primary mb-3">Notes for Buyers</h4>
+<h4 class="font-headline font-bold text-primary mb-3">Lưu ý cho người mua</h4>
 <p class="text-sm text-on-surface-variant leading-relaxed"
-   th:text="${!#strings.isEmpty(card.notes)} ? ${card.notes} : 'No additional notes for this product.'">Notes</p>
+   th:text="${!#strings.isEmpty(card.notes)} ? ${card.notes} : 'Không có ghi chú thêm cho sản phẩm này.'">Notes</p>
 </div>
 </section>
 </div>
@@ -279,11 +279,11 @@ No technical specifications available.
 <div class="flex items-center justify-between mb-6">
 <h2 class="font-headline text-xl font-bold text-primary flex items-center gap-2">
 <span class="material-symbols-outlined">show_chart</span>
-                    Price History
+                    Lịch sử giá
                 </h2>
 <span class="text-xs font-bold uppercase tracking-widest text-on-surface-variant" th:text="${baseProductName}">Base Product</span>
 </div>
-<div id="noHistoryMessage" class="hidden text-sm text-on-surface-variant italic">No transaction history yet.</div>
+<div id="noHistoryMessage" class="hidden text-sm text-on-surface-variant italic">Chưa có lịch sử giao dịch.</div>
 <div id="priceChartWrapper" class="relative w-full" style="height: 360px;">
 <canvas id="priceChart"></canvas>
 </div>
@@ -293,19 +293,19 @@ No technical specifications available.
 <footer class="md:hidden fixed bottom-0 left-0 w-full flex justify-around items-center px-4 py-3 pb-safe bg-white/80 backdrop-blur-md z-50 rounded-t-2xl shadow-[0_-4px_12px_rgba(0,0,0,0.05)] border-t border-[#c2c6d1]/15">
 <a class="flex flex-col items-center text-[#424750]" href="#">
 <span class="material-symbols-outlined">home</span>
-<span class="font-inter text-[10px] uppercase tracking-wider mt-1">Home</span>
+<span class="font-inter text-[10px] uppercase tracking-wider mt-1">Trang chủ</span>
 </a>
 <a class="flex flex-col items-center text-[#003461] font-bold bg-[#cbe7f5] rounded-xl px-4 py-1" href="#">
 <span class="material-symbols-outlined">search</span>
-<span class="font-inter text-[10px] uppercase tracking-wider mt-1">Products</span>
+<span class="font-inter text-[10px] uppercase tracking-wider mt-1">Sản phẩm</span>
 </a>
 <a class="flex flex-col items-center text-[#424750]" href="#">
 <span class="material-symbols-outlined">local_shipping</span>
-<span class="font-inter text-[10px] uppercase tracking-wider mt-1">Orders</span>
+<span class="font-inter text-[10px] uppercase tracking-wider mt-1">Đơn hàng</span>
 </a>
 <a class="flex flex-col items-center text-[#424750]" href="#">
 <span class="material-symbols-outlined">person</span>
-<span class="font-inter text-[10px] uppercase tracking-wider mt-1">Account</span>
+<span class="font-inter text-[10px] uppercase tracking-wider mt-1">Tài khoản</span>
 </a>
 </footer>
 <script th:inline="javascript">
@@ -328,7 +328,7 @@ document.addEventListener('DOMContentLoaded', () => {
         type: 'scatter',
         data: {
             datasets: [{
-                label: 'Transaction Price',
+                label: 'Giá giao dịch',
                 data: scatterData,
                 backgroundColor: '#003461',
                 pointRadius: 6,
@@ -347,9 +347,9 @@ document.addEventListener('DOMContentLoaded', () => {
                             if (!point) return '';
                             const price = Number(point.price || 0).toLocaleString();
                             return [
-                                'Price: ' + price + ' VND',
-                                'Name: ' + (point.dnaName || 'N/A'),
-                                'Material: ' + (point.dnaMaterial || 'N/A')
+                                'Giá: ' + price + ' VND',
+                                'Tên: ' + (point.dnaName || 'N/A'),
+                                'Vật liệu: ' + (point.dnaMaterial || 'N/A')
                             ];
                         }
                     }
@@ -358,10 +358,10 @@ document.addEventListener('DOMContentLoaded', () => {
             scales: {
                 x: {
                     type: 'category',
-                    title: { display: true, text: 'Date' }
+                    title: { display: true, text: 'Ngày' }
                 },
                 y: {
-                    title: { display: true, text: 'Price (VND)' },
+                    title: { display: true, text: 'Giá (VND)' },
                     ticks: {
                         callback: (value) => Number(value).toLocaleString()
                     }
